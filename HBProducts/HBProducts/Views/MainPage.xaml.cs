@@ -21,7 +21,7 @@ namespace HBProducts.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Home, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
@@ -30,11 +30,14 @@ namespace HBProducts.Views
             {
                 switch (id)
                 {
-                    case (int)MenuItemType.Browse:
+                    case (int)MenuItemType.Home:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
+                        break;
+                    case (int)MenuItemType.Models:
+                        MenuPages.Add(id, new NavigationPage(new ModelsPage()));
                         break;
                 }
             }

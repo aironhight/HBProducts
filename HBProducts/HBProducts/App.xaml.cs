@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using HBProducts.Services;
 using HBProducts.Views;
 
 namespace HBProducts
@@ -13,7 +12,6 @@ namespace HBProducts
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 

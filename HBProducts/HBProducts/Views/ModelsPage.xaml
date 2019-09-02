@@ -4,13 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.ItemsPage"
-             Title="Home"
-             x:Name="BrowseItemsPage">
-    
-    <StackLayout>
-        <Label
-            Text="This is a fancy label" />
-    </StackLayout>
-    
+             x:Class="HBProducts.Views.ModelsPage"
+             Title="3D Models">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
