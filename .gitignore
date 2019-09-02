@@ -158,6 +158,7 @@ AppPackages/
 # Others
 sql/
 *.Cache
+*.cache
 ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
@@ -189,7 +190,30 @@ UpgradeLog*.htm
 *.bim.layout
 *.bim_*.settings
 
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
 # Microsoft Fakes
 FakesAssemblies/
+
 
 .vscode/settings.json
