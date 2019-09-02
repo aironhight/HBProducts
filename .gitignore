@@ -217,3 +217,8 @@ FakesAssemblies/
 
 
 .vscode/settings.json
+*.cache
+HBProducts/HBProducts.Android/obj/Debug/90/HBProducts.Android.csproj.CoreCompileInputs.cache
+HBProducts/HBProducts.Android/obj/Debug/90/HBProducts.Android.csprojAssemblyReference.cache
+HBProducts/HBProducts/obj/Debug/netstandard2.0/HBProducts.csprojAssemblyReference.cache
+HBProducts/.vs/HBProducts/v16/.suo
