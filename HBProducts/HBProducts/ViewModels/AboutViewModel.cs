@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
-
+using Urho;
+using Urho.Resources;
 using Xamarin.Forms;
 
 namespace HBProducts.ViewModels

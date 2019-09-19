@@ -7,8 +7,11 @@ namespace HBProducts.Models
     public enum MenuItemType
     {
         Home,
-        About,
-        Models
+        Scan,
+        Products,
+        FAQ,
+        ContactUs,
+        About
     }
     public class HomeMenuItem
     {

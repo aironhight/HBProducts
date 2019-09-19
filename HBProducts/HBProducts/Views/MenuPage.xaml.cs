@@ -21,8 +21,11 @@ namespace HBProducts.Views
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Home, Title="Home" },
+                new HomeMenuItem {Id = MenuItemType.Products, Title="Products" },
+                new HomeMenuItem {Id = MenuItemType.Scan, Title = "Scan QR"},
+                new HomeMenuItem {Id = MenuItemType.FAQ, Title = "FAQ"},
+                new HomeMenuItem {Id = MenuItemType.ContactUs, Title = "Contact Us"},
                 new HomeMenuItem {Id = MenuItemType.About, Title="About" },
-                new HomeMenuItem {Id = MenuItemType.Models, Title="3D Models" }
             };
 
             ListViewMenu.ItemsSource = menuItems;

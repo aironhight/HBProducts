@@ -31,13 +31,22 @@ namespace HBProducts.Views
                 switch (id)
                 {
                     case (int)MenuItemType.Home:
-                        MenuPages.Add(id, new NavigationPage(new ItemsPage()));
+                        MenuPages.Add(id, new NavigationPage(new HomePage()));
+                        break;
+                    case (int)MenuItemType.Products:
+                        MenuPages.Add(id, new NavigationPage(new ProductsPage()));
                         break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;
-                    case (int)MenuItemType.Models:
-                        MenuPages.Add(id, new NavigationPage(new ModelsPage()));
+                    case (int)MenuItemType.ContactUs:
+                        MenuPages.Add(id, new NavigationPage(new ContactUsPage()));
+                        break;
+                    case (int)MenuItemType.FAQ:
+                        MenuPages.Add(id, new NavigationPage(new FAQPage()));
+                        break;
+                    case (int)MenuItemType.Scan:
+                        MenuPages.Add(id, new NavigationPage(new ScanPage()));
                         break;
                 }
             }

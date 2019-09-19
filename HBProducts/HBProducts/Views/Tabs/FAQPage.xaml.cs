@@ -10,11 +10,10 @@ using Xamarin.Forms.Xaml;
 namespace HBProducts.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ModelsPage : ContentPage
+    public partial class FAQPage : ContentPage
     {
-        public ModelsPage()
+        public FAQPage()
         {
-
             InitializeComponent();
         }
     }

@@ -4,13 +4,19 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.ItemsPage"
+             x:Class="HBProducts.Views.HomePage"
              Title="Home"
              x:Name="BrowseItemsPage">
+
+  
+        <StackLayout
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand">
+            <WebView
+                x:Name="webView"
+                WidthRequest="1000"
+                HeightRequest="1000"/>
+        </StackLayout>
     
-    <StackLayout>
-        <Label
-            Text="This is a fancy label" />
-    </StackLayout>
     
 </ContentPage>
