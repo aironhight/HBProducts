@@ -6,12 +6,14 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.HomePage"
              Title="Home"
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             >
 
   
         <StackLayout
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="CenterAndExpand">
+            
             <WebView
                 x:Name="webView"
                 WidthRequest="1000"
