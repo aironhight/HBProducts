@@ -26,6 +26,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>iOS Team Provisioning Profile: com.companyname.HBProducts</CodesignProvision>
+    <CodesignKey>iPhone Developer: macbookhbproducts@gmail.com (5LCQ52ZSK7)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -147,7 +149,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\HBProducts\HBProducts.csproj">
-      <Project>{FF736A46-5A87-4E6E-B30F-2A32F830E746}</Project>
+      <Project>{58FFE557-E7D9-41EB-AD7A-03737C00C3A6}</Project>
       <Name>HBProducts</Name>
     </ProjectReference>
   </ItemGroup>
