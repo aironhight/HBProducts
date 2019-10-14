@@ -6,10 +6,8 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ContactUsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Button
+            Text="Send mail"
+            Clicked="OpenMailClicked"/>
     </ContentPage.Content>
 </ContentPage>

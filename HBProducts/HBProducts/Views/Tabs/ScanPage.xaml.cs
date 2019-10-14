@@ -1,8 +1,10 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -19,40 +21,37 @@ namespace HBProducts.Views
         }
 
         private async void RequestScanner()
-        {
-            Debug.WriteLine("I AM WORKING BRO!");
-            try
-            {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
-                Debug.WriteLine("Permission status: " + status.ToString());
-                if (status != PermissionStatus.Granted)
-                {
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
-                    {
-                        await DisplayAlert("Need Camera", "In order to scan we will need camera permissions", "OK");
-                    }
+         {
+             Debug.WriteLine("I AM WORKING BRO!");
+             try
+             {
+                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+                 Debug.WriteLine("Permission status: " + status.ToString());
+                 if (status != PermissionStatus.Granted)
+                 {
+                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                     {
+                         await DisplayAlert("Need Camera", "In order to scan we will need camera permissions", "OK");
+                     }
 
-                    status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
-                }
+                     status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                 }
 
-                if (status == PermissionStatus.Granted)
-                {
-                    //Permission granted
-                    StartScanner();
-                }
-                else if (status != PermissionStatus.Unknown)
-                {
-                    //Camera permission denied...
-                }
-            }
-            catch (Exception ex)
-            {
-                //Something went wrong
-            }
-
-        }
-
-
+                 if (status == PermissionStatus.Granted)
+                 {
+                     //Permission granted
+                     StartScanner();
+                 }
+                 else if (status != PermissionStatus.Unknown)
+                 {
+                     //Camera permission denied...
+                 }
+             }
+             catch (Exception ex)
+             {
+                 //Something went wrong
+             }
+         }
 
         public async void StartScanner()
         {
