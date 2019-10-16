@@ -22,7 +22,7 @@ namespace HBProducts.Views
         public HomePage()
         {
             InitializeComponent();
-            webView.Source = "https://www.hbproducts.dk/en/hb-products-link/news-archive.html";
+            //webView.Source = "https://www.hbproducts.dk/en/hb-products-link/news-archive.html";
             NavigationPage.SetHasNavigationBar(this, false);
         }
 

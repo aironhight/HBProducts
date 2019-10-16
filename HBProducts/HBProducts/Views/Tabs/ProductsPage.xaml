@@ -6,11 +6,24 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ProductsPage"
              Title="Products">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Products page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+
+    <StackLayout BindingContext ="{Binding ProductList}">
+
+        <ListView ItemsSource="{Binding Products}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell ImageSource="{Binding ImgSource}"
+                                Text="{Binding Model}"
+                                Detail="{Binding Type}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<Label Text="{Binding Model}"/>
+            </ListView>
+            <Button 
+            Text="Make request"
+            Clicked="makeRequest"
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand" />-->
+    </StackLayout>
 </ContentPage>

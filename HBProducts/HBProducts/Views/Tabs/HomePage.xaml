@@ -14,10 +14,10 @@
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="CenterAndExpand">
             
-            <WebView
+            <!--<WebView
                 x:Name="webView"
                 WidthRequest="1000"
-                HeightRequest="1000"/>
+                HeightRequest="1000"/>-->
         </StackLayout>
     
     
