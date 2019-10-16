@@ -14,7 +14,7 @@
                 <DataTemplate>
                     <ImageCell ImageSource="{Binding ImgSource}"
                                 Text="{Binding Model}"
-                                Detail="{Binding Type/>
+                                Detail="{Binding Type}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
