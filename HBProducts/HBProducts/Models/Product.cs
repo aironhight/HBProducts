@@ -60,20 +60,6 @@ namespace HBProducts.Models
             }
         }
 
-        private String getThumbnailURL()
-        {
-            String url = "";
-            foreach(ProductData data in dataList)
-            {
-                if (data.GetType().Equals("ThumbnailURL"))
-                {
-                    url = data.GetValue();
-                    return url;
-                }
-            }
-            return url;
-        }
-
         public ArrayList DataList
         {
             set { SetProperty(ref dataList, value); }

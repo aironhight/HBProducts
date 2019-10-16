@@ -14,16 +14,10 @@
                 <DataTemplate>
                     <ImageCell ImageSource="{Binding ImgSource}"
                                 Text="{Binding Model}"
-                                Detail="{Binding Type}"/>
+                                Detail="{Binding Type/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!--<Label Text="{Binding Model}"/>
-            </ListView>
-            <Button 
-            Text="Make request"
-            Clicked="makeRequest"
-            VerticalOptions="CenterAndExpand" 
-            HorizontalOptions="CenterAndExpand" />-->
+       
     </StackLayout>
 </ContentPage>
