@@ -63,5 +63,6 @@ namespace HBProducts.Views
                 IsPresented = false;
             }
         }
+
     }
 }

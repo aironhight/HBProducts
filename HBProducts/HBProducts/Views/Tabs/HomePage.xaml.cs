@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using HBProducts.Models;
-using HBProducts.Views;
-using HBProducts.ViewModels;
-using Xamarin.Forms.Internals;
+using Urho;
+using Urho.Forms;
 
 namespace HBProducts.Views
 {
     [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
     {
-   
+
+        private ThreeDModelViewer urhoApp;
 
         public HomePage()
         {
@@ -26,5 +18,22 @@ namespace HBProducts.Views
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
+       protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            StartUrho();
+            //await TDMUrhoSurface.Show<ThreeDModelViewer>(new Urho.ApplicationOptions(assetsFolder: null));
+        }
+
+        private async void StartUrho()
+        {
+            urhoApp = await TDMUrhoSurface.Show<ThreeDModelViewer>(new Urho.ApplicationOptions("Data") { Orientation = Urho.ApplicationOptions.OrientationType.LandscapeAndPortrait });
+        }
+
+        private void StartScene(object sender, System.EventArgs e)
+        {
+            StartUrho();
+        }
     }
 }

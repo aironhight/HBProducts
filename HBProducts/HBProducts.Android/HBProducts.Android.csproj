@@ -58,7 +58,7 @@
     <PackageReference Include="Plugin.Permissions">
       <Version>5.0.0-beta</Version>
     </PackageReference>
-    <PackageReference Include="UrhoSharp">
+    <PackageReference Include="UrhoSharp.Forms">
       <Version>1.9.67</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />

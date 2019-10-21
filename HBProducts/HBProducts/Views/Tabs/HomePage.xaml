@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:urho="clr-namespace:Urho.Forms;assembly=UrhoSharp.Forms"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="HBProducts.Views.HomePage"
@@ -9,12 +10,13 @@
              x:Name="BrowseItemsPage"
              >
 
-  
-        <StackLayout
+    <StackLayout
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="CenterAndExpand">
-            
-            <!--<WebView
+        <Button Clicked="StartScene"></Button>
+        <urho:UrhoSurface x:Name="TDMUrhoSurface" VerticalOptions="FillAndExpand" />
+
+        <!--<WebView
                 x:Name="webView"
                 WidthRequest="1000"
                 HeightRequest="1000"/>-->
