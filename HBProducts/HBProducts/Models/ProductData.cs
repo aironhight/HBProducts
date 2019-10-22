@@ -5,6 +5,7 @@ using System.Text;
 
 namespace HBProducts.Models
 {
+    [Serializable]
     public class ProductData : BaseViewModel
     {
         private String dataType;
