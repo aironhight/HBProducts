@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -16,7 +17,7 @@ namespace HBProducts.Models
         private String type;
         private String threedModel;
         private List<ProductData> dataList;
-
+      
         public Product(string model, string type, string threedModel, List<ProductData> dataList)
         {
             this.model = model;
@@ -27,9 +28,9 @@ namespace HBProducts.Models
             //For testing purpose...
             ProductData imageData = new ProductData("Image", "https://www.kaeltefischer.de/sites/default/files/styles/header_bild/public/Header_Landingpage_HBProducts.jpg?itok=HKffyGX5", true);
             ProductData productData = new ProductData("Thumbnail", "https://www.hbproducts.dk/images/HBAC-2.png", true);
-            ProductData manual = new ProductData("Manual", "https://www.google.com", true);
+            ProductData manual = new ProductData("Manual", "https://www.hbproducts.dk/images/manualer/hbsc2-hv/HBSC2-SSR_Instruction%20manual_001-UK.pdf", true);
             ProductData quickStartGuide = new ProductData("Quick Start guide", "https://www.hbproducts.dk/images/manualer/hbsc2/HBSC2_-_Quick_guide-UK_009.pdf", true);
-            ProductData summary = new ProductData("Summary", "This is a very nice Sensor indeed.", false);
+            ProductData summary = new ProductData("Description", "This is a very nice Sensor indeed.", false);
 
             dataList.Add(productData);
             dataList.Add(imageData);
@@ -124,12 +125,6 @@ namespace HBProducts.Models
         {
             return dataWithoutImages().Where(data => data.IsUrl() == urlData).ToList();
         }
-
-        public ICommand ClickCommand => new Command<string>((url) =>
-        {
-            Device.OpenUri(new System.Uri(url));
-        });
-
 
     }
 }

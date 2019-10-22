@@ -18,12 +18,14 @@ namespace HBProducts.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductsPage : ContentPage
     {
+        private ProductsViewModel viewmodel { get; set; }
         public ProductsPage()
         {
             InitializeComponent();
 
+            viewmodel = new ProductsViewModel();
             //Binding ViewModel to View...
-            BindingContext = new ProductsViewModel();
+            BindingContext = viewmodel;
         }
 
         private void makeRequest(object sender, EventArgs e)

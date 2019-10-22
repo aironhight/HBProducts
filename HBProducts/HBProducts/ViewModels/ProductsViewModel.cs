@@ -12,7 +12,6 @@ namespace HBProducts.ViewModels
     class ProductsViewModel : BaseViewModel
     {
         private readonly string productsURI = "http://teatapi.azurewebsites.net/api/Product";
-        public event PropertyChangedEventHandler PropertyChanged;
         private ProductList productList;
 
         public ProductsViewModel()

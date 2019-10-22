@@ -1,7 +1,5 @@
 ﻿using HBProducts.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HBProducts.Models
 {
@@ -42,6 +40,5 @@ namespace HBProducts.Models
         {
             get { return dataType; }
         }
-
     }
 }

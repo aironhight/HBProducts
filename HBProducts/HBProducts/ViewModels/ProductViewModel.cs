@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -11,6 +12,13 @@ namespace HBProducts.ViewModels
     class ProductViewModel : BaseViewModel
     {
         private Product product;
+
+        public ICommand URLClicked
+        {
+            get {
+                return new Command<string>((url) => urlClicked(url));
+            }
+        }
 
         public ProductViewModel(Product product)
         {
@@ -23,10 +31,15 @@ namespace HBProducts.ViewModels
             get { return product; }
         }
 
-        public ICommand ClickCommand => new Command<string>((url) =>
+        public string Testing
         {
-            Device.OpenUri(new System.Uri(url));
-        });
+            get { return "Working!!!"; }
+        }
 
+        public static void urlClicked(string url)
+        {
+            Debug.WriteLine("URL CLICKED CORRECT: " + url);
+            Device.OpenUri(new Uri(url));
+        }
     }
 }

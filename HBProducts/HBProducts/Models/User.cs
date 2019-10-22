@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HBProducts.Models
 {
-    class User
+    public class User
     {
         private String name;
 

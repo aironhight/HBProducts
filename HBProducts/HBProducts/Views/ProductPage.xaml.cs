@@ -18,6 +18,7 @@ namespace HBProducts.Views
         {
             InitializeComponent();
             BindingContext = new ProductViewModel(product);
+            Title = product.FullName;
         }
 
     }
