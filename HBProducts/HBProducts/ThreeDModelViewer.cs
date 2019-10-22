@@ -35,7 +35,6 @@ namespace HBProducts
             Create3DObject();
         }
 
-        
         private async Task Create3DObject()
         {
             // 3D scene with Octree

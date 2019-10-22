@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HBProducts.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HBProducts.Models
 {
-    class ProductData
+    public class ProductData : BaseViewModel
     {
         private String dataType;
         private String dataValue;
@@ -31,5 +32,16 @@ namespace HBProducts.Models
         {
             return isUrl;
         }
+
+        public String Value
+        {
+            get { return dataValue; }
+        }
+
+        public String Type
+        {
+            get { return dataType; }
+        }
+
     }
 }

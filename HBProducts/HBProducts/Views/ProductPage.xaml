@@ -6,10 +6,46 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ProductPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BindingContext="{Binding Product}">
+            <Image Source="{Binding ProductImage}"
+                   HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Model}"
+                   HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Type}"
+                   HorizontalOptions="CenterAndExpand"/>
+
+            <ListView ItemsSource="{Binding NoURLData}"
+                      >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <TextCell 
+                            Text="{Binding Type}"
+                            Detail="{Binding Value}"
+                            IsEnabled="False"/>
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <ListView ItemsSource="{Binding URLData}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <!--<Button Text="{Binding Type}"
+                               Command="{Binding BindingContext.ClickCommand}"
+                                CommandParameter="{Binding Value}"/>-->
+                        <TextCell 
+                            Text="{Binding Type}"
+                            Detail="{Binding Value}"
+                            IsEnabled="False"/>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -7,6 +7,7 @@ using System.Text;
 
 namespace HBProducts.Models
 {
+    [Serializable]
     class ProductList : BaseViewModel
     {
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
