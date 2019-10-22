@@ -14,8 +14,7 @@
             <Label Text="{Binding Type}"
                    HorizontalOptions="CenterAndExpand"/>
 
-            <ListView ItemsSource="{Binding NoURLData}"
-                      >
+            <ListView ItemsSource="{Binding NoURLData}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
 
@@ -34,16 +33,17 @@
                     <DataTemplate>
 
                         <!--<Button Text="{Binding Type}"
-                               Command="{Binding BindingContext.ClickCommand}"
-                                CommandParameter="{Binding Value}"/>-->
+                                   Command="{Binding BindingContext.ClickCommand}"
+                                    CommandParameter="{Binding Value}"/>-->
                         <TextCell 
-                            Text="{Binding Type}"
-                            Detail="{Binding Value}"
-                            IsEnabled="False"/>
+                                Text="{Binding Type}"
+                                Detail="{Binding Value}"
+                                IsEnabled="False"/>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
 
 
         </StackLayout>

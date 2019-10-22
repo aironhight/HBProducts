@@ -8,7 +8,7 @@ using System.Text;
 namespace HBProducts.Models
 {
     [Serializable]
-    class ProductList : BaseViewModel
+    public class ProductList : BaseViewModel
     {
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
         private string testString = "Testing a string for binding";
