@@ -15,7 +15,7 @@ namespace HBProducts.Models
         private String model;
         private String type;
         private String threedModel;
-        private List<ProductData> dataList = new List<ProductData>();
+        private List<ProductData> dataList;
 
         public Product(string model, string type, string threedModel, List<ProductData> dataList)
         {
@@ -48,6 +48,11 @@ namespace HBProducts.Models
         {
             set { SetProperty(ref type, value); }
             get { return type; }
+        }
+
+        public string FullName
+        {
+            get { return model + " " + type; }
         }
 
         public string ThreeDModel
@@ -102,16 +107,13 @@ namespace HBProducts.Models
         }
 
         //Methods for data manipulation after-----------------------------
+
+        /**
+         * FIlters the ProductData and returns ProductData which does not contain the Image and Thumbnail.
+         */
         private List<ProductData> dataWithoutImages()
         {
-            List<ProductData> noImagesDataList = dataList.Where(data => !(data.GetType().Equals("Image") || !(data.GetType().Equals("Thumbnail")))).ToList();
-            //for(int i=0; i<noImagesDataList.Count; i++)
-            //{
-            //    if (noImagesDataList[i].GetType().Equals("Image") || noImagesDataList[i].GetType().Equals("Thumbnail"))
-            //        noImagesDataList.Remove(noImagesDataList[i]);
-            //}
-
-            return noImagesDataList;
+            return dataList.Where(data => !((data.GetType().Equals("Image") || (data.GetType().Equals("Thumbnail"))))).ToList();
         }
 
         /**
@@ -120,11 +122,7 @@ namespace HBProducts.Models
          */
         private List<ProductData> urlData(bool urlData)
         {
-            List<ProductData> urlDataList = dataWithoutImages().Where(data => data.IsUrl() == urlData).ToList();
-
-            urlDataList.ForEach(i => Console.WriteLine("{0} " + i.IsUrl() + " " , i));
-
-            return urlDataList;
+            return dataWithoutImages().Where(data => data.IsUrl() == urlData).ToList();
         }
 
         public ICommand ClickCommand => new Command<string>((url) =>
