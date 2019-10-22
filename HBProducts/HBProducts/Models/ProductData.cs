@@ -3,6 +3,7 @@ using System;
 
 namespace HBProducts.Models
 {
+    [Serializable]
     public class ProductData : BaseViewModel
     {
         private String dataType;
