@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HBProducts.Models
 {
-    class Customer
+    public class Customer
     {
         private String company;
         private String email;

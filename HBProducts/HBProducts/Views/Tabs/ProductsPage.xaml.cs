@@ -1,7 +1,9 @@
-﻿using HBProducts.ViewModels;
+﻿using HBProducts.Models;
+using HBProducts.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -16,12 +18,14 @@ namespace HBProducts.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductsPage : ContentPage
     {
+        private ProductsViewModel viewmodel { get; set; }
         public ProductsPage()
         {
             InitializeComponent();
 
+            viewmodel = new ProductsViewModel();
             //Binding ViewModel to View...
-            BindingContext = new ProductsViewModel();
+            BindingContext = viewmodel;
         }
 
         private void makeRequest(object sender, EventArgs e)
@@ -40,6 +44,13 @@ namespace HBProducts.Views
             {
                 Console.WriteLine("DESERIALIZED RESPONSE: " + s);
             }
+        }
+
+        private async void OnItemSelected(object sender, ItemTappedEventArgs e)
+        {
+            Product productClicked = e.Item as Product;
+            Debug.WriteLine("The selected product is: " + productClicked.Model);
+            await Navigation.PushAsync(new ProductPage(productClicked));
         }
     }
 }

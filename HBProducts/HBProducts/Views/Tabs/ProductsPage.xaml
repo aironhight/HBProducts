@@ -9,10 +9,11 @@
 
     <StackLayout BindingContext ="{Binding ProductList}">
 
-        <ListView ItemsSource="{Binding Products}">
+        <ListView ItemsSource="{Binding Products}"
+                  ItemTapped="OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ImageCell ImageSource="{Binding ImgSource}"
+                    <ImageCell ImageSource="{Binding ThumbNailSource}"
                                 Text="{Binding Model}"
                                 Detail="{Binding Type}"/>
                 </DataTemplate>

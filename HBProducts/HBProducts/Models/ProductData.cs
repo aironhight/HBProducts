@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HBProducts.ViewModels;
+using System;
 
 namespace HBProducts.Models
 {
-    class ProductData
+    [Serializable]
+    public class ProductData : BaseViewModel
     {
         private String dataType;
         private String dataValue;
@@ -30,6 +30,16 @@ namespace HBProducts.Models
         public Boolean IsUrl()
         {
             return isUrl;
+        }
+
+        public String Value
+        {
+            get { return dataValue; }
+        }
+
+        public String Type
+        {
+            get { return dataType; }
         }
     }
 }

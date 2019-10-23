@@ -4,12 +4,45 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:Name="ProductPageView"
              x:Class="HBProducts.Views.ProductPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BindingContext="{Binding Product}">
+            <Image Source="{Binding ProductImage}"
+                   HorizontalOptions="CenterAndExpand"/>
+           
+<!--Makes a list of all of the data which is not containing URLs(e.g. Product Description)-->
+            <ListView ItemsSource="{Binding NoURLData}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <TextCell 
+                            Text="{Binding Type}"
+                            Detail="{Binding Value}"
+                            IsEnabled="False"/>
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+<!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
+            <ListView ItemsSource="{Binding URLData}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+
+                            <Button       
+                                    Text="{Binding Type}"                        
+                                    Command="{Binding BindingContext.URLClicked, 
+                                                Source={x:Reference ProductPageView}}"
+                                    CommandParameter="{Binding Value}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

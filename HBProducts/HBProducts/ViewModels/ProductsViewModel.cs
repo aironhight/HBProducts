@@ -12,7 +12,6 @@ namespace HBProducts.ViewModels
     class ProductsViewModel : BaseViewModel
     {
         private readonly string productsURI = "http://teatapi.azurewebsites.net/api/Product";
-        public event PropertyChangedEventHandler PropertyChanged;
         private ProductList productList;
 
         public ProductsViewModel()
@@ -36,9 +35,9 @@ namespace HBProducts.ViewModels
             Console.WriteLine("Server responded with: " + response); */
 
 
-            productList.AddProduct(new Product("HBPS3", "Level Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new ArrayList()));
-            productList.AddProduct(new Product("H3", "Oil Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new ArrayList()));
-            productList.AddProduct(new Product("HAa3", "Refrigerant Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new ArrayList()));
+            productList.AddProduct(new Product("HBPS3", "Level Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
+            productList.AddProduct(new Product("H3", "Oil Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
+            productList.AddProduct(new Product("HAa3", "Refrigerant Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
 
         }
 
