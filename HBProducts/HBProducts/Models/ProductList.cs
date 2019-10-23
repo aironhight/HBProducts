@@ -16,7 +16,7 @@ namespace HBProducts.Models
 
         public ObservableCollection<Product> Products
         {
-            set { SetProperty(ref products, value); }
+            set { SetProperty(ref products, value); OnPropertyChanged("Products"); }
             get { return products; }
         }
 

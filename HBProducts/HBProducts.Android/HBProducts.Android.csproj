@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveXaml">
+      <Version>2.1.73</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3-beta2</Version>
     </PackageReference>
@@ -111,7 +114,6 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-    <Folder Include="Assets\Materials\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HBProducts\HBProducts.csproj">

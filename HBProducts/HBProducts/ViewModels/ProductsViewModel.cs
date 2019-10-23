@@ -30,14 +30,18 @@ namespace HBProducts.ViewModels
             var response = await client.GetStringAsync(productsURI);
             IsLoading = false;
             string deserialized = JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
-            
+
             //Converts the JsonString to an object and updates the products in the productList
-            productList.Products = JsonConvert.DeserializeObject<ProductList>(deserialized).Products;
+            //productList.Products = JsonConvert.DeserializeObject<ProductList>(deserialized).Products;
+            ProductList = JsonConvert.DeserializeObject<ProductList>(deserialized);
         }
 
         public ProductList ProductList
         {
-            set { SetProperty(ref productList, value); }
+            set { SetProperty(ref productList, value); OnPropertyChanged("ProductList");
+                  SetProperty(ref productList, value); OnPropertyChanged("ProductList");
+                  SetProperty(ref productList, value); OnPropertyChanged("ProductList");
+            }
             get { return productList; }
         }
 

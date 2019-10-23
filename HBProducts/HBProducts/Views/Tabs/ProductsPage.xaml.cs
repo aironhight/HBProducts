@@ -32,11 +32,11 @@ namespace HBProducts.Views
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
+            productList.SelectedItem = null;
             Product productClicked = await viewmodel.GetProductWithId(5);
             //Product productClicked = e.Item as Product;
             Debug.WriteLine("The selected product is: " + productClicked.Model);
             await Navigation.PushAsync(new ProductPage(productClicked));
-            productList.SelectedItem = null;
         }
     }
 }

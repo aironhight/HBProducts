@@ -7,50 +7,51 @@
              x:Name="ProductPageView"
              x:Class="HBProducts.Views.ProductPage">
     <ContentPage.Content>
-        <StackLayout BindingContext="{Binding Product}" VerticalOptions="Start">
+        <StackLayout BindingContext="{Binding Product}" VerticalOptions="Start"
+                     Margin="7,7,7,7">
             <Image Source="{Binding ProductImage}"
-                   HorizontalOptions="CenterAndExpand"/>
-           
+                   HorizontalOptions="CenterAndExpand"
+                   Margin="0,0,0,7"/>
+
+            <StackLayout VerticalOptions="StartAndExpand">
 <!--Makes a list of all of the data which is not containing URLs(e.g. Product Description)-->
-            <ListView ItemsSource="{Binding NoURLData}"
-                    HasUnevenRows="True" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell
-                            IsEnabled="False">
-                            
-                            <StackLayout 
-                                            >
-                                    <Label Text="{Binding Type}"/>
+                <ListView ItemsSource="{Binding NoURLData}"
+                        HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell IsEnabled="False">
+                                <StackLayout>
+                                    <Label Text="{Binding Type}"
+                                           FontSize="Large"
+                                           TextColor="Black"/>
                                     <Label Text="{Binding Value}"
-                                           LineBreakMode="WordWrap"
-                                           BackgroundColor="Azure"/>
+                                               LineBreakMode="WordWrap"
+                                           FontSize="Medium"
+                                               />
 
                                 </StackLayout>
-                        </ViewCell>
-                        
-                        <!--<TextCell 
-                            Text="{Binding Type}"
-                            Detail="{Binding Value}"
-                            
-                            IsEnabled="False"
-                            />-->
-                        
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </ViewCell>
 
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
             <!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
-            <ListView ItemsSource="{Binding URLData}">
+            <ListView ItemsSource="{Binding URLData}"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell >
-
-                            <Button       
-                                    Text="{Binding Type}"                        
+                        <ViewCell>
+                            <StackLayout Margin="0,5,0,5" >
+                                <Button       
+                                    Text="{Binding Type}"
+                                    FontSize="Large"
+                                    TextColor="White"
                                     Command="{Binding BindingContext.URLClicked, 
                                                 Source={x:Reference ProductPageView}}"
-                                    CommandParameter="{Binding Value}"/>
+                                    CommandParameter="{Binding Value}"
+                                    BackgroundColor="{x:DynamicResource HB}"/>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

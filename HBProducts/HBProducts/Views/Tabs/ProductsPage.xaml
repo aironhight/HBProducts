@@ -29,7 +29,9 @@
 
             <ListView ItemsSource="{Binding Products}"
                       ItemTapped="OnItemSelected"
-                      x:Name="productList">
+                      RowHeight="100"
+                      x:Name="productList"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell ImageSource="{Binding ThumbNailSource}"

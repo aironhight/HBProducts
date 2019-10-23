@@ -34,7 +34,7 @@ namespace HBProducts.Views
             ListViewMenu.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
-                    return;
+                    return; 
 
                 var id = (int)((HomeMenuItem)e.SelectedItem).Id;
                 await RootPage.NavigateFromMenu(id);
