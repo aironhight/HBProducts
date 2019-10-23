@@ -6,39 +6,33 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HBProducts.ViewModels
 {
     class ProductsViewModel : BaseViewModel
     {
-        private readonly string productsURI = "http://teatapi.azurewebsites.net/api/Product";
+        private readonly string productsURI = "https://hbproductswebapi.azurewebsites.net/api/Product";
         private ProductList productList;
+        private HttpClient client;
+        private Boolean isLoading;
 
         public ProductsViewModel()
         {
             productList = new ProductList();
+            client = new HttpClient();
             requestProducts();
         }
 
         private async void requestProducts()
         {
-            /*HttpClient client = new HttpClient();
-
-            var response = await client.GetStringAsync("http://teatapi.azurewebsites.net/api/Product");
-            Console.WriteLine("RESPONSE: " + response);
-            List<String> test = JsonConvert.DeserializeObject<List<String>>(response);*/
-
-            /* Latest...
-            HttpClient client = new HttpClient();
+            IsLoading = true;
             var response = await client.GetStringAsync(productsURI);
-            productList = JsonConvert.DeserializeObject<ProductList>(response);
-            Console.WriteLine("Server responded with: " + response); */
-
-
-            productList.AddProduct(new Product("HBPS3", "Level Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
-            productList.AddProduct(new Product("H3", "Oil Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
-            productList.AddProduct(new Product("HAa3", "Refrigerant Sensor", "https://www.hbproducts.dk/images/HBAC-2.png", new List<ProductData>()));
-
+            IsLoading = false;
+            string deserialized = JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
+            
+            //Converts the JsonString to an object and updates the products in the productList
+            productList.Products = JsonConvert.DeserializeObject<ProductList>(deserialized).Products;
         }
 
         public ProductList ProductList
@@ -46,6 +40,21 @@ namespace HBProducts.ViewModels
             set { SetProperty(ref productList, value); }
             get { return productList; }
         }
-        
+
+        public Boolean IsLoading
+        {
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); OnPropertyChanged("IsLoading"); }
+        }
+
+        public async Task<Product> GetProductWithId(int id)
+        {
+            var response = await client.GetStringAsync(productsURI + "/" + id);
+            string deserialized = JsonConvert.DeserializeObject<string>(response);
+
+            return JsonConvert.DeserializeObject<Product>(deserialized);
+        }
+
+
     }
 }

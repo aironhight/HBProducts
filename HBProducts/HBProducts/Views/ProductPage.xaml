@@ -7,25 +7,40 @@
              x:Name="ProductPageView"
              x:Class="HBProducts.Views.ProductPage">
     <ContentPage.Content>
-        <StackLayout BindingContext="{Binding Product}">
+        <StackLayout BindingContext="{Binding Product}" VerticalOptions="Start">
             <Image Source="{Binding ProductImage}"
                    HorizontalOptions="CenterAndExpand"/>
            
 <!--Makes a list of all of the data which is not containing URLs(e.g. Product Description)-->
-            <ListView ItemsSource="{Binding NoURLData}">
+            <ListView ItemsSource="{Binding NoURLData}"
+                    HasUnevenRows="True" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
+                        <ViewCell
+                            IsEnabled="False">
+                            
+                            <StackLayout 
+                                            >
+                                    <Label Text="{Binding Type}"/>
+                                    <Label Text="{Binding Value}"
+                                           LineBreakMode="WordWrap"
+                                           BackgroundColor="Azure"/>
 
-                        <TextCell 
+                                </StackLayout>
+                        </ViewCell>
+                        
+                        <!--<TextCell 
                             Text="{Binding Type}"
                             Detail="{Binding Value}"
-                            IsEnabled="False"/>
+                            
+                            IsEnabled="False"
+                            />-->
                         
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-<!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
+            <!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
             <ListView ItemsSource="{Binding URLData}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

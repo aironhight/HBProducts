@@ -19,6 +19,7 @@ namespace HBProducts.Views
     public partial class ProductsPage : ContentPage
     {
         private ProductsViewModel viewmodel { get; set; }
+
         public ProductsPage()
         {
             InitializeComponent();
@@ -26,31 +27,16 @@ namespace HBProducts.Views
             viewmodel = new ProductsViewModel();
             //Binding ViewModel to View...
             BindingContext = viewmodel;
-        }
-
-        private void makeRequest(object sender, EventArgs e)
-        {
-            request();
-        }
-
-        private async void request()
-        {
-            HttpClient client = new HttpClient();
-
-            var response = await client.GetStringAsync("http://teatapi.azurewebsites.net/api/Product");
-            Console.WriteLine("RESPONSE: " + response);
-            List<String> test = JsonConvert.DeserializeObject<List<String>>(response);
-            foreach (String s in test)
-            {
-                Console.WriteLine("DESERIALIZED RESPONSE: " + s);
-            }
+            productList.SelectedItem = null;
         }
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            Product productClicked = e.Item as Product;
+            Product productClicked = await viewmodel.GetProductWithId(5);
+            //Product productClicked = e.Item as Product;
             Debug.WriteLine("The selected product is: " + productClicked.Model);
             await Navigation.PushAsync(new ProductPage(productClicked));
+            productList.SelectedItem = null;
         }
     }
 }

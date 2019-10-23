@@ -1,5 +1,6 @@
 ﻿using HBProducts.ViewModels;
 using System;
+using Xamarin.Forms;
 
 namespace HBProducts.Models
 {
@@ -17,29 +18,37 @@ namespace HBProducts.Models
             this.isUrl = isUrl;
         }
 
-        public String GetType()
+        public Boolean IsUrl
         {
-            return dataType;
-        }
+            get { return isUrl; }
+            set { SetProperty(ref isUrl, value); }
 
-        public String GetValue()
-        {
-            return dataValue;
-        }
-
-        public Boolean IsUrl()
-        {
-            return isUrl;
         }
 
         public String Value
         {
             get { return dataValue; }
+            set { SetProperty(ref dataValue, value); }
+
         }
 
         public String Type
         {
             get { return dataType; }
+            set { SetProperty(ref dataType, value); }
+
+        }
+
+        public HtmlWebViewSource HtmlValue
+        {
+            get {
+                string htmlText = Value.Replace(@"\", string.Empty);
+                var html = new HtmlWebViewSource
+                {
+                    Html = htmlText
+                };
+                return html;
+            }
         }
     }
 }

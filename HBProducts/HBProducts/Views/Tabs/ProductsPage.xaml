@@ -5,20 +5,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ProductsPage"
+             x:Name="parentView"
              Title="Products">
+    <RelativeLayout>
+        <ActivityIndicator IsRunning="{Binding BindingContext.IsLoading, 
+                                                    Source={x:Reference parentView}}"
+                           Color="{x:DynamicResource HB}"
+                           RelativeLayout.XConstraint=
+                                "{ConstraintExpression 
+                                    Type=RelativeToParent,
+                                    Property=Width, 
+                                    Factor=0.5,
+                                    Constant=-25
+                                    }"
+                            RelativeLayout.YConstraint=
+                                "{ConstraintExpression 
+                                    Type=RelativeToParent,
+                                    Property=Height,
+                                    Factor=0.5,
+                                    Constant=-25}"/>    
 
-    <StackLayout BindingContext ="{Binding ProductList}">
+        <StackLayout BindingContext ="{Binding ProductList}">
 
-        <ListView ItemsSource="{Binding Products}"
-                  ItemTapped="OnItemSelected">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ImageCell ImageSource="{Binding ThumbNailSource}"
-                                Text="{Binding Model}"
-                                Detail="{Binding Type}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <ListView ItemsSource="{Binding Products}"
+                      ItemTapped="OnItemSelected"
+                      x:Name="productList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell ImageSource="{Binding ThumbNailSource}"
+                                    Text="{Binding Model}"
+                                    TextColor="{x:DynamicResource HB}"
+                                    Detail="{Binding Type}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
        
-    </StackLayout>
+        </StackLayout>
+    </RelativeLayout>
 </ContentPage>
