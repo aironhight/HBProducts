@@ -51,11 +51,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Touch.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Views\Tabs\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Tabs\ProductsPage.xaml.cs">
       <DependentUpon>ProductsPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Models\square.mdl" />
   </ItemGroup>
 </Project>
