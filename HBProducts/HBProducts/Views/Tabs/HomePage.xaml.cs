@@ -5,35 +5,80 @@ using Urho.Forms;
 
 namespace HBProducts.Views
 {
-    [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
-    {
 
-        private ThreeDModelViewer urhoApp;
+    {
+        //UrhoSurface urhoSurface;
+        //public ThreeDModelViewer shit;
+        //bool isInit = false;
 
         public HomePage()
         {
             InitializeComponent();
+            //      bool isInit;
+            //      urhoSurface = new UrhoSurface();
+            //      urhoSurface.VerticalOptions = LayoutOptions.FillAndExpand;
+            //      Content = new StackLayout
+            //      {
+            //          Padding = new Thickness(12, 12, 12, 40),
+            //          VerticalOptions = LayoutOptions.FillAndExpand,
+            //          Children = {
+            //urhoSurface }
+            //      };
+
             //webView.Source = "https://www.hbproducts.dk/en/hb-products-link/news-archive.html";
-            NavigationPage.SetHasNavigationBar(this, false);
+
+
         }
 
-       protected override async void OnAppearing()
+
+
+        //protected override async void OnAppearing()
+        //{
+
+        //    //urhoSurface = new UrhoSurface();
+        //    //if(shit == null) {
+
+        //    (Xamarin.Forms.Application.Current.MainPage as MainPage).IsGestureEnabled = false;
+
+        //    shit = await urhoSurface.Show<ThreeDModelViewer>(new ApplicationOptions("Materials")
+        //    { Orientation = ApplicationOptions.OrientationType.Portrait });
+        //    //}
+        //    //else
+        //    //{
+
+        //    //    await urhoSurface.Show<ThreeDModelViewer>(new ApplicationOptions("Materials")
+        //    //    { Orientation = ApplicationOptions.OrientationType.Portrait });
+        //    //}
+        //}
+
+
+
+        //protected override async void OnDisappearing()
+        //{
+        //   UrhoSurface.OnPause();
+
+        //}
+
+
+        //public async void OnSleep()
+        //{
+        //    // await urhoSurface.Stop();
+        //    //shit.Stop();
+        //    await shit.Exit();
+        //}
+
+        async void StartUrho()
         {
-            base.OnAppearing();
 
-            StartUrho();
-            //await TDMUrhoSurface.Show<ThreeDModelViewer>(new Urho.ApplicationOptions(assetsFolder: null));
+            await Navigation.PushAsync(new ThreeDModelView());
+
         }
 
-        private async void StartUrho()
-        {
-            urhoApp = await TDMUrhoSurface.Show<ThreeDModelViewer>(new Urho.ApplicationOptions("Data") { Orientation = Urho.ApplicationOptions.OrientationType.LandscapeAndPortrait });
-        }
-
-        private void StartScene(object sender, System.EventArgs e)
+        void StartScene(object sender, System.EventArgs e)
         {
             StartUrho();
         }
     }
+
 }
