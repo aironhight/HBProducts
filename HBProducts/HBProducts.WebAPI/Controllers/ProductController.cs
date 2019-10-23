@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HBProducts.Models;
 using HBProducts.WebAPI.Models;
+using Newtonsoft.Json;
 
 namespace HBProducts.WebAPI.Controllers
 {
@@ -14,15 +15,15 @@ namespace HBProducts.WebAPI.Controllers
         private readonly Database obj = new Database();
 
         // GET: api/Product
-        public IEnumerable<ProductList> Get()
+        public string Get()
         {
-            yield return obj.GetAll();
+            return JsonConvert.SerializeObject(obj.GetAll(), Formatting.Indented);
         }
 
         // GET: api/Product/5
-        public IEnumerable<Product> Get(int id)
+        public string Get(int id)
         {
-            yield return obj.GetProduct(id);
+            return JsonConvert.SerializeObject(obj.GetProduct(id), Formatting.Indented);
         }
 
         // POST: api/Product
