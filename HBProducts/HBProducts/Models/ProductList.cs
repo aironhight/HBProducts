@@ -30,5 +30,10 @@ namespace HBProducts.Models
         {
             Products.Add(product);
         }
+
+        public int ProductsCount()
+        {
+            return products.Count;
+        }
     }
 }

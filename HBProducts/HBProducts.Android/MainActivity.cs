@@ -20,10 +20,11 @@ namespace HBProducts.Droid
         //ThreeDModelViewer game;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
+            base.OnCreate(savedInstanceState);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(savedInstanceState);
+            
             CrossCurrentActivity.Current.Activity = this;
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

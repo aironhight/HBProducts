@@ -23,7 +23,24 @@
                                     Type=RelativeToParent,
                                     Property=Height,
                                     Factor=0.5,
-                                    Constant=-25}"/>    
+                                    Constant=-25}"/>
+
+        <Label Text="No internet connection"
+               IsEnabled="False"
+               IsVisible="{Binding NoInternetConnection}"
+                RelativeLayout.XConstraint=
+                                "{ConstraintExpression 
+                                    Type=RelativeToParent,
+                                    Property=Width, 
+                                    Factor=0.4,
+                                    Constant=-25
+                                    }"
+                            RelativeLayout.YConstraint=
+                                "{ConstraintExpression 
+                                    Type=RelativeToParent,
+                                    Property=Height,
+                                    Factor=0.5,
+                                    Constant=-25}"/>
 
         <StackLayout BindingContext ="{Binding ProductList}">
 

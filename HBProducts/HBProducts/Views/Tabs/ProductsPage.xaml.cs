@@ -33,10 +33,24 @@ namespace HBProducts.Views
         private async void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
             productList.SelectedItem = null;
-            Product productClicked = await viewmodel.GetProductWithId(5);
-            //Product productClicked = e.Item as Product;
-            Debug.WriteLine("The selected product is: " + productClicked.Model);
-            await Navigation.PushAsync(new ProductPage(productClicked));
+            if (!viewmodel.NoInternetConnection)
+            {
+                try { 
+                    //There is internet connection.
+                    Product productClicked = await viewmodel.GetProductWithId(5);
+                    if(productClicked != null) { 
+                        Debug.WriteLine("The selected product is: " + productClicked.Model);
+                        await Navigation.PushAsync(new ProductPage(productClicked));
+                    }
+                } catch (Exception ex)
+                {
+                    await DisplayAlert("System Error", ex.Message, "OK");
+                }
+            } else
+            {
+                //There is no internet connection
+                await DisplayAlert("Alert", "There is no internet connection...", "OK");
+            } 
         }
     }
 }
