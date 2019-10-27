@@ -1,10 +1,10 @@
 ﻿using HBProducts.Models;
+using HBProducts.Services;
 using HBProducts.ViewModels;
+using HBProducts.Views.iOS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 namespace HBProducts.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProductPage : ContentPage
+    public partial class ProductPage : ContentPage, INotifyView
     {
         private Product product;
         private ProductViewModel viewmodel;
@@ -21,7 +21,7 @@ namespace HBProducts.Views
         {
             InitializeComponent();
             this.product = product;
-            viewmodel = new ProductViewModel(product);
+            viewmodel = new ProductViewModel(product, this);
             BindingContext = viewmodel;
             Title = product.FullName;
 
@@ -68,6 +68,21 @@ namespace HBProducts.Views
                 {
                     // Some other exception occurred
                 }
+        }
+
+        public void notify(string type, params object[] list)
+        {
+            switch (type)
+            {
+                case "openWebViewer":
+                    openWebViewer(list[0].ToString());
+                    break;
+            }
+        }
+
+        private async void openWebViewer(string url)
+        {
+            await Navigation.PushAsync(new WebViewerPage(url));
         }
     }
 }

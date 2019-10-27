@@ -1,4 +1,5 @@
 ﻿using HBProducts.Models;
+using HBProducts.Services;
 using HBProducts.Views;
 using System;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ namespace HBProducts.ViewModels
     class ProductViewModel : BaseViewModel
     {
         private Product product;
+        private INotifyView view;
 
         public ICommand URLClicked
         {
@@ -18,9 +20,10 @@ namespace HBProducts.ViewModels
             }
         }
 
-        public ProductViewModel(Product product)
+        public ProductViewModel(Product product, INotifyView view)
         {
             this.product = product;
+            this.view = view;
         }
 
         public Product Product
@@ -29,15 +32,20 @@ namespace HBProducts.ViewModels
             get { return product; }
         }
 
-        public string Testing
+        public async void urlClicked(string url)
         {
-            get { return "Working!!!"; }
-        }
+            Debug.WriteLine("URL CLICKED: " + url);
+            
+            switch(Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    view.notify("openWebViewer", url);
+                    break;
 
-        public void urlClicked(string url)
-        {
-            Debug.WriteLine("URL CLICKED CORRECT: " + url);
-            Device.OpenUri(new Uri(url));
+                default:
+                    Device.OpenUri(new Uri(url));
+                    break;
+            }
         }
 
     }
