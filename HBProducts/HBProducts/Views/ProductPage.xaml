@@ -7,16 +7,18 @@
              x:Name="ProductPageView"
              x:Class="HBProducts.Views.ProductPage">
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout BindingContext="{Binding Product}" VerticalOptions="Start"
                      Margin="7,7,7,7">
+            
             <Image Source="{Binding ProductImage}"
                    HorizontalOptions="CenterAndExpand"
                    Margin="0,0,0,7"/>
 
-            <StackLayout VerticalOptions="StartAndExpand">
-<!--Makes a list of all of the data which is not containing URLs(e.g. Product Description)-->
+<!--Makes a list of all of the data which is NOT containing URLs(e.g. Product Description)-->
                 <ListView ItemsSource="{Binding NoURLData}"
-                        HasUnevenRows="True" >
+                        HasUnevenRows="True" 
+                          x:Name="listViewNoURLData">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell IsEnabled="False">
@@ -35,30 +37,46 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            
+                    <!--Button for the 3D model-->
+                    <Button       
+                        Text="3D Model"
+                        FontSize="Large"
+                        TextColor="White"
+                        Clicked="threeDModelButtonClicked"
+                        BackgroundColor="{x:DynamicResource HB}"/>
+
+                    <!--Button for enquiry-->
+                    <Button       
+                        Text="Make an enquiry"
+                        FontSize="Large"
+                        TextColor="White"
+                        Clicked="enquiryButtonClicked"
+                        BackgroundColor="{x:DynamicResource HB}"/>
+
+
+                        <!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
+                <ListView ItemsSource="{Binding URLData}"
+                              HasUnevenRows="True"
+                              x:Name="listViewURLData">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Margin="0,5,0,5" >
+                                    <Button       
+                                            Text="{Binding Type}"
+                                            FontSize="Large"
+                                            TextColor="White"
+                                            Command="{Binding BindingContext.URLClicked, 
+                                                        Source={x:Reference ProductPageView}}"
+                                            CommandParameter="{Binding Value}"
+                                            BackgroundColor="{x:DynamicResource HB}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
-            <!-- Makes the buttons with URLs to the product data(e.g. User manual, quick start guide, etc.)-->
-            <ListView ItemsSource="{Binding URLData}"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Margin="0,5,0,5" >
-                                <Button       
-                                    Text="{Binding Type}"
-                                    FontSize="Large"
-                                    TextColor="White"
-                                    Command="{Binding BindingContext.URLClicked, 
-                                                Source={x:Reference ProductPageView}}"
-                                    CommandParameter="{Binding Value}"
-                                    BackgroundColor="{x:DynamicResource HB}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-
-
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

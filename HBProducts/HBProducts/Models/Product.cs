@@ -18,13 +18,15 @@ namespace HBProducts.Models
         private String type;
         private String threedModel;
         private ObservableCollection<ProductData> dataList;
+        private int id;
       
-        public Product(string model, string type, string threedModel, ObservableCollection<ProductData> dataList)
+        public Product(string model, string type, string threedModel, ObservableCollection<ProductData> dataList, int id)
         {
             this.model = model;
             this.type = type;
             this.threedModel = threedModel;
             this.dataList = dataList;
+            this.id = id;
 
             //For testing purpose...
             //ProductData imageData = new ProductData("Image", "https://www.kaeltefischer.de/sites/default/files/styles/header_bild/public/Header_Landingpage_HBProducts.jpg?itok=HKffyGX5", true);
@@ -35,6 +37,8 @@ namespace HBProducts.Models
 
             //dataList.Add(productData);
             //dataList.Add(imageData);
+            //dataList.Add(manual);
+            //dataList.Add(quickStartGuide);
             //dataList.Add(manual);
             //dataList.Add(quickStartGuide);
             //dataList.Add(summary);
@@ -69,6 +73,24 @@ namespace HBProducts.Models
             get { return dataList; }
         }
 
+        public int Id
+        {
+            set { SetProperty(ref id, value); }
+            get { return id; }
+        }
+
+        //Methods for data manipulation starting from here-----------------------------
+
+        /**
+         * Filters out the ProductData returning data which is either with only URL's or without URL's
+         * param urlData : Set to true if you want data with URL's; set to false if you want non-url data.
+         */
+        private List<ProductData> urlData(bool urlData)
+        {
+            return dataWithoutImages().Where(data => data.IsUrl == urlData).ToList();
+        }
+
+
         public List<ProductData> NoURLData
         {
             get { return urlData(false); }
@@ -78,9 +100,6 @@ namespace HBProducts.Models
         {
             get { return urlData(true); }
         }
-
-        //Methods for data manipulation starting from here-----------------------------
-
         /**
          * Returns a new ImageSource with the thumbnail for the product
          */
@@ -95,7 +114,7 @@ namespace HBProducts.Models
         public ImageSource ProductImage
         {
             get {
-                return ImageSource.FromUri(new Uri("https://www.kaeltefischer.de/sites/default/files/styles/header_bild/public/Header_Landingpage_HBProducts.jpg?itok=HKffyGX5"));
+                return ImageSource.FromUri(new Uri(dataList.Where(data => data.Type.Equals("Image")).First<ProductData>().Value));
             }
         }
 
@@ -105,15 +124,6 @@ namespace HBProducts.Models
         private List<ProductData> dataWithoutImages()
         {
             return dataList.Where(data => !((data.Type.Equals("Image") || (data.Type.Equals("Thumbnail"))))).ToList();
-        }
-
-        /**
-         * Filters out the ProductData returning data which is either with only URL's or without URL's
-         * param urlData : Set to true if you want data with URL's; set to false if you want non-url data.
-         */
-        private List<ProductData> urlData(bool urlData)
-        {
-            return dataWithoutImages().Where(data => data.IsUrl == urlData).ToList();
         }
 
     }

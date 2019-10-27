@@ -8,23 +8,7 @@
              x:Name="parentView"
              Title="Products">
     <RelativeLayout>
-        <ActivityIndicator IsRunning="{Binding BindingContext.IsLoading, 
-                                                    Source={x:Reference parentView}}"
-                           Color="{x:DynamicResource HB}"
-                           RelativeLayout.XConstraint=
-                                "{ConstraintExpression 
-                                    Type=RelativeToParent,
-                                    Property=Width, 
-                                    Factor=0.5,
-                                    Constant=-25
-                                    }"
-                            RelativeLayout.YConstraint=
-                                "{ConstraintExpression 
-                                    Type=RelativeToParent,
-                                    Property=Height,
-                                    Factor=0.5,
-                                    Constant=-25}"/>
-
+        
         <Label Text="No internet connection"
                IsEnabled="False"
                IsVisible="{Binding NoInternetConnection}"
@@ -48,7 +32,12 @@
                       ItemTapped="OnItemSelected"
                       RowHeight="100"
                       x:Name="productList"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding BindingContext.IsLoading, 
+                                                    Source={x:Reference parentView}}"
+                      RefreshCommand="{Binding BindingContext.RefreshProducts, 
+                                                    Source={x:Reference parentView}}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell ImageSource="{Binding ThumbNailSource}"

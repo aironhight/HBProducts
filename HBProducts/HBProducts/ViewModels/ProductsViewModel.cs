@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace HBProducts.ViewModels
 {
@@ -13,6 +15,13 @@ namespace HBProducts.ViewModels
         private ProductList productList;
         private HttpClient client;
         private Boolean isLoading, noInternetConnection;
+        public ICommand RefreshProducts
+        {
+            get
+            {
+                return new Command(() => requestProducts());
+            }
+        }
 
         public ProductsViewModel()
         {
@@ -29,7 +38,6 @@ namespace HBProducts.ViewModels
             if (networkAccess == NetworkAccess.Internet)
             {
                 NoInternetConnection = false;
-                if(productList.ProductsCount() != 0) { return; } //Return if the product list was already loaded...
 
                 IsLoading = true;
                 try { 
@@ -92,6 +100,5 @@ namespace HBProducts.ViewModels
             if (e.NetworkAccess == Connectivity.NetworkAccess)
                 requestProducts();
         }
-
     }
 }

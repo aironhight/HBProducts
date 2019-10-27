@@ -1,9 +1,7 @@
 ﻿using HBProducts.Models;
+using HBProducts.Views;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -36,10 +34,11 @@ namespace HBProducts.ViewModels
             get { return "Working!!!"; }
         }
 
-        public static void urlClicked(string url)
+        public void urlClicked(string url)
         {
             Debug.WriteLine("URL CLICKED CORRECT: " + url);
             Device.OpenUri(new Uri(url));
         }
+
     }
 }

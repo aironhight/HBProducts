@@ -12,10 +12,6 @@
     <StackLayout
             VerticalOptions="CenterAndExpand" 
             HorizontalOptions="CenterAndExpand">
-<Button Text="Click to START!"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="Center"
-                Clicked="StartScene" />
         <!--<forms:UrhoSurface x:Name="urhoSurface" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         </forms:UrhoSurface>-->
         <!--<WebView
