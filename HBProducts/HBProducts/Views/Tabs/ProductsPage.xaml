@@ -37,8 +37,7 @@
                       IsRefreshing="{Binding BindingContext.IsLoading, 
                                                     Source={x:Reference parentView}}"
                       RefreshCommand="{Binding BindingContext.RefreshProducts, 
-                                                    Source={x:Reference parentView}}"
-                      Footer="">
+                                                    Source={x:Reference parentView}}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell ImageSource="{Binding ThumbNailSource}"

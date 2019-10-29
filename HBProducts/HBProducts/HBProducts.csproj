@@ -13,17 +13,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
     <PackageReference Include="Plugin.Permissions" Version="5.0.0-beta" />
     <PackageReference Include="UrhoSharp.Forms" Version="1.9.67" />
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />  
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />  
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
-    <PackageReference Include="Sendgrid" Version="9.12.0" />
-    <PackageReference Include="Plugin.AzurePushNotification" Version="1.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="Views\Notifications.xaml" />
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\iOS\WebViewerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -56,12 +51,6 @@
 
   <ItemGroup>
     <Compile Remove="Touch.cs" />
-    <Compile Remove="AzureConstants.cs" />
-    <Compile Remove="Notification.cs" />
-    <Compile Remove="MyPage.cs" />
-    <Compile Remove="Views\Notifications.xaml.cs" />
-    <Compile Remove="Views\Notilycation.cs" />
-    <Compile Remove="Views\Notification.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\Tabs\HomePage.xaml.cs">

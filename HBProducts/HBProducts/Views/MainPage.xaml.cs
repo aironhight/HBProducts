@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-
 using HBProducts.Models;
 
 namespace HBProducts.Views
@@ -15,8 +14,6 @@ namespace HBProducts.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : MasterDetailPage
     {
-        
-
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {

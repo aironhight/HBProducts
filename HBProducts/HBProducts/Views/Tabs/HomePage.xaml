@@ -18,8 +18,6 @@
                 x:Name="webView"
                 WidthRequest="1000"
                 HeightRequest="1000"/>-->
-
-        
         </StackLayout>
     
     

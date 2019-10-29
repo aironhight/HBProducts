@@ -8,7 +8,6 @@
     <ContentPage.Content>
         <StackLayout>
             <WebView
-
                 x:Name="webView"
                 WidthRequest="1000"
                 HeightRequest="1000"/>
