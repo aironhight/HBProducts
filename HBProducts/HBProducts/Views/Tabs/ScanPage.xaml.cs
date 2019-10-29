@@ -1,7 +1,10 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -19,6 +22,7 @@ namespace HBProducts.Views
 
         private async void RequestScanner()
          {
+             Debug.WriteLine("I AM WORKING BRO!");
              try
              {
                  var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
@@ -40,13 +44,7 @@ namespace HBProducts.Views
                  }
                  else if (status != PermissionStatus.Unknown)
                  {
-                    //Permission denied
-                    switch(Device.RuntimePlatform)
-                    {
-                        case Device.iOS:
-                            await DisplayAlert("Need Camera", "In order to scan we will need camera permissions. Turn them on from the settings page of our app.", "OK");
-                            break;
-                    }
+                     //Camera permission denied...
                  }
              }
              catch (Exception ex)
