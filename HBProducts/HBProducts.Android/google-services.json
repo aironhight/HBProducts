@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "264063328849",
+    "firebase_url": "https://hbbachproj.firebaseio.com",
+    "project_id": "hbbachproj",
+    "storage_bucket": "hbbachproj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264063328849:android:a94113a431223482754e70",
+        "android_client_info": {
+          "package_name": "com.companyname.hbproducts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264063328849-m5k1u95ij405fluarc736uqd3pfql7os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbRj27mZlnXFDxy9c8cAKSbQaiobCkchA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264063328849-m5k1u95ij405fluarc736uqd3pfql7os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
