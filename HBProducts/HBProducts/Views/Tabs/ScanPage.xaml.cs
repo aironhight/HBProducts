@@ -50,7 +50,7 @@ namespace HBProducts.Views
                  }
                  else if (status != PermissionStatus.Unknown)
                  {
-<
+
                     //Permission denied
                     switch(Device.RuntimePlatform)
                     {
