@@ -27,6 +27,7 @@ namespace HBProducts.iOS
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 
+
             return base.FinishedLaunching(app, options);
         }
     }
