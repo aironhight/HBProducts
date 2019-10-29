@@ -1,12 +1,8 @@
-using Android.OS;
-using HBProducts.Models;
+﻿using HBProducts.Models;
 using HBProducts.ViewModels;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,7 +24,6 @@ namespace HBProducts.Views
 
         private async void RequestScanner()
          {
-             Debug.WriteLine("I AM WORKING BRO!");
              try
              {
                  var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
@@ -50,7 +45,6 @@ namespace HBProducts.Views
                  }
                  else if (status != PermissionStatus.Unknown)
                  {
-
                     //Permission denied
                     switch(Device.RuntimePlatform)
                     {
