@@ -89,7 +89,7 @@ namespace HBProducts.ViewModels
                 string deserialized = JsonConvert.DeserializeObject<string>(response);
 
                 return JsonConvert.DeserializeObject<Product>(deserialized);
-            } catch (Exception e)
+            } catch  (Java.Net.UnknownHostException netConnection)
             {
                 return null;
             }
