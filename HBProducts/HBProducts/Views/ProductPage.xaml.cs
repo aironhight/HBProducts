@@ -29,6 +29,20 @@ namespace HBProducts.Views
             listViewURLData.HeightRequest = (60 * product.URLData.Count);
         }
 
+        public ProductPage(Product product, Element parentPage)
+        {
+            InitializeComponent();
+            this.product = product;
+            viewmodel = new ProductViewModel(product, this);
+            BindingContext = viewmodel;
+            Title = product.FullName;
+
+            listViewNoURLData.HeightRequest = (240 * product.NoURLData.Count);
+            listViewURLData.HeightRequest = (60 * product.URLData.Count);
+
+            this.Parent = parentPage;
+        }
+
         private void threeDModelButtonClicked(object sender, EventArgs e)
         {
             open3dmodel();
