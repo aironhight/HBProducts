@@ -1,15 +1,6 @@
 ﻿using HBProducts.Models;
 using HBProducts.ViewModels;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Urho;
-using Urho.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -43,6 +34,7 @@ namespace HBProducts.Views
                     await Navigation.PushAsync(new ProductPage(productClicked)); //launch the new page, parsing the selected product as parameter
                 } else
                 {
+                    //The request was not successful. Alert the user.
                     await DisplayAlert("Error", "Product couldn't be loaded. Check your internet connection.", "OK");
                 }
             } else

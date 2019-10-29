@@ -19,32 +19,17 @@ namespace HBProducts.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductPage : ContentPage, INotifyView
     {
-        private Product product;
         private ProductViewModel viewmodel;
+
         public ProductPage(Product product)
         {
             InitializeComponent();
-            this.product = product;
-            viewmodel = new ProductViewModel(product, this);
-            BindingContext = viewmodel;
-            Title = product.FullName;
-
-            listViewNoURLData.HeightRequest = (240*product.NoURLData.Count);
-            listViewURLData.HeightRequest = (60 * product.URLData.Count);
-        }
-
-        public ProductPage(Product product, Element parentPage)
-        {
-            InitializeComponent();
-            this.product = product;
             viewmodel = new ProductViewModel(product, this);
             BindingContext = viewmodel;
             Title = product.FullName;
 
             listViewNoURLData.HeightRequest = (240 * product.NoURLData.Count);
             listViewURLData.HeightRequest = (60 * product.URLData.Count);
-
-            this.Parent = parentPage;
         }
 
         private void threeDModelButtonClicked(object sender, EventArgs e)
@@ -54,7 +39,7 @@ namespace HBProducts.Views
 
         private async void open3dmodel()
         {
-            await Navigation.PushAsync(new ThreeDModelView(product.ThreeDModel));
+            await Navigation.PushAsync(new ThreeDModelView(viewmodel.Product.ThreeDModel));
         }
 
         private async  void enquiryButtonClicked(object sender, EventArgs e)
@@ -72,7 +57,7 @@ namespace HBProducts.Views
                 var msg = new SendGridMessage()
                 {
                     From = new EmailAddress("koci@no-reply.com", "Don Koci"),
-                    Subject = ("Enquiry about" + product.FullName),
+                    Subject = ("Enquiry about" + viewmodel.Product.FullName),
                     PlainTextContent = "Write product enquiry...!",
                     HtmlContent = "<strong>Hello, Email!</strong>"
                 };
