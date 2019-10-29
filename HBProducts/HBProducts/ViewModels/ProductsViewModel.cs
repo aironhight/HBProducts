@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+
 namespace HBProducts.ViewModels
 {
     class ProductsViewModel : BaseViewModel
@@ -89,7 +90,7 @@ namespace HBProducts.ViewModels
                 string deserialized = JsonConvert.DeserializeObject<string>(response);
 
                 return JsonConvert.DeserializeObject<Product>(deserialized);
-            } catch  (Exception e)
+            } catch  (Java.Net.UnknownHostException netConnection)
             {
                 return null;
             }
