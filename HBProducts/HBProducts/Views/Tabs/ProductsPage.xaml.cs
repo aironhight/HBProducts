@@ -1,15 +1,6 @@
 ﻿using HBProducts.Models;
 using HBProducts.ViewModels;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Urho;
-using Urho.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,11 +23,25 @@ namespace HBProducts.Views
 
         private async void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            Product productClicked = await viewmodel.GetProductWithId(5);
-            //Product productClicked = e.Item as Product;
-            Debug.WriteLine("The selected product is: " + productClicked.Model);
-            await Navigation.PushAsync(new ProductPage(productClicked));
             productList.SelectedItem = null;
+            if (!viewmodel.NoInternetConnection)
+            {
+                //There is internet connection.
+                Product dummyProduct = e.Item as Product; //This is the selected product, but it contains only product data for the thumbnail...
+                Product productClicked = await viewmodel.GetProductWithId(dummyProduct.Id); //So we request the product with all product data...
+                if(productClicked != null) { //Check if the request was successful
+                    Debug.WriteLine("The selected product is: " + productClicked.Model);
+                    await Navigation.PushAsync(new ProductPage(productClicked)); //launch the new page, parsing the selected product as parameter
+                } else
+                {
+                    //The request was not successful. Alert the user.
+                    await DisplayAlert("Error", "Product couldn't be loaded. Check your internet connection.", "OK");
+                }
+            } else
+            {
+                //There is no internet connection
+                await DisplayAlert("Alert", "Turn on internet connectivity services.", "OK");
+            } 
         }
     }
 }

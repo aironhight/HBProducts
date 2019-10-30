@@ -16,7 +16,7 @@ namespace HBProducts.Models
 
         public ObservableCollection<Product> Products
         {
-            set { SetProperty(ref products, value); }
+            set { SetProperty(ref products, value); OnPropertyChanged("Products"); }
             get { return products; }
         }
 
@@ -29,6 +29,11 @@ namespace HBProducts.Models
         public void AddProduct(Product product)
         {
             Products.Add(product);
+        }
+
+        public int ProductsCount()
+        {
+            return products.Count;
         }
     }
 }

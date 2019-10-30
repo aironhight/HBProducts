@@ -11,11 +11,13 @@ namespace HBProducts.Views
     {
 
         UrhoSurface urhoSurface;
-        public ThreeDModelViewer shit;
+        public ThreeDModelViewer modelViewer;
+        private string threeDModel;
 
-        public ThreeDModelView()
+        public ThreeDModelView(string threeDModel)
         {
             InitializeComponent();
+            this.threeDModel = threeDModel;
             urhoSurface = new UrhoSurface();
             urhoSurface.VerticalOptions = LayoutOptions.FillAndExpand;
             Content = new StackLayout
@@ -23,20 +25,18 @@ namespace HBProducts.Views
                 Padding = new Thickness(12, 12, 12, 40),
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children = {
-      urhoSurface }
+                urhoSurface }
             };
         }
         protected override async void OnAppearing()
         {
-
-            //urhoSurface = new UrhoSurface();
-            //if(shit == null) {
-
             (Xamarin.Forms.Application.Current.MainPage as MainPage).IsGestureEnabled = false;
 
-            shit = await urhoSurface.Show<ThreeDModelViewer>(new ApplicationOptions("Materials")
+            modelViewer = await urhoSurface.Show<ThreeDModelViewer>(new ApplicationOptions("Materials")
             { Orientation = ApplicationOptions.OrientationType.Portrait });
 
+            modelViewer.setThreeDModelName(threeDModel);
+            Urho.Application.InvokeOnMain(()=>modelViewer.startDisplaying());
         }
 
         protected override async void OnDisappearing()

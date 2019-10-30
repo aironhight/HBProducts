@@ -7,7 +7,7 @@
              x:Class="HBProducts.Views.ScanPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the Scan Page!"
+            <Label Text="Welcome to the Scan Page! Click the button below to start scanning!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             <Button
