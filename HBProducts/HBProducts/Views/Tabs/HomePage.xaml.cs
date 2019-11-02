@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Urho;
 using Urho.Forms;
+using Plugin.AzurePushNotification;
 
 namespace HBProducts.Views
 {
@@ -14,7 +15,22 @@ namespace HBProducts.Views
             InitializeComponent();
 
             //webView.Source = "https://www.hbproducts.dk/en/hb-products-link/news-archive.html";
+            CrossAzurePushNotification.Current.OnNotificationOpened += (s, p) =>
+            {
+                
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Navigation.PushAsync(new HomePage());
+
+                    });
+
+                
+            };
+
         }
+
+
     }
+
 
 }
