@@ -1,4 +1,5 @@
 ﻿using HBProducts.Models;
+using HBProducts.Services;
 using Java.Net;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +18,9 @@ namespace HBProducts.ViewModels
         private ProductList productList;
         private HttpClient client;
         private Boolean isLoading, noInternetConnection;
+        private ProductManager manager;
+        private INotifyView notifyView;
+
         public ICommand RefreshProducts
         {
             get
@@ -25,38 +29,37 @@ namespace HBProducts.ViewModels
             }
         }
 
-        public ProductsViewModel()
+        public ProductsViewModel(INotifyView notifyView)
         {
             client = new HttpClient();
             productList = new ProductList();
+            manager = new ProductManager();
+            this.notifyView = notifyView;
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged; //Add an event handler for internet connectivity changes.
             requestProducts();
-            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
-        private async void requestProducts()
+        public async void requestProducts()
         {
             var networkAccess = Connectivity.NetworkAccess;
 
             if (networkAccess == NetworkAccess.Internet)
             {
                 NoInternetConnection = false;
-
                 IsLoading = true;
-                try { 
-                    var response = await client.GetStringAsync(productsURI);
-                    IsLoading = false;
-                    string deserialized = JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
+                string productListString = await manager.requestProductsAsync();
+                IsLoading = false;
 
-                    //Converts the JsonString to an object and updates the products in the productList
-                    //productList.Products = JsonConvert.DeserializeObject<ProductList>(deserialized).Products;
-                    ProductList = JsonConvert.DeserializeObject<ProductList>(deserialized);
-                } catch (Exception ex)
+                if (productListString.Contains("Error:"))
                 {
-                    System.Threading.Thread.Sleep(1000);
-                    requestProducts();
+                    notifyView.notify("Error", productListString.Substring(6));
+                    return;
                 }
-            } else
-            {
+
+                ProductList = JsonConvert.DeserializeObject<ProductList>(productListString);
+
+
+            } else {
                 NoInternetConnection = true;
             }
 
@@ -86,20 +89,26 @@ namespace HBProducts.ViewModels
 
         public async Task<Product> GetProductWithId(int id)
         {
-            try { 
-                var response = await client.GetStringAsync(productsURI + "/" + id);
-                string deserialized = JsonConvert.DeserializeObject<string>(response);
+            IsLoading = true;
+            //ask the manager for the JSON string of the product
+            string productString = await manager.getProductWithId(id);
+            IsLoading = false;
 
-                return JsonConvert.DeserializeObject<Product>(deserialized);
-            } catch  (Java.Net.UnknownHostException netConnection)
+            //Check if the system threw an error
+            if(productString.Contains("Error:"))
             {
-                return null;
+                throw new SystemException(productString.Substring(6));
             }
+
+            //Convert the string to a product and return it...
+            return JsonConvert.DeserializeObject<Product>(productString);
         }
 
+        //The method gets called on each internet connectivity change
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
-            if (e.NetworkAccess == Connectivity.NetworkAccess)
+            //If the connectivity changed to "Internet access" and there are no products loaded - make a request.
+            if (e.NetworkAccess == Connectivity.NetworkAccess && ProductList.Products.Count == 0)
                 requestProducts();
         }
     }

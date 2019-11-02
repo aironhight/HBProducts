@@ -1,6 +1,8 @@
 ﻿using Android.OS;
 using HBProducts.Models;
+using HBProducts.Services;
 using HBProducts.ViewModels;
+using Newtonsoft.Json;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
@@ -15,11 +17,14 @@ namespace HBProducts.Views
     public partial class ScanPage : ContentPage
     {
         private Boolean scanned;
+        private ProductManager manager;
+        
 
         public ScanPage()
         {
             InitializeComponent();
             scanned = false;
+            manager = new ProductManager();
             RequestScanner();
         }
 
@@ -81,7 +86,7 @@ namespace HBProducts.Views
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         //Navigation.PopAsync();
-                        openProductPage(scannedId);
+                        getProductWithId(scannedId);
                     });
                     
                     return;
@@ -100,22 +105,19 @@ namespace HBProducts.Views
             await Navigation.PushAsync(ScannerPage);
         }
 
-        private async void openProductPage(int id)
+        private async void getProductWithId(int id)
         {
-            ProductsViewModel vm = new ProductsViewModel();
-            Product scannedProduct = await vm.GetProductWithId(id);
+            string productString = await manager.getProductWithId(id);
+
             Device.BeginInvokeOnMainThread(() =>
             {
-                //Check if the product is not null
-                if (scannedProduct != null) {
-                    //If its not - start the product page
-                    //Navigation.PopAsync();
-                    startProductPage(scannedProduct);
-                } else
-                {
-                    //Alert the user that the product couldnt be loaded.
+                if (productString.Contains("Error:")) {
                     Navigation.PopAsync();
-                    DisplayAlert("Error", "Product couldn't be loaded. Check your internet connection.", "OK");
+                    DisplayAlert("Error", productString.Substring(6), "OK");
+                    return;
+                } else {
+                    Product scannedProduct = JsonConvert.DeserializeObject<Product>(productString);
+                    startProductPage(scannedProduct);
                 }
             });
         }

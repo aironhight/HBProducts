@@ -15,8 +15,6 @@ namespace HBProducts.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : MasterDetailPage
     {
-        
-
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
