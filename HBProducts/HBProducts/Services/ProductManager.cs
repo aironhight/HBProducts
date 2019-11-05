@@ -64,7 +64,7 @@ namespace HBProducts.Services
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return "Error:Unexpected error: " + ex.Message.ToString();
             }
         }
     }

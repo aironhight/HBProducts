@@ -15,12 +15,14 @@ namespace HBProducts.ViewModels
         private Product product;
         private bool isBusy;
         private INotifyView view;
+        private Customer customer;
 
         public EnquiryViewModel(Product product, INotifyView view)
         {
             this.product = product;
             this.view = view;
             isBusy = false;
+            customer = Settings.GetUserData();
         }
 
         public Product Product
@@ -70,6 +72,22 @@ namespace HBProducts.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        public void saveUserData(string name, string company, string email, string telno, string country)
+        {
+            customer = new Customer(name, company, email, telno, country);
+            Settings.SaveUserData(customer);
+        }
+
+        public void clearUserData()
+        {
+            Settings.ClearUserData();
+        }
+
+        public Customer Customer
+        {
+            get { return customer; }
         }
 
     }

@@ -6,11 +6,16 @@ namespace HBProducts.Models
 {
     public class User
     {
-        private String name;
+        protected String name { get; set; }
+
 
         public User(String name)
         {
             this.name = name;
         }
+        
+        public User() { }
+
+        public string Name { get { return name; } }
     }
 }

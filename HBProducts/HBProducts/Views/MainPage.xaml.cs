@@ -50,7 +50,8 @@ namespace HBProducts.Views
                         MenuPages.Add(id, new NavigationPage(new ScanPage()));
                         break;
                 }
-            }
+                
+            }  
 
             var newPage = MenuPages[id];
 
@@ -63,7 +64,13 @@ namespace HBProducts.Views
 
                 IsPresented = false;
             }
-        }
 
+            
+            //
+        }
+        public void NavigateToPage(int id)
+        {
+            menu.setSelectedItem(id);
+        }
     }
 }

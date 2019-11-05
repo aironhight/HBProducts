@@ -7,22 +7,35 @@
              x:Class="HBProducts.Views.HomePage"
              Title="Home"
              x:Name="BrowseItemsPage"
+             NavigationPage.HasNavigationBar="False"
              >
 
-    <StackLayout
-            VerticalOptions="CenterAndExpand" 
-            HorizontalOptions="CenterAndExpand">
-        <!--<forms:UrhoSurface x:Name="urhoSurface" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        </forms:UrhoSurface>-->
-        <!--<WebView
-                x:Name="webView"
-                WidthRequest="1000"
-                HeightRequest="1000"/>-->
-
+    <Grid Margin="10,10,10,10"
+          BackgroundColor="White"
+          RowSpacing="10"
+          ColumnSpacing="10">
         
-        </StackLayout>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Text ="Products" BackgroundColor="{x:DynamicResource HB}" TextColor="White" Opacity="0.9" Grid.Row="0" Grid.Column="0" Clicked="productsButtonClicked"/>
+        <Button Text ="Scan QR" BackgroundColor="{x:DynamicResource HB}" TextColor="White" Opacity="0.9" Grid.Row="0" Grid.Column="1" Clicked="productsButtonClicked"/>
+        <Button Text ="FAQ" BackgroundColor="{x:DynamicResource HB}" TextColor="White" Opacity="0.9" Grid.Row="1" Grid.Column="0" Clicked="productsButtonClicked"/>
+        <Button Text ="Contact us" BackgroundColor="{x:DynamicResource HB}" TextColor="White" Opacity="0.9" Grid.Row="1" Grid.Column="1" Clicked="productsButtonClicked"/>
+        <Button Text ="About" BackgroundColor="{x:DynamicResource HB}" TextColor="White" Opacity="0.9" Grid.Row="2" Grid.Column="0" Clicked="productsButtonClicked"/>
+
     
-    
+     </Grid>
+
+
 </ContentPage>
 
 

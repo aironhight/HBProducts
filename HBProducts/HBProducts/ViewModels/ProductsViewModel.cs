@@ -14,9 +14,7 @@ namespace HBProducts.ViewModels
 {
     class ProductsViewModel : BaseViewModel
     {
-        private readonly string productsURI = "https://hbproductswebapi.azurewebsites.net/api/Product";
         private ProductList productList;
-        private HttpClient client;
         private Boolean isLoading, noInternetConnection;
         private ProductManager manager;
         private INotifyView notifyView;
@@ -31,13 +29,12 @@ namespace HBProducts.ViewModels
 
         public ProductsViewModel(INotifyView notifyView)
         {
-            client = new HttpClient();
             productList = new ProductList();
             manager = new ProductManager();
             this.notifyView = notifyView;
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged; //Add an event handler for internet connectivity changes.
-            requestProducts();
         }
+
 
         public async void requestProducts()
         {
@@ -57,12 +54,9 @@ namespace HBProducts.ViewModels
                 }
 
                 ProductList = JsonConvert.DeserializeObject<ProductList>(productListString);
-
-
             } else {
                 NoInternetConnection = true;
             }
-
         }
 
         public ProductList ProductList

@@ -4,29 +4,90 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.EnquiryPage">
+             x:Class="HBProducts.Views.EnquiryPage"
+             x:Name="rootView">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Send" Clicked="sendButtonClicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <RelativeLayout>
-
-            <ScrollView x:Name="entryLayout"
+            
+            <StackLayout x:Name="entryLayout"
+                        Margin="7,7,7,7"
                         Orientation="Vertical"
-                        IsClippedToBounds="True">
-                <StackLayout >
-                    <Editor Placeholder="Write enquiry..."
-                                       x:Name="entry"
-                                       Margin="7,7,7,7"
-                                        AutoSize="TextChanges"
-                                        IsEnabled="{Binding FieldsEnabled}"/>
+                        VerticalOptions="FillAndExpand">
+                
+                <!-- Scrollview for the data entries...-->
+                <ScrollView>
+                    <StackLayout Spacing="0"
+                     BindingContext="{Binding Customer}">
 
-                    <Button Text="Send Enquiry"
-                                        Clicked="sendButtonClicked"
-                                        Margin="7,7,7,7"
-                                        FontSize="Large"
-                                        BackgroundColor="{x:DynamicResource HB}"
-                                        TextColor="White"
-                                        IsEnabled="{Binding FieldsEnabled}"/>
-                </StackLayout>
-            </ScrollView>
+                        <Label Text="Full name*"/>
+                        <Entry Placeholder="Full name*"
+                           x:Name="fullName"
+                           Text="{Binding Name}"
+                           Keyboard="Text"
+                           Margin="0,0,0,20"
+                           IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+                        <Label Text="Company name*"/>
+                        <Entry Placeholder="Company name*"
+                           x:Name="company"
+                           Text="{Binding Company}"
+                           Keyboard="Text"
+                           Margin="0,0,0,20"
+                           IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+
+                        <Label Text="Country"/>
+                        <Entry Placeholder="Country"
+                           x:Name="country"
+                           Keyboard="Text"
+                           Text="{Binding Country}"
+                           Margin="0,0,0,20"
+                           IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+
+                        <Label Text="E-mail address*"/>
+                        <Entry Placeholder="E-mail address*"
+                           x:Name="email"
+                           Keyboard="Email"
+                           Text="{Binding Email}"
+                           Margin="0,0,0,20"
+                           IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+
+                        <Label Text="Telephone number*"/>
+                        <Entry Placeholder="Telephone number*"
+                           x:Name="telno"
+                           Keyboard="Telephone"
+                           Text="{Binding Telephone}"
+                           Margin="0,0,0,20"
+                           IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+
+                        <StackLayout
+                        Orientation="Horizontal">
+                            <CheckBox IsChecked="True"
+                                  x:Name="checkbox"
+                                  Color="{x:DynamicResource HB}"
+                                  IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+                            <Label Text="Save my data for further enquiries."
+                               IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                                        Source={x:Reference rootView}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+                
+                <Editor Placeholder="Write enquiry...*"
+                            x:Name="entry"
+                            Margin="0,7,0,7"
+                            AutoSize="TextChanges"
+                            HeightRequest="100"
+                            IsEnabled="{Binding BindingContext.FieldsEnabled, 
+                                            Source={x:Reference rootView}}"/>
+            </StackLayout>
 
             <ActivityIndicator 
                     IsRunning="{Binding IsBusy}"
@@ -48,8 +109,6 @@
                             Constant=-25}"/>
             
             </RelativeLayout>
-
-
 
     </ContentPage.Content>
         
