@@ -39,7 +39,7 @@ namespace HBProducts.Views
 
         private async void open3dmodel()
         {
-            await Navigation.PushModalAsync(new ThreeDModelView(viewmodel.Product.ThreeDModel));
+            await Navigation.PushAsync(new ThreeDModelView(viewmodel.Product.ThreeDModel));
         }
 
         private void enquiryButtonClicked(object sender, EventArgs e)

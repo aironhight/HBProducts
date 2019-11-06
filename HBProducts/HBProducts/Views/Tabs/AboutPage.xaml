@@ -8,13 +8,31 @@
              xmlns:vm="clr-namespace:HBProducts.ViewModels"
              Title="{Binding Title}">
 
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
-        HorizontalOptions="CenterAndExpand">
-        <Label
-            Text="Welcome to the About page!"/>
-    </StackLayout>
-    
+    <ScrollView>
+        <StackLayout
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            Margin="7,7,7,7">
+            <Editor Text="{Binding AboutCompany}"
+                    IsReadOnly="True"
+                    FontSize="Body"/>
+
+            <Label Text="{Binding Paragraph1Label}" TextColor="Black" FontSize="Medium" 
+                   FontAttributes="Bold" Margin="0,15,0,0"/>
+            <Editor Text="{Binding Paragraph1Text}"
+                    IsReadOnly="True"
+                    FontSize="Body"/>
+
+            <Label Text="{Binding Paragraph2Label}" TextColor="Black" FontSize="Medium" 
+                   FontAttributes="Bold" Margin="0,15,0,0"/>
+            <Editor Text="{Binding Paragraph2Text}"
+                    IsReadOnly="True"
+                    FontSize="Body"/>
+
+
+
+        </StackLayout>
+    </ScrollView>
 
     
 </ContentPage>

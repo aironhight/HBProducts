@@ -36,7 +36,7 @@ namespace HBProducts.Views
             productList.SelectedItem = null;
             if (!viewmodel.NoInternetConnection)
             {
-                //There is internet connection.
+                //There is internet connection - make a new thread with the 
                 Task.Factory.StartNew(() => productClicked(e));
             }else
             {
@@ -69,9 +69,14 @@ namespace HBProducts.Views
         {
             if(type.Equals("Error"))
             {
-                await DisplayAlert("Error", list[0].ToString() + Environment.NewLine + "The page will automatically try to refresh.", "OK");
-                viewmodel.requestProducts();
+                Device.BeginInvokeOnMainThread(() => showError(list[0].ToString()));
             }
+        }
+
+        private async void showError(string message)
+        {
+            await DisplayAlert("Error", message + Environment.NewLine + "The page will automatically try to refresh.", "OK");
+            viewmodel.requestProducts();
         }
     }
 }

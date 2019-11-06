@@ -85,8 +85,7 @@ namespace HBProducts.ViewModels
         {
             IsLoading = true;
             //ask the manager for the JSON string of the product
-            string productString = await manager.getProductWithId(id);
-            IsLoading = false;
+            string productString = await manager.getProductWithId(id);            
 
             //Check if the system threw an error
             if(productString.Contains("Error:"))
@@ -95,7 +94,9 @@ namespace HBProducts.ViewModels
             }
 
             //Convert the string to a product and return it...
-            return JsonConvert.DeserializeObject<Product>(productString);
+            Product toReturn = JsonConvert.DeserializeObject<Product>(productString);
+            IsLoading = false;
+            return toReturn;
         }
 
         //The method gets called on each internet connectivity change

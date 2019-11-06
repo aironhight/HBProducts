@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HBProducts.ViewModels;
+using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,9 +11,12 @@ namespace HBProducts.Views
     [DesignTimeVisible(false)]
     public partial class AboutPage : ContentPage
     {
+        private AboutViewModel viewmodel;
         public AboutPage()
         {
             InitializeComponent();
+            viewmodel = new AboutViewModel();
+            BindingContext = viewmodel; 
         }
     }
 }

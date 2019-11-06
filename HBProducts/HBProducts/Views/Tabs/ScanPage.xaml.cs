@@ -85,7 +85,7 @@ namespace HBProducts.Views
                     //If the scanned code contains ID.
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        //Navigation.PopAsync();
+                        Navigation.PopAsync();
                         getProductWithId(scannedId);
                     });
                     
@@ -107,7 +107,10 @@ namespace HBProducts.Views
 
         private async void getProductWithId(int id)
         {
-            string productString = await manager.getProductWithId(id);
+            var networkAccess = Connectivity.NetworkAccess; //Check internet connectivity
+            if (networkAccess == NetworkAccess.Internet)
+            {
+                string productString = await manager.getProductWithId(id);
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -120,31 +123,29 @@ namespace HBProducts.Views
                     startProductPage(scannedProduct);
                 }
             });
-        }
-
-        private async void startProductPage(Product prod)
-        {
-            var networkAccess = Connectivity.NetworkAccess; //Check internet connectivity
-            if (networkAccess == NetworkAccess.Internet)
-            {
-                if (!scanned)
-                {
-                    try { 
-                        scanned = true;
-                        //Navigation.RemovePage(this);
-                        await Navigation.PopAsync();
-                        await Navigation.PushModalAsync(new ProductPage(prod));
-                    } catch (Exception ex)
-                    {
-                        await Navigation.PopAsync();
-                        await DisplayAlert("Error", ex.Message, "OK");
-                    }
-                }
-            } else
+            }
+            else
             {
 
                 await Navigation.PopAsync();
                 await DisplayAlert("No internet access", "In order to get data for products the app needs internet access.", "OK");
+            }
+        }
+
+        private async void startProductPage(Product prod)
+        {
+            if (!scanned)
+            {
+                try { 
+                    scanned = true;
+                    //Navigation.RemovePage(this);
+                    await Navigation.PopAsync();
+                    await Navigation.PushAsync(new ProductPage(prod));
+                } catch (Exception ex)
+                {
+                    await Navigation.PopAsync();
+                    await DisplayAlert("Error", "Unexpected error: " + ex.Message, "OK");
+                }
             }
         }
 

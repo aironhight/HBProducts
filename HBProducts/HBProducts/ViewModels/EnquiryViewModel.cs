@@ -50,7 +50,7 @@ namespace HBProducts.ViewModels
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("product-enquiry@hbapp.com", "EnquiryMessenger"),
-                Subject = ("Enquiry about" + product.FullName),
+                Subject = ("Enquiry about " + product.FullName),
                 PlainTextContent = "Write product enquiry...!",
                 HtmlContent = "<p>" + text + "</p>"
             };

@@ -8,7 +8,6 @@
              x:Name="parentView"
              Title="Products">
     <RelativeLayout>
-        
         <Label Text="No internet connection"
                IsEnabled="False"
                IsVisible="{Binding NoInternetConnection}"
