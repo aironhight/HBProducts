@@ -1,6 +1,8 @@
 ﻿using Android.OS;
 using HBProducts.Models;
+using HBProducts.Services;
 using HBProducts.ViewModels;
+using Newtonsoft.Json;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
@@ -15,11 +17,14 @@ namespace HBProducts.Views
     public partial class ScanPage : ContentPage
     {
         private Boolean scanned;
+        private ProductManager manager;
+        
 
         public ScanPage()
         {
             InitializeComponent();
             scanned = false;
+            manager = new ProductManager();
             RequestScanner();
         }
 
@@ -80,8 +85,8 @@ namespace HBProducts.Views
                     //If the scanned code contains ID.
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        //Navigation.PopAsync();
-                        openProductPage(scannedId);
+                        Navigation.PopAsync();
+                        getProductWithId(scannedId);
                     });
                     
                     return;
@@ -100,49 +105,47 @@ namespace HBProducts.Views
             await Navigation.PushAsync(ScannerPage);
         }
 
-        private async void openProductPage(int id)
-        {
-            ProductsViewModel vm = new ProductsViewModel();
-            Product scannedProduct = await vm.GetProductWithId(id);
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                //Check if the product is not null
-                if (scannedProduct != null) {
-                    //If its not - start the product page
-                    //Navigation.PopAsync();
-                    startProductPage(scannedProduct);
-                } else
-                {
-                    //Alert the user that the product couldnt be loaded.
-                    Navigation.PopAsync();
-                    DisplayAlert("Error", "Product couldn't be loaded. Check your internet connection.", "OK");
-                }
-            });
-        }
-
-        private async void startProductPage(Product prod)
+        private async void getProductWithId(int id)
         {
             var networkAccess = Connectivity.NetworkAccess; //Check internet connectivity
             if (networkAccess == NetworkAccess.Internet)
             {
-                if (!scanned)
-                {
-                    try { 
-                        scanned = true;
-                        //Navigation.RemovePage(this);
-                        await Navigation.PopAsync();
-                        await Navigation.PushModalAsync(new ProductPage(prod));
-                    } catch (Exception ex)
-                    {
-                        await Navigation.PopAsync();
-                        await DisplayAlert("Error", ex.Message, "OK");
-                    }
+                string productString = await manager.getProductWithId(id);
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                if (productString.Contains("Error:")) {
+                    Navigation.PopAsync();
+                    DisplayAlert("Error", productString.Substring(6), "OK");
+                    return;
+                } else {
+                    Product scannedProduct = JsonConvert.DeserializeObject<Product>(productString);
+                    startProductPage(scannedProduct);
                 }
-            } else
+            });
+            }
+            else
             {
 
                 await Navigation.PopAsync();
                 await DisplayAlert("No internet access", "In order to get data for products the app needs internet access.", "OK");
+            }
+        }
+
+        private async void startProductPage(Product prod)
+        {
+            if (!scanned)
+            {
+                try { 
+                    scanned = true;
+                    //Navigation.RemovePage(this);
+                    await Navigation.PopAsync();
+                    await Navigation.PushAsync(new ProductPage(prod));
+                } catch (Exception ex)
+                {
+                    await Navigation.PopAsync();
+                    await DisplayAlert("Error", "Unexpected error: " + ex.Message, "OK");
+                }
             }
         }
 

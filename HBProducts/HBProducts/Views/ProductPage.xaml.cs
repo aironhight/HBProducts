@@ -42,49 +42,14 @@ namespace HBProducts.Views
             await Navigation.PushAsync(new ThreeDModelView(viewmodel.Product.ThreeDModel));
         }
 
-        private async  void enquiryButtonClicked(object sender, EventArgs e)
+        private void enquiryButtonClicked(object sender, EventArgs e)
         {
-            await openEnquiryPage();
+            openEnquiryPage();
         }
 
-        public async Task openEnquiryPage()
+        public async void openEnquiryPage()
         {
-            //try
-            //{
-                var apiKey = "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";
-                var client = new SendGridClient(apiKey);
-
-                var msg = new SendGridMessage()
-                {
-                    From = new EmailAddress("koci@no-reply.com", "Don Koci"),
-                    Subject = ("Enquiry about" + viewmodel.Product.FullName),
-                    PlainTextContent = "Write product enquiry...!",
-                    HtmlContent = "<strong>Hello, Email!</strong>"
-                };
-                msg.AddTo(new EmailAddress("253640@via.dk", "Konstantin"));
-                var response = await client.SendEmailAsync(msg);
-
-
-                //List<string> empty = new List<string>();
-                //empty.Add("info@hbproducts.dk");
-                //var message = new EmailMessage
-                //{
-                //    Subject = "Enquiry about " + product.FullName,
-                //    Body = "Write product enquiry...",
-                //    To = empty,
-                //    //Cc = ccRecipients,
-                //    //Bcc = bccRecipients
-                //};
-                //await Email.ComposeAsync(message);
-            //}
-            //    catch (FeatureNotSupportedException fbsEx)
-            //    {
-            //        // Email is not supported on this device
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        // Some other exception occurred
-            //    }
+            await Navigation.PushAsync(new EnquiryPage(viewmodel.Product));
         }
 
         public void notify(string type, params object[] list)

@@ -62,7 +62,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Margin="0,5,0,5" >
+                                <StackLayout Margin="0,0,0,5" >
                                     <Button       
                                             Text="{Binding Type}"
                                             FontSize="Large"

@@ -8,7 +8,7 @@
             x:Class="HBProducts.Views.MainPage">
 
     <MasterDetailPage.Master>
-        <views:MenuPage />
+        <views:MenuPage x:Name="menu" />
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>

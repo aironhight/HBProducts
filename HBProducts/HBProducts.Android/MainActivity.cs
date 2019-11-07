@@ -41,8 +41,6 @@ namespace HBProducts.Droid
 
             
       AzurePushNotificationManager.Initialize(this, Constants.ListenConnectionString, Constants.NotificationHubName, true);
-                      
-
 
            
         }

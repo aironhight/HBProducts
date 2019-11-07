@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Diagnostics;
 
 namespace HBProducts.Views
 {
@@ -17,6 +18,8 @@ namespace HBProducts.Views
         public MenuPage()
         {
             InitializeComponent();
+            StackTrace stackTrace = new StackTrace();
+            string caller = stackTrace.GetFrame(1).GetMethod().Name;
 
             menuItems = new List<HomeMenuItem>
             {
@@ -37,8 +40,15 @@ namespace HBProducts.Views
                     return; 
 
                 var id = (int)((HomeMenuItem)e.SelectedItem).Id;
+                
                 await RootPage.NavigateFromMenu(id);
             };
+        }
+
+        public void setSelectedItem(int id)
+        {
+            if(!ListViewMenu.SelectedItem.Equals(menuItems[id]))
+                ListViewMenu.SelectedItem = menuItems[id];
         }
     }
 }
