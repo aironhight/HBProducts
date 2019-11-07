@@ -6,17 +6,33 @@ namespace HBProducts.Models
 {
     public class Message
     {
-        private User sender { get; }
-        private String text { get; }
-        private String timeSend { get; }
+        private bool isEmployee;
+        private string text;
+        private string timeSend;
+        private int id;
 
-        public Message(User sender, String text, String timeSend)
+        public Message(bool isEmployee, string text, string timeSend, int id)
         {
-            this.sender = sender;
+            this.isEmployee = isEmployee;
             this.text = text;
             this.timeSend = timeSend;
+            this.id = id;
         }
 
+        public bool IsEmployee
+        {
+            get { return isEmployee; }
+            set { isEmployee = value; }
+        }
+
+        public string Text
+        { get { return text; } }
+
+        public string TimeSend
+        { get { return timeSend; } }
+
+        public int Id
+        { get { return id; } }
 
     }
 }

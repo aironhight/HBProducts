@@ -1,6 +1,7 @@
 ﻿using HBProducts.Models;
 using HBProducts.Services;
 using HBProducts.ViewModels;
+using HBProducts.Views.Tabs.Enquiry;
 using SendGrid;
 using System;
 
@@ -9,7 +10,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace HBProducts.Views
+namespace HBProducts.Views.Tabs.Enquiry
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EnquiryPage : ContentPage, INotifyView
@@ -23,16 +24,23 @@ namespace HBProducts.Views
             entryLayout.HeightRequest = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density + 50;
             viewmodel = new EnquiryViewModel(product, this);
             BindingContext = viewmodel;
-            Title = "Product enquiry";
+            Title = "Personal Data";
         }
 
-        private async void sendButtonClicked(object sender, EventArgs e)
+
+        public void notify(string type, params object[] list)
         {
-            if(entry.Text.Length == 0)
-            {   //Alert the user if the entry field is empty.
-                await DisplayAlert("Warning", "Entry field empty.", "OK");
-                return;
-            } else if(fullName.Text.Length == 0)
+            if (type.Equals("Error"))
+            {
+                //Display the error.
+                DisplayAlert("Error", list[0].ToString(), "OK");
+            }
+        }
+
+        private async void nextButtonclicked(object sender, EventArgs e)
+        {
+
+            if (fullName.Text.Length == 0)
             {
                 await DisplayAlert("Warning", "Full name field empty.", "OK");
                 return;
@@ -53,43 +61,12 @@ namespace HBProducts.Views
                 return;
             }
 
-            String emailBody = "<p> <b> Full Name: </b>" + fullName.Text + "</p>"
-                + "<p> <b> Company: </b>" + company.Text + "</p>"
-                + "<p> <b> Country: </b>" + country.Text + "</p>"
-                + "<p> <b> E-mail address: </b>" + email.Text + "</p>"
-                + "<p> <b> Telephone nr.: </b>" + telno.Text + "</p>"
-                + "<p> <b> Message: </b>" + entry.Text + "</p>";
-            viewmodel.sendMail(emailBody);
-
             if (checkbox.IsChecked)
                 viewmodel.saveUserData(fullName.Text, company.Text, email.Text, telno.Text, country.Text);
             else
                 viewmodel.clearUserData();
-        }
 
-        public void notify(string type, params object[] list)
-        {
-            if (type.Equals("response"))
-            {
-                Response response = (Response)list[0];
-
-                //Check if the enquiry was sent successfully
-                if (response.StatusCode == HttpStatusCode.Accepted)
-                {
-                    entry.Text = "";
-                    DisplayAlert("Enquiry", "Enquiry sent successfully!", "OK");
-                }
-                else
-                {
-                    //Alert the user if not.
-                    DisplayAlert("Enquiry", "Enquiry not successful. Error code:" + response.StatusCode.ToString(), "OK");
-                }
-            }
-            else if (type.Equals("Error"))
-            {
-                //Display the error.
-                DisplayAlert("Error", list[0].ToString(), "OK");
-            }
+            await Navigation.PushAsync(new EnquiryMessagePage(fullName.Text, company.Text, email.Text, telno.Text, country.Text, viewmodel));
         }
     }
 }

@@ -4,23 +4,24 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.EnquiryPage"
+             x:Class="HBProducts.Views.Tabs.Enquiry.EnquiryPage"
              x:Name="rootView">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Send" Clicked="sendButtonClicked"/>
+        <ToolbarItem Text="Next" Clicked="nextButtonclicked"/>
     </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-        <RelativeLayout>
-            
-            <StackLayout x:Name="entryLayout"
+        <ScrollView x:Name="scrollview">
+        <RelativeLayout VerticalOptions="FillAndExpand">
+
+                <StackLayout x:Name="entryLayout"
                         Margin="7,7,7,7"
                         Orientation="Vertical"
                         VerticalOptions="FillAndExpand">
-                
-                <!-- Scrollview for the data entries...-->
-                <ScrollView>
+
                     <StackLayout Spacing="0"
-                     BindingContext="{Binding Customer}">
+                     BindingContext="{Binding Customer}"
+                                 VerticalOptions="FillAndExpand">
 
                         <Label Text="Full name*"/>
                         <Entry Placeholder="Full name*"
@@ -78,37 +79,13 @@
                                                         Source={x:Reference rootView}}"/>
                         </StackLayout>
                     </StackLayout>
-                </ScrollView>
-                
-                <Editor Placeholder="Write enquiry...*"
-                            x:Name="entry"
-                            Margin="0,7,0,7"
-                            AutoSize="TextChanges"
-                            HeightRequest="100"
-                            IsEnabled="{Binding BindingContext.FieldsEnabled, 
-                                            Source={x:Reference rootView}}"/>
-            </StackLayout>
 
-            <ActivityIndicator 
-                    IsRunning="{Binding IsBusy}"
-                    IsVisible="{Binding IsBusy}"
-                    Color="{x:StaticResource HB}"
-                
-                    RelativeLayout.XConstraint=
-                        "{ConstraintExpression 
-                            Type=RelativeToParent,
-                            Property=Width, 
-                            Factor=0.5,
-                            Constant=-25
-                            }"
-                    RelativeLayout.YConstraint=
-                        "{ConstraintExpression 
-                            Type=RelativeToParent,
-                            Property=Height,
-                            Factor=0.5,
-                            Constant=-25}"/>
+                   
+                </StackLayout>
+
             
             </RelativeLayout>
+        </ScrollView>
 
     </ContentPage.Content>
         

@@ -53,7 +53,6 @@ namespace HBProducts.Views
                 Product productClicked = await viewmodel.GetProductWithId(dummyProduct.Id); //So we request the product with all product data...
                 Debug.WriteLine("The selected product is: " + productClicked.Model);
                 Device.BeginInvokeOnMainThread(() => startProductpage(productClicked));
-                 
             }
             catch (Exception ex)
             {

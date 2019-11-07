@@ -8,7 +8,6 @@ namespace HBProducts.Models
     {
         protected String name { get; set; }
 
-
         public User(String name)
         {
             this.name = name;
@@ -16,6 +15,6 @@ namespace HBProducts.Models
         
         public User() { }
 
-        public string Name { get { return name; } }
+        public string Name { get { return name; } set { this.name = value; } }
     }
 }

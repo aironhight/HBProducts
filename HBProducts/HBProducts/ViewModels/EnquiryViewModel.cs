@@ -10,7 +10,7 @@ using System.Text;
 
 namespace HBProducts.ViewModels
 {
-    class EnquiryViewModel : BaseViewModel
+    public class EnquiryViewModel : BaseViewModel
     {
         private Product product;
         private bool isBusy;
@@ -90,5 +90,10 @@ namespace HBProducts.ViewModels
             get { return customer; }
         }
 
+        public INotifyView INotifyView
+        {
+            get { return view; }
+            set { this.view = value; }
+        }
     }
 }

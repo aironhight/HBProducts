@@ -24,9 +24,6 @@ namespace HBProducts.Models
             favouriteProducts = new ProductList();
         }
 
-        public string Name { get{ return name; }
-            set { this.name = value; }
-        }
         public string Company { get { return company; } set { this.company = value; } }
         public string Email { get { return email; } set { this.email = value; } }
         public string Telephone { get { return telNum; } set { this.telNum = value; } }

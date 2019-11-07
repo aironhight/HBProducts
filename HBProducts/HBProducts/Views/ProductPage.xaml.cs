@@ -11,8 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-
-
+using HBProducts.Views.Tabs.Enquiry;
 
 namespace HBProducts.Views
 {

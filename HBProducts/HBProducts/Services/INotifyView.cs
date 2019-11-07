@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HBProducts.Services
 {
-    interface INotifyView
+    public interface INotifyView
     {
         void notify(string type, params object[] list);
     }
