@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Materials\Square.mdl" />
+    <AndroidAsset Include="Assets\Materials\lux.mdl" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />

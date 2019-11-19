@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Plugin.AzurePushNotification;
 using UIKit;
+using UserNotifications;
 
 namespace HBProducts.iOS
 {
@@ -24,11 +26,32 @@ namespace HBProducts.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+            AzurePushNotificationManager.Initialize(Constants.ListenConnectionString, Constants.NotificationHubName, options, true) ;
+            AzurePushNotificationManager.CurrentNotificationPresentationOption = UNNotificationPresentationOptions.Alert | UNNotificationPresentationOptions.Badge;
+
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 
 
             return base.FinishedLaunching(app, options);
         }
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            AzurePushNotificationManager.DidRegisterRemoteNotifications(deviceToken);
+        }
+
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        {
+            AzurePushNotificationManager.RemoteNotificationRegistrationFailed(error);
+
+        }
+        // To receive notifications in foregroung on iOS 9 and below.
+        // To receive notifications in background in any iOS version
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+
+            AzurePushNotificationManager.DidReceiveMessage(userInfo);
+        }
     }
+
 }
