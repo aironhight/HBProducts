@@ -1,6 +1,5 @@
 ﻿using HBProducts.Models;
 using HBProducts.Services;
-using Java.Net;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
