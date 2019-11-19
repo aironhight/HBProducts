@@ -8,7 +8,7 @@ namespace HBProducts.Models
     {
         private List<int> ratings;
 
-        public Employee(string name, bool isEmp) : base(name, isEmp)
+        public Employee(string name) : base(name)
         {
             ratings = new List<int>();
         }

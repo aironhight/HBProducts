@@ -14,7 +14,7 @@ namespace HBProducts.Models
 
         public Customer() { }
 
-        public Customer(string name, bool isEmp, string company, string email, string telnum, string country) : base(name, isEmp)
+        public Customer(string name, string company, string email, string telnum, string country) : base(name)
         {
             this.company = company;
             this.email = email;
