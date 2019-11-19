@@ -103,8 +103,13 @@ namespace HBProducts.ViewModels
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             //If the connectivity changed to "Internet access" and there are no products loaded - make a request.
-            if (e.NetworkAccess == Connectivity.NetworkAccess && ProductList.Products.Count == 0)
-                requestProducts();
+            if (e.NetworkAccess == Connectivity.NetworkAccess)
+            {
+                NoInternetConnection = false;
+
+                if (ProductList.Products.Count == 0)
+                    requestProducts();
+            }
         }
     }
 }
