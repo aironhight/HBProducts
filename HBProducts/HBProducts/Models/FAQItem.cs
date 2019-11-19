@@ -18,14 +18,21 @@ namespace HBProducts.Models
             this.imagePath = imagePath;
         }
 
+        public FAQItem(string question, string answer)
+        {
+            this.question = question;
+            this.answer = answer;
+            this.imagePath = "";
+        }
+
         public string Question
         {
-            get { return question; }
+            get { return "Q: " + question; }
         }
 
         public string Answer
         {
-            get { return answer; }
+            get { return "A: " + answer; }
         }
 
         public ImageSource Image

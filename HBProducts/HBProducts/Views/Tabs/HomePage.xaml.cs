@@ -21,9 +21,6 @@ namespace HBProducts.Views
                     Navigation.PushAsync(new HomePage());
                 });
             };
-
-            
-
         }
 
         protected override void OnAppearing()

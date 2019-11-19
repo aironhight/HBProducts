@@ -28,8 +28,7 @@
                                            TextColor="Black"/>
                                     <Label Text="{Binding Value}"
                                                LineBreakMode="WordWrap"
-                                           FontSize="Medium"
-                                               />
+                                           FontSize="Medium"/>
 
                                 </StackLayout>
                             </ViewCell>

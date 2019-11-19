@@ -19,13 +19,20 @@ namespace HBProducts
         public static readonly string aboutParagraph2Text = "We always think of service in our product development. Our thorough and unique \"split design\", where the electronic part is easily removed from the mechanical part, allows for quick and easy testing or replacement of the electronics - without stoppages or loss of pressure. Our design of the mechanical parts, which require no maintenance at all, is just as intelligent.";
 
 
-        public static readonly string q1 = "What are the LEDs indicating?";
+        public static readonly string q1 = "What are the LEDs indicating?(24VDC HBSR, HBSO1, HBSO2, HBSC2, HBOR)";
         public static readonly string a1 = "The LEDs have three different indications. When the sensor is blinking green the sensor is powered correctly and the sensor is not detecting level. When the LEDs are constant red the sensor is detecting level. Blinking red LEDs indicate an error e.g. the electronic part is not connected to the mechanical part correctly. For HBOR sensors red LEDs indicate OIL.";
         
-        public static readonly string q2 = "What output configuration should I choose?";
+        public static readonly string q2 = "What output configuration should I choose?(24VDC HBSR, HBSO1, HBSO2, HBSC2, HBOR)";
         public static readonly string a2 = "The sensor comes in a variety of different configurations. PNP configurations provide a 24VDC signal. NPN configurations provide a 0VDC signal. NO will provide the 24VDC or 0VDC signal respectively when the sensor detects level. NC will give the signal when the sensor is not detecting level. Available options are: PNP/NO, PNP/NC, NPN/NO and NPN/NC.";
 
+        public static readonly string q3 = "How do I wire the sensor?(HBSR-SSR2, HBSO1-SSR2, HBSO2-SSR2, HBSC2-SSR2, HBOR-SSR2)";
+        public static readonly string a3 = "Pin configuration is as follows:";
 
+        public static readonly string q4 = "How do I choose between HBOS1 and HBSO2?";
+        public static readonly string a4 = "HBSO1 is for PAO, POE & mineral oil. HBSO2 is for synthetic PAG oil.";
+
+        public static readonly string q5 = "How do I wire the switch and what relay to choose?";
+        public static readonly string a5 = "For PNP versions you connect the signal (pin 3) to the 24VDC+ terminal of the relay 24VDC- goes to ground. For NPN Versions you must connect signal (pin 3) to 24VDC- of the relay and 24VDC+ terminal to 24VDC. You can use any relay that meets the following specifications. Voltage: 24VDC. Min. coil resistance: 475Ω recommended relays are SCHRACK MT221024, OMRON G22A-432A.";
 
 
 

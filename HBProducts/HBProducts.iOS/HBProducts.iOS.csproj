@@ -184,6 +184,9 @@
     <BundleResource Include="Resources\star.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Materials\" />
+    <BundleResource Include="Resources\Diagram2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Diagram1.png" />
   </ItemGroup>
 </Project>
