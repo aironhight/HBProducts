@@ -1,5 +1,4 @@
-﻿using Android.OS;
-using HBProducts.Models;
+﻿using HBProducts.Models;
 using HBProducts.Services;
 using HBProducts.ViewModels;
 using Newtonsoft.Json;

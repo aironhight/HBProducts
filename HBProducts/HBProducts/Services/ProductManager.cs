@@ -29,16 +29,16 @@ namespace HBProducts.Services
                 //If the request was successful...
                 return JsonConvert.DeserializeObject<string>(response); //JSON string of a product.
             }
-            catch (Java.Net.UnknownHostException netConnection)
-            {
-                //No internet connection.
-                return "Error:No internet connection";
-            }
-            catch (Javax.Net.Ssl.SSLException)
-            {
-                //Connection interrupted
-                return "Error:Connection interrupted.";
-            }
+            //catch (Java.Net.UnknownHostException netConnection)
+            //{
+            //    //No internet connection.
+            //    return "Error:No internet connection";
+            //}
+            //catch (Javax.Net.Ssl.SSLException)
+            //{
+            //    //Connection interrupted
+            //    return "Error:Connection interrupted.";
+            //}
             catch (Exception ex)
             {
                 return "Error:" + ex.Message;
@@ -52,16 +52,16 @@ namespace HBProducts.Services
                 var response = await client.GetStringAsync(Constants.ProductsURI);
                 return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
             }
-            catch (Java.Net.UnknownHostException netConnection)
-            {
-                //No internet connection.
-                return "Error:Check your internet connection";
-            }
-            catch(Javax.Net.Ssl.SSLException)
-            {
-                //Connection interrupted
-                return "Error:Connection interrupted.";
-            }
+            //catch (Java.Net.UnknownHostException netConnection)
+            //{
+            //    //No internet connection.
+            //    return "Error:Check your internet connection";
+            //}
+            //catch(Javax.Net.Ssl.SSLException)
+            //{
+            //    //Connection interrupted
+            //    return "Error:Connection interrupted.";
+            //}
             catch (Exception ex)
             {
                 return "Error:Unexpected error: " + ex.Message.ToString();

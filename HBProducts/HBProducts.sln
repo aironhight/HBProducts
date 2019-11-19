@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBProducts.Android", "HBPro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBProducts.iOS", "HBProducts.iOS\HBProducts.iOS.csproj", "{A77B819B-1124-4DA1-9F17-5E86AE8611D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HBProducts", "HBProducts\HBProducts.csproj", "{58FFE557-E7D9-41EB-AD7A-03737C00C3A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBProducts", "HBProducts\HBProducts.csproj", "{58FFE557-E7D9-41EB-AD7A-03737C00C3A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
