@@ -17,35 +17,14 @@ namespace HBProducts.Views
             InitializeComponent();
         }
 
-        private void OpenMailClicked(object sender, EventArgs e)
+        private void OpenChatClicked(object sender, EventArgs e)
         {
-            OpenMail();
+            OpenChat();
         }
 
-        private async void OpenMail()
+        private async void OpenChat()
         {
-            try
-            {
-                List<string> empty = new List<string>();
-                empty.Add("aironhight@yahoo.com");
-                var message = new EmailMessage
-                {
-                    Subject = "Test",
-                    Body = "This is a test if we are genders",
-                    To = empty,
-                    //Cc = ccRecipients,
-                    //Bcc = bccRecipients
-                };
-                await Email.ComposeAsync(message);
-            }
-            catch (FeatureNotSupportedException fbsEx)
-            {
-                // Email is not supported on this device
-            }
-            catch (Exception ex)
-            {
-                // Some other exception occurred
-            }
+            await Navigation.PushAsync(new ChatPage());
         }
     }
 }

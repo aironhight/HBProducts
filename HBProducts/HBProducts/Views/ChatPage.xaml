@@ -4,10 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.ContactUsPage">
+             x:Class="HBProducts.Views.ChatPage">
     <ContentPage.Content>
-        <Button
-            Text="Open chat"
-            Clicked="OpenChatClicked"/>
+        <StackLayout>
+            <Button Text="Send request" Clicked="SendRequestClicked"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

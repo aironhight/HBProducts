@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HBProducts.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace HBProducts.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FAQPage : ContentPage
     {
+        private FAQViewModel viewmodel;
         public FAQPage()
         {
             InitializeComponent();
+            viewmodel = new FAQViewModel();
         }
+
     }
 }
