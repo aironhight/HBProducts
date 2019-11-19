@@ -142,6 +142,7 @@
     </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="Resources\Materials\Square.mdl" />
+    <BundleResource Include="Resources\Materials\lux.mdl" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
