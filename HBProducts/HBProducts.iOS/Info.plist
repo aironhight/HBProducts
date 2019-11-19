@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>HBProducts</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.HBProducts</string>
+	<string>HB.HBMain</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -37,6 +37,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Allows the app to use the QRScanner</string>
 	<key>UIApplicationExitsOnSuspend</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

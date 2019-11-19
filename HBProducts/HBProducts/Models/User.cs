@@ -6,9 +6,11 @@ namespace HBProducts.Models
 {
     public class User
     {
-        protected String name { get; set; }
+        // The variables are protected so that they can be 
+        //  accessed from any class that inherits this class
+        protected string name { get; set; }
 
-        public User(String name)
+        public User(string name)
         {
             this.name = name;
         }

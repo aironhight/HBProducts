@@ -35,17 +35,19 @@ namespace HBProducts.ViewModels
         public async void urlClicked(string url)
         {
             Debug.WriteLine("URL CLICKED: " + url);
-            
-            switch(Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    view.notify("openWebViewer", url);
-                    break;
 
-                default:
-                    Device.OpenUri(new Uri(url));
-                    break;
-            }
+            Device.OpenUri(new Uri(url));
+
+            //switch (Device.RuntimePlatform)
+            //{
+            //    case Device.iOS:
+            //        view.notify("openWebViewer", url);
+            //        break;
+
+            //    default:
+            //        Device.OpenUri(new Uri(url));
+            //        break;
+            //}
         }
 
     }
