@@ -4,13 +4,13 @@ using System.Text;
 
 namespace HBProducts.Models
 {
-    class Employee : User
+    public class Employee : User
     {
-        private List<int> ratings;
+        //private List<int> ratings;
 
         public Employee(string name) : base(name)
         {
-            ratings = new List<int>();
+            //ratings = new List<int>();
         }
     }
 }

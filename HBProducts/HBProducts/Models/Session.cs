@@ -8,14 +8,16 @@ namespace HBProducts.Models
     {
         private string timeStarted;
         private List<Message> messageList;
-        private List<User> userList;
+        private Customer customer;
+        private Employee employee;
         private int sessionID;
 
-        public Session(string timeStarted, List<Message> mList, List<User> uList, int sessionID)
+        public Session(string timeStarted, List<Message> mList, Customer customer, Employee employee, int sessionID)
         {
             this.timeStarted = timeStarted;
             this.messageList = mList;
-            this.userList = uList;
+            this.customer = customer;
+            this.employee = employee;
             this.sessionID = sessionID;
         }
 
@@ -37,10 +39,16 @@ namespace HBProducts.Models
             set { this.messageList = value; }
         }
 
-        public List<User> UserList
+        public Customer Customer
         {
-            get { return this.userList; }
-            set { this.userList = value; }
+            get { return this.customer; }
+            set { this.customer = value; }
+        }
+
+        public Employee Employee
+        {
+            get { return this.employee; }
+            set { this.employee = value; }
         }
 
         public void AddMessage(Message message)
