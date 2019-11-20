@@ -12,7 +12,7 @@ using Xamarin.Forms;
 namespace HBProducts.Models
 {
     [Serializable]
-    public class Product : BaseViewModel
+    public class Product
     {
         private String model;
         private String type;
@@ -46,13 +46,13 @@ namespace HBProducts.Models
 
         public string Model
         {
-            set { SetProperty(ref model, value); }
+            set { model = value; }
             get { return model; }
         }
 
         public string Type
         {
-            set { SetProperty(ref type, value); }
+            set { type = value; }
             get { return type; }
         }
 
@@ -63,19 +63,19 @@ namespace HBProducts.Models
 
         public string ThreeDModel
         {
-            set { SetProperty(ref threedModel, value); }
+            set { threedModel = value; }
             get { return threedModel; }
         }
 
         public ObservableCollection<ProductData> DataList
         {
-            set { SetProperty(ref dataList, value); }
+            set { dataList = value; }
             get { return dataList; }
         }
 
         public int Id
         {
-            set { SetProperty(ref id, value); }
+            set { id =  value; }
             get { return id; }
         }
 

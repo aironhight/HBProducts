@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace HBProducts.Models
 {
     [Serializable]
-    public class ProductList : BaseViewModel
+    public class ProductList
     {
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
 
@@ -16,14 +16,15 @@ namespace HBProducts.Models
 
         public ObservableCollection<Product> Products
         {
-            set { SetProperty(ref products, value); OnPropertyChanged("Products"); }
+            set { products = value; }
             get { return products; }
         }
 
         //Methods to implement commands to manipulate the product list...
-        public void RemoveProduct(Product product)
+        public Product RemoveProduct(Product product)
         {
             Products.Remove(product);
+            return product;
         }
 
         public void AddProduct(Product product)

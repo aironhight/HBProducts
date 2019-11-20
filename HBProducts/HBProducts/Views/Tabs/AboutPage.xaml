@@ -17,7 +17,7 @@
                     IsReadOnly="True"
                     FontSize="Body"/>
 
-            <Label Text="{Binding Paragraph1Label}" TextColor="Black" FontSize="Medium" 
+            <Label Text="{Binding Paragraph1Label}" TextColor="{x:DynamicResource HB}" FontSize="Medium" 
                    FontAttributes="Bold" Margin="0,15,0,0"/>
             <Editor Text="{Binding Paragraph1Text}"
                     IsReadOnly="True"
