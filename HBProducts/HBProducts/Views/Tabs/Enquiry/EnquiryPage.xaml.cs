@@ -19,14 +19,23 @@ namespace HBProducts.Views.Tabs.Enquiry
 
         public EnquiryPage(Product product)
         {
+            construct(product);
+        }
+
+        public EnquiryPage()
+        {
+            construct(null);
+        }
+
+        private void construct(Product product)
+        {
             InitializeComponent();
-            entryLayout.WidthRequest = DeviceDisplay.MainDisplayInfo.Width/DeviceDisplay.MainDisplayInfo.Density; //Set the width of the Entry manually...
+            entryLayout.WidthRequest = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density; //Set the width of the Entry manually...
             entryLayout.HeightRequest = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density + 50;
-            viewmodel = new EnquiryViewModel(product, this);
+            viewmodel = product != null ? new EnquiryViewModel(product, this) : new EnquiryViewModel(this);
             BindingContext = viewmodel;
             Title = "Personal Data";
         }
-
 
         public void notify(string type, params object[] list)
         {

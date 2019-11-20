@@ -25,6 +25,13 @@ namespace HBProducts.ViewModels
             customer = Settings.GetUserData();
         }
 
+        public EnquiryViewModel(INotifyView view)
+        {
+            this.view = view;
+            isBusy = false;
+            customer = Settings.GetUserData();
+        }
+
         public Product Product
         {
             get { return product; }
@@ -50,8 +57,8 @@ namespace HBProducts.ViewModels
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("product-enquiry@hbapp.com", "EnquiryMessenger"),
-                Subject = ("Enquiry about " + product.FullName),
-                PlainTextContent = "Write product enquiry...!",
+                Subject = product != null ? "Enquiry about " + product.FullName : "Email from customer",
+                PlainTextContent = "Write enquiry...!",
                 HtmlContent = "<p>" + text + "</p>"
             };
 

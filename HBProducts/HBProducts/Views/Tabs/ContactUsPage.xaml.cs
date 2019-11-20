@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HBProducts.Views.Tabs.Enquiry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace HBProducts.Views
             InitializeComponent();
         }
 
-        private void OpenChatClicked(object sender, EventArgs e)
+        private void OpenChatButtonClicked(object sender, EventArgs e)
         {
             OpenChat();
         }
@@ -25,6 +26,18 @@ namespace HBProducts.Views
         private async void OpenChat()
         {
             await Navigation.PushAsync(new ChatPage());
+        }
+
+        private void SendEmailButtonClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new EnquiryPage());
+        }
+
+        private async void CallButtonClicked(object sender, EventArgs e)
+        {
+           // Device.OpenUri(new Uri("tel:038773729"));
+            //Launcher.OpenUri(new Uri("tel:038773729"));
+            await Launcher.OpenAsync(new Uri("tel:038773729"));
         }
     }
 }

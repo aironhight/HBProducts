@@ -72,7 +72,7 @@ namespace HBProducts.ViewModels
             {
                 if (favProducts.Contains(products.Products[i].Id))
                 {
-                    products.Products[i].Model = "*" + products.Products[i].Model;
+                    products.Products[i].Model = "*" + products.Products[i].Model + "*";
                     Product temp = products.Products[favIndex];
                     products.Products[favIndex] = products.Products[i];
                     products.Products[i] = temp;

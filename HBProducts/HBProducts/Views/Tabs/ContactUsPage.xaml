@@ -6,8 +6,36 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ContactUsPage">
     <ContentPage.Content>
-        <Button
-            Text="Open chat"
-            Clicked="OpenChatClicked"/>
+        <Grid Margin="15,15,15,15"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                
+            </Grid.RowDefinitions>
+
+                <Button
+                    Text="Send us an email"
+                    Clicked="SendEmailButtonClicked"
+                    Grid.Row="0"
+                    BackgroundColor="{x:DynamicResource HB}"
+                    Margin="15"/>
+
+                <Button
+                    Text="Call us"
+                    Clicked="CallButtonClicked"
+                    Grid.Row="1"
+                    Margin="15"
+                    BackgroundColor="{x:DynamicResource HB}"/>
+
+            <Button
+                Text="Open chat"
+                Clicked="OpenChatButtonClicked"
+                Grid.Row="2"
+                Margin="15"
+                BackgroundColor="{x:DynamicResource HB}"/>
+        </Grid>
+
     </ContentPage.Content>
 </ContentPage>

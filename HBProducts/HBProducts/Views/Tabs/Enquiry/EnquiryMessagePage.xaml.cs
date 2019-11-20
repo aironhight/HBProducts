@@ -33,7 +33,7 @@ namespace HBProducts.Views.Tabs.Enquiry
             this.viewModel = viewModel;
             viewModel.INotifyView = this;
             BindingContext = viewModel;
-            Title = "Product enquiry";
+            Title = "Enquiry";
         }
 
         public async void notify(string type, params object[] list)
