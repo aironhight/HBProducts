@@ -14,10 +14,12 @@ namespace HBProducts.Views
     public partial class FAQPage : ContentPage
     {
         private FAQViewModel viewmodel;
+
         public FAQPage()
         {
             InitializeComponent();
             viewmodel = new FAQViewModel();
+            BindingContext = viewmodel;
         }
 
     }

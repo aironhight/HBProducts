@@ -51,13 +51,20 @@ namespace HBProducts.Views
             await Navigation.PushAsync(new EnquiryPage(viewmodel.Product));
         }
 
-        public void notify(string type, params object[] list)
+        public async void notify(string type, params object[] list)
         {
             switch (type)
             {
                 case "openWebViewer":
                     openWebViewer(list[0].ToString());
                     break;
+                case "favorited":
+                    await DisplayAlert("Favourites", "The product has been added to favorites. The next time that you refresh the products page it will apear on top!", "OK");
+                    break;
+                case "unfavorited":
+                    await DisplayAlert("Removed", "The next time that you refresh the products page the product will no longer appear on top!", "OK");
+                    break;
+
             }
         }
 

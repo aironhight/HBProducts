@@ -4,12 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProducts.Views.FAQPage">
+             x:Class="HBProducts.Views.FAQPage"
+             Title="FAQ">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the FAQ Page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        
+        <ScrollView>
+            <StackLayout>
+                <ListView ItemsSource="{Binding FAQItems}" HasUnevenRows="True" SeparatorVisibility="Default">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell IsEnabled="False">
+                                <StackLayout Margin="7">
+                                    <Label Text="{Binding Question}" FontAttributes="Bold" TextColor="{x:DynamicResource HB}" FontSize="Medium" IsEnabled="False"/>
+                                    <Label Text="{Binding Answer}" TextColor="Black" IsEnabled="False" FontSize="Body"/>
+                                    <Image Source="{Binding Image}" IsEnabled="False"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

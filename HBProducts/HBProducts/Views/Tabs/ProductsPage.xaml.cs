@@ -27,7 +27,7 @@ namespace HBProducts.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if(viewmodel.ProductList.ProductsCount() <= 0) //If the page is not filled with products - request products.
+            if (viewmodel.ProductList.ProductsCount() <= 0) //If the page is not filled with products - request products.
                 Task.Factory.StartNew(() => viewmodel.requestProducts());
         }
 

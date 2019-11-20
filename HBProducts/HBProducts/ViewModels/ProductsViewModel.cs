@@ -2,7 +2,7 @@
 using HBProducts.Services;
 using Newtonsoft.Json;
 using System;
-using System.Net.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -52,10 +52,34 @@ namespace HBProducts.ViewModels
                     return;
                 }
 
-                ProductList = JsonConvert.DeserializeObject<ProductList>(productListString);
+                //Set the sorted ProductList variable to a sorted product list so that the favorites come on top.
+                ProductList = SortProductList(JsonConvert.DeserializeObject<ProductList>(productListString)); 
             } else {
                 NoInternetConnection = true;
             }
+        }
+
+        private ProductList SortProductList(ProductList products)
+        {
+            List<int> favProducts = Settings.GetFavoriteProducts();
+            if (favProducts.Count == 0) //Check if there are any favorite products...
+                return products;
+
+            ProductList pl = new ProductList();
+            int favIndex = 0;
+
+            for (int i = 0; i < products.ProductsCount(); i++)
+            {
+                if (favProducts.Contains(products.Products[i].Id))
+                {
+                    products.Products[i].Model = "*" + products.Products[i].Model;
+                    Product temp = products.Products[favIndex];
+                    products.Products[favIndex] = products.Products[i];
+                    products.Products[i] = temp;
+                    favIndex++;
+                }
+            }
+            return products;
         }
 
         public ProductList ProductList
