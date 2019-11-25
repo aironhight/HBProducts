@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace HBProducts.Models
@@ -7,12 +8,12 @@ namespace HBProducts.Models
     public class Session
     {
         private string timeStarted;
-        private List<Message> messageList;
+        private ObservableCollection<Message> messageList;
         private Customer customer;
         private Employee employee;
         private int sessionID;
 
-        public Session(string timeStarted, List<Message> mList, Customer customer, Employee employee, int sessionID)
+        public Session(string timeStarted, ObservableCollection<Message> mList, Customer customer, Employee employee, int sessionID)
         {
             this.timeStarted = timeStarted;
             this.messageList = mList;
@@ -33,7 +34,7 @@ namespace HBProducts.Models
             set { this.timeStarted = value; }
         }
 
-        public List<Message> MessageList
+        public ObservableCollection<Message> MessageList
         {
             get { return this.messageList; }
             set { this.messageList = value; }
@@ -53,7 +54,7 @@ namespace HBProducts.Models
 
         public void AddMessage(Message message)
         {
-            messageList.Add(message);
+            messageList.Insert(0, message);
         }
     }
 }
