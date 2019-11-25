@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="HBProductsSupport.Views.ChatListPage">
+    <ContentPage.Content>
+        <ScrollView Margin="7,0,7,7">
+        <StackLayout>
+                <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                                <StackLayout BindingContext="{Binding Customer}"
+                                             Margin="0,5,0,5">
+                                <Label Text="{Binding Name}"/>
+                                <Label Text="{Binding Email}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            
+           
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

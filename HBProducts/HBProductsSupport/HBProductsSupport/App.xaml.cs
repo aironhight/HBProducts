@@ -13,7 +13,6 @@ namespace HBProductsSupport
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 

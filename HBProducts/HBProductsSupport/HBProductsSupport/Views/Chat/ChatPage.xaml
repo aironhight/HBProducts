@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HBProductsSupport.Views.Chat.ChatPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:eff="clr-namespace:HBProductsSupport.Effects"
+    xmlns:local="clr-namespace:HBProductsSupport"
+    Title="HB Support">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MessageDataTemplateSelector x:Key="MessageSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="AUTO" />
+        </Grid.RowDefinitions>
+        <ListView
+            x:Name="MessageListView"
+            BackgroundColor="White"
+            HasUnevenRows="True"
+            ItemTemplate="{StaticResource MessageSelector}"
+            ItemsSource="{Binding Messages}"
+            SelectionMode="None"
+            SeparatorVisibility="None" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.Effects>
+                <eff:TopPaddingWhenKeyboardAppearsEffect />
+            </Grid.Effects>
+            <Entry
+                x:Name="EntryText"
+                Completed="Entry_Completed"
+                Focused="EntryText_Focused"
+                ReturnCommand="{Binding SubmitMessageCommand}"
+                ReturnCommandParameter="{Binding TextEntry}"
+                Text="{Binding TextEntry}" 
+                Placeholder="Write Message..."/>
+            <Button Grid.Column="1" Command="{Binding SubmitMessageCommand}" Text="Send" WidthRequest="100"  BackgroundColor="{DynamicResource HB}" TextColor="White" CommandParameter="{Binding TextEntry}"/>
+        </Grid>
+    </Grid>
+
+</ContentPage>
