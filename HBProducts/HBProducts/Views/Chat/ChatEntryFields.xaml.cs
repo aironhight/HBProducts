@@ -25,20 +25,30 @@ namespace HBProducts.Views.Chat
 
         private async void nextButtonclicked(object sender, EventArgs e)
         {
+            //Check if the fields are filled correctly
             if(fullName.Text == "")
             {
                 DisplayAlert("Error", "Name entry not filled.", "OK");
                 return;
             }
-            if( email.Text == "")
+            if( email.Text == "" || email.Text.Contains("@"))
             {
                 DisplayAlert("Error", "E-mail entry not filled.", "OK");
                 return;
             }
-
+            setActivityIndicatorRunning(true);
             await Navigation.PushAsync(new ChatPage( await manager.GetSesionId(email.Text, fullName.Text)));
+            setActivityIndicatorRunning(false);
         }
 
+        //Enable and disable fields + enable/disable Activity indicator
+        private void setActivityIndicatorRunning(bool state)
+        {
+            indicator.IsRunning = state;
+            indicator.IsVisible = state;
+            fullName.IsEnabled = !state;
+            email.IsEnabled = !state;
+        }
 
     }
 }

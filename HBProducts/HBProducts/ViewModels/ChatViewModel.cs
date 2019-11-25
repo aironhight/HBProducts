@@ -37,15 +37,6 @@ namespace HBProducts.ViewModels
             
             SubmitMessageCommand = new Command<string>(SubmitMessage);
             textEntry = String.Empty;
-
-            OnSendCommand = new Command(() =>
-            {
-                if (!string.IsNullOrEmpty(TextMessage))
-                {
-                    chat.AddMessage(new Message(false, TextMessage, "", 0));
-                    TextMessage = string.Empty;
-                }
-            });
         }
 
         public string TextEntry
@@ -74,9 +65,10 @@ namespace HBProducts.ViewModels
         private async void getLatestMessages()
         {
             string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
-            if(jsonList.Contains("Error:"))
+            if(jsonList.Contains("Error"))
             {
                 //TO BE IMPLEMENTED!!!
+                view.notify("error", jsonList.Substring(6));
                 return;
             }
             List<Message> newMesssages = JsonConvert.DeserializeObject<List<Message>>(jsonList);
@@ -91,15 +83,13 @@ namespace HBProducts.ViewModels
             }
         }
 
-        public string TextMessage { get; set; }
-
         private void SubmitMessage(string obj)
         {
             var x = new TextChatViewModel() { Direction = TextChatViewModel.ChatDirection.Outgoing, Text = obj };
             Messages.Add(x);
+            view.notify("new messages");
             TextEntry = string.Empty;
             DataAdded?.Invoke(this, null);
-            //MessagingCenter.Send<MainViewModel>(this, "EntryAdded");
         }
     }
 }

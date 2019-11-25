@@ -10,18 +10,41 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Full name*"/>
-            <Entry Placeholder="Full name*"
+        <RelativeLayout>
+            <StackLayout>
+                <Label Text="Full name*"/>
+                <Entry Placeholder="Full name*"
                            x:Name="fullName"
                            Keyboard="Text"
                            Margin="0,0,0,20" />
-            <Label Text="Email*"/>
-            
-            <Entry Placeholder="Email*"
+                <Label Text="Email*"/>
+
+                <Entry Placeholder="Email*"
                            x:Name="email"
-                           Keyboard="Text"
+                           Keyboard="Email"
                            Margin="0,0,0,20" />
-        </StackLayout>
+            </StackLayout>
+
+            <ActivityIndicator 
+                x:Name="indicator"
+                IsRunning="False"
+                IsVisible="False"
+                
+                Color="{x:StaticResource HB}"
+                
+                RelativeLayout.XConstraint=
+                    "{ConstraintExpression 
+                        Type=RelativeToParent,
+                        Property=Width, 
+                        Factor=0.5,
+                        Constant=-25
+                        }"
+                RelativeLayout.YConstraint=
+                    "{ConstraintExpression 
+                        Type=RelativeToParent,
+                        Property=Height,
+                        Factor=0.5,
+                        Constant=-25}"/>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

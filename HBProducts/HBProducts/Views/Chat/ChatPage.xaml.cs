@@ -20,13 +20,15 @@ namespace HBProducts.Views.Chat
         private ChatManager manager;
         private ChatViewModel vm;
         private int sessionID;
+        private bool showingError;
 
         public ChatPage(int sessionID)
         {
             InitializeComponent();
+            showingError = false;
             manager = new ChatManager();
             vm = new ChatViewModel(sessionID, this);
-            BindingContext = vm;   
+            BindingContext = vm;
         }
 
         private async void SendRequestClicked(object sender, EventArgs e)
@@ -71,12 +73,21 @@ namespace HBProducts.Views.Chat
                 MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
         }
 
-        public void notify(string type, params object[] list)
+        public async void notify(string type, params object[] list)
         {
             switch(type)
             {
                 case "new messages":
                     MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+                    break;
+
+                case "error":
+                    if (!showingError)
+                    {
+                        showingError = true;
+                        await DisplayAlert("Unexpected Error", "Error while getting messages: " + list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.", "OK");
+                        showingError = false;
+                    }
                     break;
             }
         }
