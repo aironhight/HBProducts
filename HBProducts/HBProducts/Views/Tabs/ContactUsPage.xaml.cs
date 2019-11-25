@@ -35,9 +35,7 @@ namespace HBProducts.Views
 
         private async void CallButtonClicked(object sender, EventArgs e)
         {
-           // Device.OpenUri(new Uri("tel:038773729"));
-            //Launcher.OpenUri(new Uri("tel:038773729"));
-            await Launcher.OpenAsync(new Uri("tel:038773729"));
+            await Launcher.OpenAsync(new Uri("tel:" + Constants.telephone));
         }
     }
 }

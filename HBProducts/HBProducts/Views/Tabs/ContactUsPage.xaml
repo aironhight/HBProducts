@@ -15,25 +15,28 @@
                 
             </Grid.RowDefinitions>
 
-                <Button
-                    Text="Send us an email"
-                    Clicked="SendEmailButtonClicked"
-                    Grid.Row="0"
-                    BackgroundColor="{x:DynamicResource HB}"
-                    Margin="15"/>
+            <Button
+                Text="Send us an email"
+                Clicked="SendEmailButtonClicked"
+                Grid.Row="0"
+                BackgroundColor="{x:DynamicResource HB}"
+                TextColor="White"
+                Margin="15"/>
 
-                <Button
-                    Text="Call us"
-                    Clicked="CallButtonClicked"
-                    Grid.Row="1"
-                    Margin="15"
-                    BackgroundColor="{x:DynamicResource HB}"/>
+            <Button
+                Text="Call us"
+                Clicked="CallButtonClicked"
+                TextColor="White"
+                Grid.Row="1"
+                Margin="15"
+                BackgroundColor="{x:DynamicResource HB}"/>
 
             <Button
                 Text="Open chat"
                 Clicked="OpenChatButtonClicked"
                 Grid.Row="2"
                 Margin="15"
+                TextColor="White"
                 BackgroundColor="{x:DynamicResource HB}"/>
         </Grid>
 

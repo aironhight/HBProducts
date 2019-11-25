@@ -8,6 +8,7 @@ namespace HBProducts
         public static readonly string ProductsURI = "https://hbproductswebapi2.azurewebsites.net/api/Product";
         public static readonly string ChatURI = "https://hbproductschatapi.azurewebsites.net/api/Chat/";
         public static readonly string sendgridApiKey = "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";
+        public static readonly string telephone = "+4587476200";
 
 
         public static readonly string aboutCompany1 = "HB Products – dedicated to optimal solutions for level measurement and control of oil and refrigerants.";

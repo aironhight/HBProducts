@@ -23,7 +23,7 @@
                     IsReadOnly="True"
                     FontSize="Body"/>
 
-            <Label Text="{Binding Paragraph2Label}" TextColor="Black" FontSize="Medium" 
+            <Label Text="{Binding Paragraph2Label}" TextColor="{x:DynamicResource HB}" FontSize="Medium" 
                    FontAttributes="Bold" Margin="0,15,0,0"/>
             <Editor Text="{Binding Paragraph2Text}"
                     IsReadOnly="True"
