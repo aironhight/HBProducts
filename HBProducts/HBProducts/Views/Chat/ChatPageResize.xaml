@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HBProducts.Views.ChatPageResize"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HBProducts">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MessageDataTemplateSelector x:Key="MessageSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout>
+            <ListView
+                x:Name="MessageListView"
+                BackgroundColor="Yellow"
+                HasUnevenRows="True"
+                ItemTemplate="{StaticResource MessageSelector}"
+                ItemsSource="{Binding Messages}"
+                SelectionMode="None"
+                SeparatorVisibility="None" />
+
+            <BoxView BackgroundColor="Red" HeightRequest="2" VerticalOptions="End" />
+        </StackLayout>
+
+        <Entry
+            x:Name="EntryText"
+            Grid.Row="1"
+            Completed="EntryText_Completed"
+            Placeholder="Enter some stuff"
+            ReturnCommand="{Binding SubmitMessageCommand}"
+            ReturnCommandParameter="{Binding TextEntry}"
+            Text="{Binding TextEntry}" />
+        <BoxView Grid.Row="2" HeightRequest="0" />
+    </Grid>
+
+
+</ContentPage>
+
+<!--<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="HBProducts.Views.ChatPageResize">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>-->

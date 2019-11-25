@@ -19,7 +19,7 @@ namespace HBProducts.Services
         {
             String userData = Preferences.Get("userData", "");
             if (userData.Length == 0)
-                return null;
+                return new Customer("", "", "", "", "");
 
             Customer toReturn = JsonConvert.DeserializeObject<Customer>(userData);
             return JsonConvert.DeserializeObject<Customer>(userData);

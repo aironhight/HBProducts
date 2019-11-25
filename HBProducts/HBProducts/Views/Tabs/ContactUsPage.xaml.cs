@@ -1,4 +1,5 @@
-﻿using HBProducts.Views.Tabs.Enquiry;
+﻿using HBProducts.Views.Chat;
+using HBProducts.Views.Tabs.Enquiry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace HBProducts.Views
 
         private async void OpenChat()
         {
-            await Navigation.PushAsync(new ChatPage());
+            await Navigation.PushAsync(new ChatEntryFields());
         }
 
         private void SendEmailButtonClicked(object sender, EventArgs e)
