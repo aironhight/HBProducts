@@ -87,8 +87,10 @@ namespace HBProducts.ViewModels
         {
             var x = new TextChatViewModel() { Direction = TextChatViewModel.ChatDirection.Outgoing, Text = obj };
             Messages.Add(x);
-            view.notify("new messages");
+            view.notify("new messages");            
+            manager.sendMessage(chat.SessionID, new Message(false, TextEntry, "", 0));
             TextEntry = string.Empty;
+            view.notify("new messages");
             DataAdded?.Invoke(this, null);
         }
     }
