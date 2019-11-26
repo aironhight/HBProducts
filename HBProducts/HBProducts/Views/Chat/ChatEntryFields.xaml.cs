@@ -31,7 +31,7 @@ namespace HBProducts.Views.Chat
                 DisplayAlert("Error", "Name entry not filled.", "OK");
                 return;
             }
-            if( email.Text == "" || email.Text.Contains("@"))
+            if( email.Text == "" || !(email.Text.Contains("@")))
             {
                 DisplayAlert("Error", "E-mail entry not filled.", "OK");
                 return;

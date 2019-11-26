@@ -20,11 +20,11 @@ namespace HBProductsSupport.Services
             client = new HttpClient();
         }
 
-        public async Task<string> GetCustMessages(int sessionID, int lastMesage)
+        public async Task<string> GetEmpMessages(int sessionID, int lastMesage)
         {
             try
             {
-                var response = await client.GetStringAsync(Constants.ChatURI + "GetCustMessages/"+sessionID+"/"+lastMesage);
+                var response = await client.GetStringAsync(Constants.ChatURI + "GetEmpMessages/"+sessionID+"/"+lastMesage);
                 return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
             }
             catch (Exception ex)
@@ -126,6 +126,57 @@ namespace HBProductsSupport.Services
                 return -200;
             }
             
+        }
+
+        public async Task<string> GetEmpSessions(int empID)
+        {
+            try
+            {
+                var response = await client.GetStringAsync(Constants.ChatURI + "GetEmpSessions/" + empID);
+                return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
+            }
+            catch (Exception ex)
+            {
+                return "Error:Error Loading sessions:" + ex.Message;
+            }
+        }
+
+        public async Task<int> GetEmpID(string empName)
+        {
+            int userID = -123;
+            try
+            {
+                var res = await client.GetAsync(Constants.ChatURI + "GetEmpID/" + empName);
+                string response = await res.Content.ReadAsStringAsync();
+                //Debug.WriteLine("Kurvata: " + response);
+
+
+                if (res.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    //SUCCESSFUL POST REQUEST
+                    if (Int32.TryParse(response, out userID))
+                    {
+                        //Successful tryparse
+                        return userID;
+                    }
+                    else
+                    {
+                        //Unsucessful tryparse - Unexpected error ocurred
+                        return -12;
+                    }
+
+                }
+                else
+                {
+                    return -200;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error at ChatManager: " + ex.StackTrace);
+                return -200;
+            }
         }
     }
 }
