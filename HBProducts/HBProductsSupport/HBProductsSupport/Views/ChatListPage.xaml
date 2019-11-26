@@ -6,15 +6,33 @@
              mc:Ignorable="d"
              x:Class="HBProductsSupport.Views.ChatListPage">
     <ContentPage.Content>
-        <ScrollView Margin="7,0,7,7">
-        <StackLayout>
-                <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
-                <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True">
+        <!--<ScrollView Margin="7,0,7,7">--> 
+            <StackLayout>
+                    <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True" ItemTapped="onItemSelected" 
+                          IsPullToRefreshEnabled="True" RefreshCommand="{Binding CommandUpdate}"
+                          IsRefreshing="{Binding IsBusy}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout BindingContext="{Binding Customer}"
+                                                Margin="0,5,0,5">
+                                    <Label Text="{Binding Name}"/>
+                                    <Label Text="{Binding Email}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            <Label Text="Taken Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+            <ListView ItemsSource="{Binding EmployeeSessions}" HasUnevenRows="True" ItemTapped="onTakenItemSelected" 
+                          IsPullToRefreshEnabled="True" RefreshCommand="{Binding CommandUpdate}"
+                          IsRefreshing="{Binding IsBusy}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                                <StackLayout BindingContext="{Binding Customer}"
-                                             Margin="0,5,0,5">
+                            <StackLayout BindingContext="{Binding Customer}"
+                                                Margin="0,5,0,5">
                                 <Label Text="{Binding Name}"/>
                                 <Label Text="{Binding Email}"/>
                             </StackLayout>
@@ -22,10 +40,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            
-           
         </StackLayout>
-        </ScrollView>
+        <!--</ScrollView>-->
     </ContentPage.Content>
 </ContentPage>

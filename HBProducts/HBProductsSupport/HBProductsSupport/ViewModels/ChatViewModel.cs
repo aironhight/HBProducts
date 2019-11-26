@@ -52,7 +52,7 @@ namespace HBProductsSupport.ViewModels
             this.chat = JsonConvert.DeserializeObject<Session>(chatString);
             lastMessageID = chat.GetLatestEmployeeMessageID();
             foreach (Message m in chat.MessageList) //Add all previous messages to the chat page.
-                Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = m.IsEmployee ? TextChatViewModel.ChatDirection.Incoming : TextChatViewModel.ChatDirection.Outgoing });
+                Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = m.IsEmployee ? TextChatViewModel.ChatDirection.Outgoing : TextChatViewModel.ChatDirection.Incoming });
 
             //Make the system check for new messages every 3 seconds.
             var startTimeSpan = TimeSpan.Zero;
@@ -71,7 +71,7 @@ namespace HBProductsSupport.ViewModels
 
         private async void getLatestMessages()
         {
-            string jsonList = await manager.GetCustMessages(chat.SessionID, lastMessageID);
+            string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
             if(jsonList.Contains("Error"))
             {
                 //TO BE IMPLEMENTED!!!
