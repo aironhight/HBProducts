@@ -57,11 +57,12 @@ namespace HBProductsSupport.Models
             messageList.Insert(0, message);
         }
 
-        public int GetLatestEmployeeMessageID()
+        public int GetLatestCustomerMessageID()
         {
+            if (messageList == null) return 0;
             for(int i = messageList.Count-1; i>0; i--)
             {
-                if (messageList[i].IsEmployee)
+                if (!messageList[i].IsEmployee)
                     return messageList[i].Id;
             }
             return 0;

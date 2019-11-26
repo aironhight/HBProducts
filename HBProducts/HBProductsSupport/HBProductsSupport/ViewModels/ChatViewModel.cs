@@ -50,7 +50,7 @@ namespace HBProductsSupport.ViewModels
         {
             string chatString = await manager.GetSessionInfo(sessionID);
             this.chat = JsonConvert.DeserializeObject<Session>(chatString);
-            lastMessageID = chat.GetLatestEmployeeMessageID();
+            lastMessageID = chat.GetLatestCustomerMessageID();
             foreach (Message m in chat.MessageList) //Add all previous messages to the chat page.
                 Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = m.IsEmployee ? TextChatViewModel.ChatDirection.Outgoing : TextChatViewModel.ChatDirection.Incoming });
             StartUpdateRequests();
@@ -78,6 +78,7 @@ namespace HBProductsSupport.ViewModels
         {
             if (chat == null || manager == null) return;
             string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
+
             if(jsonList.Contains("Error"))
             {
                 //TO BE IMPLEMENTED!!!

@@ -20,11 +20,11 @@ namespace HBProductsSupport.Services
             client = new HttpClient();
         }
 
-        public async Task<string> GetEmpMessages(int sessionID, int lastMesage)
+        public async Task<string> GetCustMessages(int sessionID, int lastMesage)
         {
             try
             {
-                var response = await client.GetStringAsync(Constants.ChatURI + "GetEmpMessages/"+sessionID+"/"+lastMesage);
+                var response = await client.GetStringAsync(Constants.ChatURI + "GetCustMessages/"+sessionID+"/"+lastMesage);
                 return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
             }
             catch (Exception ex)
