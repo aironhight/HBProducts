@@ -38,6 +38,7 @@ namespace HBProducts.ViewModels
             
             SubmitMessageCommand = new Command<string>(SubmitMessage);
             textEntry = String.Empty;
+            StartUpdateRequests();
         }
 
         public string TextEntry
@@ -54,15 +55,19 @@ namespace HBProducts.ViewModels
             if(chat.MessageList != null) { 
                 foreach (Message m in chat.MessageList) //Add all previous messages to the chat page.
                     Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = m.IsEmployee ? TextChatViewModel.ChatDirection.Incoming : TextChatViewModel.ChatDirection.Outgoing });
-            }
+            } 
+        }
+
+        public void StartUpdateRequests()
+        {
             //Make the system check for new messages every 3 seconds.
+            if (manager == null || chat == null) return;
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(3);
             timer = new Timer((e) =>
             {
                 getLatestMessages();
             }, null, startTimeSpan, periodTimeSpan);
-            
         }
 
         public void StopUpdateRequests()

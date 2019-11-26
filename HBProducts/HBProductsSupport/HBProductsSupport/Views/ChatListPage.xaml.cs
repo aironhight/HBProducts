@@ -48,7 +48,7 @@ namespace HBProductsSupport.Views
                 int response = await manager.TakeSession(empID, s.SessionID);
 
                 if (response !=-2)
-                    await Navigation.PushAsync(new ChatPage(s.SessionID));
+                    await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
             }
         }
 
@@ -56,7 +56,7 @@ namespace HBProductsSupport.Views
         {
             {
                 Session s = e.Item as Session;
-                await Navigation.PushAsync(new ChatPage(s.SessionID));
+                await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
             }
         }
     }

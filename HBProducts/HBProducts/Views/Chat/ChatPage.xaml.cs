@@ -34,6 +34,15 @@ namespace HBProducts.Views.Chat
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if(vm != null)
+                vm.StartUpdateRequests();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (vm != null)
+                vm.StopUpdateRequests();
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -61,12 +70,6 @@ namespace HBProducts.Views.Chat
                 {
                     MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
                 });
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            vm.StopUpdateRequests();
         }
 
         public async void notify(string type, params object[] list)

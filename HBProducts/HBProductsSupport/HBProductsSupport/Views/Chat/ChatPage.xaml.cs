@@ -22,18 +22,26 @@ namespace HBProductsSupport.Views.Chat
         private int sessionID;
         private bool showingError;
 
-        public ChatPage(int sessionID)
+        public ChatPage(int sessionID, string username)
         {
             InitializeComponent();
             showingError = false;
             manager = new ChatManager();
             vm = new ChatViewModel(sessionID, this);
             BindingContext = vm;
+            Title = username;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            vm.StartUpdateRequests();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            vm.StopUpdateRequests();
         }
 
         private void Button_Clicked(object sender, EventArgs e)
