@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +18,8 @@ namespace HBProducts.Views.Chat
         public ChatEntryFields()
         {
             InitializeComponent();
+            entryLayout.WidthRequest = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density; //Set the width of the Entry manually...
+            entryLayout.HeightRequest = DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density + 50;
             fullName.Text = Settings.GetUserData().Name;
             email.Text = Settings.GetUserData().Email;
             manager = new ChatManager();
@@ -31,7 +33,7 @@ namespace HBProducts.Views.Chat
                 DisplayAlert("Error", "Name entry not filled.", "OK");
                 return;
             }
-            if( email.Text == "" || !(email.Text.Contains("@")))
+            if( email.Text == "" || !email.Text.Contains("@"))
             {
                 DisplayAlert("Error", "E-mail entry not filled.", "OK");
                 return;

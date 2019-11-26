@@ -11,7 +11,8 @@
     
     <ContentPage.Content>
         <RelativeLayout>
-            <StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand"
+                         x:Name="entryLayout">
                 <Label Text="Full name*"/>
                 <Entry Placeholder="Full name*"
                            x:Name="fullName"
