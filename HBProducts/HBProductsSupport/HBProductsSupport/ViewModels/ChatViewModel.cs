@@ -64,20 +64,26 @@ namespace HBProductsSupport.ViewModels
 
         public void StartUpdateRequests()
         {
-            StopUpdateRequests(); //If there are already requests going on
-            //Make the system check for new messages every 3 seconds.
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(3);
-            timer = new Timer((e) =>
+            Task.Factory.StartNew(() =>
             {
-                getLatestMessages();
-            }, null, startTimeSpan, periodTimeSpan);
+                while (manager == null || chat == null)
+                {
+                    Thread.Sleep(500);
+                }
+                //Make the system check for new messages every 3 seconds.
+                var startTimeSpan = TimeSpan.Zero;
+                var periodTimeSpan = TimeSpan.FromSeconds(3);
+                timer = new Timer((e) =>
+                {
+                    getLatestMessages();
+                }, null, startTimeSpan, periodTimeSpan);
+            });
         }
 
         private async void getLatestMessages()
         {
             if (chat == null || manager == null) return;
-            string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
+            string jsonList = await manager.GetCustMessages(chat.SessionID, lastMessageID);
 
             if(jsonList.Contains("Error"))
             {
@@ -99,6 +105,7 @@ namespace HBProductsSupport.ViewModels
 
         private void SubmitMessage(string obj)
         {
+            if (manager == null) return;
             var x = new TextChatViewModel() { Direction = TextChatViewModel.ChatDirection.Outgoing, Text = obj };
             Messages.Add(x);
             view.notify("new messages");            

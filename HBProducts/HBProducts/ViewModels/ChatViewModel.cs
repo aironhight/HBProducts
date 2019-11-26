@@ -60,14 +60,22 @@ namespace HBProducts.ViewModels
 
         public void StartUpdateRequests()
         {
-            //Make the system check for new messages every 3 seconds.
-            if (manager == null || chat == null) return;
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(3);
-            timer = new Timer((e) =>
+            Task.Factory.StartNew(() =>
             {
-                getLatestMessages();
-            }, null, startTimeSpan, periodTimeSpan);
+                while (manager == null || chat == null)
+                {
+                    Thread.Sleep(500);
+                }
+
+                //Make the system check for new messages every 3 seconds.
+                if (manager == null || chat == null) return;
+                var startTimeSpan = TimeSpan.Zero;
+                var periodTimeSpan = TimeSpan.FromSeconds(3);
+                timer = new Timer((e) =>
+                {
+                    getLatestMessages();
+                }, null, startTimeSpan, periodTimeSpan);
+            }); 
         }
 
         public void StopUpdateRequests()
@@ -78,22 +86,26 @@ namespace HBProducts.ViewModels
 
         private async void getLatestMessages()
         {
+           
             string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
-            if(jsonList.Contains("Error"))
+            if (jsonList.Contains("Error"))
             {
                 view.notify("error", jsonList.Substring(6));
                 return;
             }
             List<Message> newMesssages = JsonConvert.DeserializeObject<List<Message>>(jsonList);
-            
-            if(newMesssages.Count > 0) {
+
+            if (newMesssages.Count > 0)
+            {
                 lastMessageID = newMesssages[newMesssages.Count - 1].Id;
-                foreach (Message m in newMesssages) 
+                foreach (Message m in newMesssages)
                     Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = TextChatViewModel.ChatDirection.Incoming });
 
                 view.notify("new messages");
                 DataAdded?.Invoke(this, null);
             }
+            
+            
         }
 
         private void SubmitMessage(string obj)
