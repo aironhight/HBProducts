@@ -23,6 +23,7 @@ namespace HBProductsSupport.ViewModels
         private string textEntry;
         private int lastMessageID;
         private INotifyView view;
+        private Timer timer;
 
         public event EventHandler DataAdded;
         public IList<TextChatViewModel> Messages { get; set; }
@@ -56,10 +57,16 @@ namespace HBProductsSupport.ViewModels
             //Make the system check for new messages every 3 seconds.
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(3);
-            var timer = new Timer((e) =>
+            timer = new Timer((e) =>
             {
                 getLatestMessages();
             }, null, startTimeSpan, periodTimeSpan);
+        }
+
+        public void StopUpdateRequests()
+        {
+            if(timer != null)
+                timer.Dispose();
         }
 
         private async void getLatestMessages()

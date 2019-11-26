@@ -36,8 +36,6 @@ namespace HBProductsSupport.Views.Chat
             base.OnAppearing();
         }
 
-
-
         private void Button_Clicked(object sender, EventArgs e)
         {
             var x = MessageListView.ItemsSource;
@@ -46,14 +44,19 @@ namespace HBProductsSupport.Views.Chat
 
         private void Entry_Completed(object sender, EventArgs e)
         {
-            MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+            Device.BeginInvokeOnMainThread(() => {
+                MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+            });
             //EntryText.Focus();
         }
 
         private void EntryText_Focused(object sender, FocusEventArgs e)
         {
-            if(vm.Messages.Count != 0) 
-                MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+            if (vm.Messages.Count != 0)
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+                });
         }
 
         public async void notify(string type, params object[] list)
@@ -61,7 +64,10 @@ namespace HBProductsSupport.Views.Chat
             switch(type)
             {
                 case "new messages":
-                    MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+                    });
                     break;
 
                 case "error":
