@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>HBProductsSupport</string>
+	<string>HB Support App</string>
 	<key>CFBundleIdentifier</key>
 	<string>HB.HBSupport</string>
 	<key>CFBundleVersion</key>
@@ -31,7 +31,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
-	<string>HBProductsSupport</string>
+	<string>HBSupport</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>
