@@ -15,6 +15,7 @@ namespace HBProducts.Views.Chat
     public partial class ChatEntryFields : ContentPage
     {
         private ChatManager manager;
+
         public ChatEntryFields()
         {
             InitializeComponent();
@@ -27,20 +28,55 @@ namespace HBProducts.Views.Chat
 
         private async void nextButtonclicked(object sender, EventArgs e)
         {
+            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                AlertMessage("No internet", "You cannot open a session with no internet access...");
+                return;
+            }
             //Check if the fields are filled correctly
             if(fullName.Text == "")
             {
-                DisplayAlert("Error", "Name entry not filled.", "OK");
+                AlertMessage("Error", "Name entry not filled.");
                 return;
             }
             if( email.Text == "" || !email.Text.Contains("@"))
             {
-                DisplayAlert("Error", "E-mail entry not filled.", "OK");
+                AlertMessage("Error", "E-mail entry not filled.");
                 return;
             }
             setActivityIndicatorRunning(true);
-            await Navigation.PushAsync(new ChatPage( await manager.GetSesionId(email.Text, fullName.Text)));
+            int sessionRes = await manager.GetSesionId(email.Text, fullName.Text);
+            switch(sessionRes)
+            {
+                case -12:
+                    AlertMessage("Error", "Internal server error. Please check your internet connection and try again!");
+                    setActivityIndicatorRunning(false);
+                    return;
+                case -123:
+                    AlertMessage("Error", "Exception in the API. Please check your internet connection and try again!");
+                    setActivityIndicatorRunning(false);
+                    return;
+                case -420:
+                    AlertMessage("Timeout Error", "The request has timed out. Please check your internet connection and try again!");
+                    setActivityIndicatorRunning(false);
+                    return;
+                
+            }
+            await Navigation.PushAsync(new ChatPage(sessionRes));
             setActivityIndicatorRunning(false);
+        }
+
+        private void AlertMessage(string title, string text)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Alert(title, text);
+            });
+        }
+
+        private async void Alert(string title, string text)
+        {
+            await DisplayAlert(title, text, "OK");
         }
 
         //Enable and disable fields + enable/disable Activity indicator

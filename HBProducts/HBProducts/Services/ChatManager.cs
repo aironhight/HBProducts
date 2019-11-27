@@ -41,8 +41,11 @@ namespace HBProducts.Services
                     return -12;
                 }
             }
-            // If an error occurred
-            catch (Exception e)
+            catch (OperationCanceledException opc) //Timeout exception
+            {
+                return -420;
+            }
+            catch (Exception e) //All exceptions
             {
                 return -123;
             }

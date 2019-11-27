@@ -75,6 +75,10 @@ namespace HBProductsSupport.Services
                 var response = await client.GetStringAsync(Constants.ChatURI+"GetSession/"+sessionID);
                 return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
             }
+            catch (OperationCanceledException opc) //Timeout exception
+            {
+                return "Error:Timeout error(GetSessionInfo)";
+            }
             catch(Exception ex)
             {
                 return "Error:Session Error." + ex.Message;
@@ -112,11 +116,10 @@ namespace HBProductsSupport.Services
                         //Unsucessful tryparse - Unexpected error ocurred
                         return -12;
                     }
-                    
                 }
                 else
                 {
-                    return -200;
+                    return -200; //Internal server error.
                 }
                 
             }
@@ -138,6 +141,22 @@ namespace HBProductsSupport.Services
             catch (Exception ex)
             {
                 return "Error:Error Loading sessions:" + ex.Message;
+            }
+        }
+
+        public async Task<int> CloseSession(int sessionID)
+        {
+            try
+            {
+                var res = await client.GetAsync(Constants.ChatURI + "CloseChatSession/" + sessionID);
+                string response = await res.Content.ReadAsStringAsync();
+                int toReturn = -2;
+                Int32.TryParse(response, out toReturn);
+                return toReturn;
+            }
+            catch (Exception ex)
+            {
+                return -3;
             }
         }
 
@@ -164,7 +183,6 @@ namespace HBProductsSupport.Services
                         //Unsucessful tryparse - Unexpected error ocurred
                         return -12;
                     }
-
                 }
                 else
                 {

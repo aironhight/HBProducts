@@ -158,5 +158,12 @@ namespace HBProducts.Views
         {
             RequestScanner();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            var mdp = Xamarin.Forms.Application.Current.MainPage as MainPage;
+            mdp.NavigateToPage(0);
+            return true;
+        }
     }
 }

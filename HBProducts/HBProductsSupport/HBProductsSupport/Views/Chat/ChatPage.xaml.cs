@@ -2,10 +2,12 @@
 using HBProductsSupport.Services;
 using HBProductsSupport.ViewModels;
 using Newtonsoft.Json;
+using SendGrid;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,16 +19,13 @@ namespace HBProductsSupport.Views.Chat
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChatPage : ContentPage, INotifyView
     {
-        private ChatManager manager;
         private ChatViewModel vm;
-        private int sessionID;
-        private bool showingError;
+        private bool displayingError;
 
         public ChatPage(int sessionID, string username)
         {
             InitializeComponent();
-            showingError = false;
-            manager = new ChatManager();
+            displayingError = false;
             vm = new ChatViewModel(sessionID, this);
             BindingContext = vm;
             Title = username;
@@ -35,12 +34,14 @@ namespace HBProductsSupport.Views.Chat
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            displayingError = false;
             vm.StartUpdateRequests();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+            displayingError = true;
             vm.StopUpdateRequests();
         }
 
@@ -74,19 +75,91 @@ namespace HBProductsSupport.Views.Chat
                 case "new messages":
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
+                        if(vm.Messages != null && vm.Messages.Count > 0)
+                            MessageListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.End, false);
                     });
                     break;
 
                 case "error":
-                    if (!showingError)
-                    {
-                        showingError = true;
-                        await DisplayAlert("Unexpected Error", "Error while getting messages: " + list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.", "OK");
-                        showingError = false;
-                    }
+                    AlertMessage("Unexpected Error", "Error while getting messages: " + list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.");
+                    break;
+
+                case "session error":
+                    AlertMessage("Session Error", "Error while getting session info: " + list[0].ToString() + Environment.NewLine + "The session will try to update automatically.");
+                    break;
+
+                case "EmailError":
+                    AlertMessage("Error sending chat copy to the customer", list[0].ToString());
+                    break;
+
+                case "closing error":
+                    AlertMessage("Error closing the session", list[0].ToString());
+                    break;
+
+                case "session closed":
+                    await Navigation.PopAsync();
+                    break;
+
+                case "message error":
+                    AlertMessage("Error sending message!", "Sending the message failed too many times... The message will not be sent." + Environment.NewLine + "Error: " + list[0].ToString());
+                    break;
+
+                case "response":
+                    Response response = (Response)list[0];
+
+                    //Check if the enquiry was sent successfully
+                    if (response.StatusCode == HttpStatusCode.Accepted)
+                        AlertMessage("Sucess", "Chat copy sent successfuly");
+                    else
+                        //Alert the user if not.
+                        AlertMessage("Fail", "Chat copy did not send successfuly. Error code:" + response.StatusCode.ToString());
+
+                    break;
+
+                case "no internet":
+                    AlertMessage("No internet","There is no internet connection. The background of the chat will stay red until there is no internet connectivity");
+                    break;
+
+                case "no session error":
+                    AlertMessage("Error", "Unable to start chat session. Check your internet connectivity.");
+                    break;
+
+                case "error host":
+                    AlertMessage("Error", "Unable to reach host after few attempts. Check your network connectivity. The app will try to reach the host again!");
                     break;
             }
+        }
+
+        private void AlertMessage(string title, string message)
+        {
+            Device.BeginInvokeOnMainThread(() => Alert(title, message));
+        }
+
+        private async void Alert(string title, string message)
+        {
+            if (!displayingError)
+            {
+                displayingError = true;
+                await DisplayAlert(title, message, "OK");
+                displayingError = false;
+            }
+        }
+
+        private async void closeSessionClicked(object sender, EventArgs e)
+        {
+            var res = await DisplayAlert("Close session?", "Are you sure that you want to close this session?", "Continue", "Cancel");
+            if (res)
+            {
+                var sendRes = await DisplayAlert("Send copy to email?", "Do you want to send a copy of the chat to the customer's email?", "Yes", "Cancel");
+                vm.CloseSessionAsync(sendRes);
+            }
+        }
+
+        private void infoClicked(object sender, EventArgs e)
+        {
+            DisplayAlert("Customer info", 
+                "Name: " + vm.GetCustomerName() + Environment.NewLine +
+                "Email: " + vm.GetCustomerEmail(), "OK");
         }
     }
 }

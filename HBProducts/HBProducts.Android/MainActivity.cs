@@ -40,8 +40,8 @@ namespace HBProducts.Droid
             }
 
             
-      AzurePushNotificationManager.Initialize(this, Constants.ListenConnectionString, Constants.NotificationHubName, true);
-
+            AzurePushNotificationManager.Initialize(this, Constants.ListenConnectionString, Constants.NotificationHubName, true);
+            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "all", "general" });
            
         }
 

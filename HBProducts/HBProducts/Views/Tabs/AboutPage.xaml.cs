@@ -18,5 +18,12 @@ namespace HBProducts.Views
             viewmodel = new AboutViewModel();
             BindingContext = viewmodel; 
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            var mdp = Xamarin.Forms.Application.Current.MainPage as MainPage;
+            mdp.NavigateToPage(0);
+            return true;
+        }
     }
 }
