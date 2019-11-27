@@ -39,11 +39,8 @@ namespace HBProducts.Droid
                 AzurePushNotificationManager.DefaultNotificationChannelName = "General";
             }
 
-            
             AzurePushNotificationManager.Initialize(this, Constants.ListenConnectionString, Constants.NotificationHubName, true);
             CrossAzurePushNotification.Current.RegisterAsync(new string[] { "all", "general" });
-           
-        }
 
        
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -52,5 +49,6 @@ namespace HBProducts.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
+      
+	}
 }

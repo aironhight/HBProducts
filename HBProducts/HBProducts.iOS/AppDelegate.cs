@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Plugin.AzurePushNotification;
 using UIKit;
 using UserNotifications;
@@ -26,8 +27,10 @@ namespace HBProducts.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+            KeyboardOverlapRenderer.Init();
             AzurePushNotificationManager.Initialize(Constants.ListenConnectionString, Constants.NotificationHubName, options, true) ;
             AzurePushNotificationManager.CurrentNotificationPresentationOption = UNNotificationPresentationOptions.Alert | UNNotificationPresentationOptions.Badge;
+            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "all", "general" });
 
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
