@@ -6,6 +6,11 @@
     xmlns:eff="clr-namespace:HBProductsSupport.Effects"
     xmlns:local="clr-namespace:HBProductsSupport"
     Title="HB Support">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Close" Clicked="closeSessionClicked"/>
+        <ToolbarItem Text="Info" Clicked="infoClicked"/>
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -20,7 +25,7 @@
         </Grid.RowDefinitions>
         <ListView
             x:Name="MessageListView"
-            BackgroundColor="White"
+            BackgroundColor="{Binding BackGroundColor}"
             HasUnevenRows="True"
             ItemTemplate="{StaticResource MessageSelector}"
             ItemsSource="{Binding Messages}"

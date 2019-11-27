@@ -4,43 +4,50 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="HBProductsSupport.Views.ChatListPage">
+             x:Name="rootView"
+             x:Class="HBProductsSupport.Views.ChatListPage"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{Binding BackgroundColor}">
     <ContentPage.Content>
-        <!--<ScrollView Margin="7,0,7,7">--> 
-            <StackLayout>
-                    <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
-                <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True" ItemTapped="onItemSelected" 
-                          IsPullToRefreshEnabled="True" RefreshCommand="{Binding CommandUpdate}"
-                          IsRefreshing="{Binding IsBusy}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout BindingContext="{Binding Customer}"
-                                                Margin="0,5,0,5">
-                                    <Label Text="{Binding Name}"/>
-                                    <Label Text="{Binding Email}"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            <Label Text="Taken Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
-            <ListView ItemsSource="{Binding EmployeeSessions}" HasUnevenRows="True" ItemTapped="onTakenItemSelected" 
-                          IsPullToRefreshEnabled="True" RefreshCommand="{Binding CommandUpdate}"
-                          IsRefreshing="{Binding IsBusy}">
+        
+        <StackLayout Margin="7,0,7,7" IsEnabled="{Binding ListsEnabled}" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}">
+            <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
+            
+            <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True" ItemTapped="onItemSelected" 
+                      IsPullToRefreshEnabled="False" RefreshCommand="{Binding CommandUpdate}"
+                      IsRefreshing="False" IsEnabled="{Binding ListsEnabled}"
+                      x:Name="unTakenList" BackgroundColor="{Binding BackgroundColor}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout BindingContext="{Binding Customer}"
                                                 Margin="0,5,0,5">
-                                <Label Text="{Binding Name}"/>
-                                <Label Text="{Binding Email}"/>
+                                <Label Text="{Binding Name}" BackgroundColor="{Binding BackgroundColor},  Source={x:Reference rootView}"/>
+                                <Label Text="{Binding Email}" BackgroundColor="{Binding BackgroundColor},  Source={x:Reference rootView}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label Text="Taken Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
+            <ListView ItemsSource="{Binding EmployeeSessions}" HasUnevenRows="True" ItemTapped="onTakenItemSelected" 
+                      IsPullToRefreshEnabled="False" RefreshCommand="{Binding CommandUpdate}"
+                      IsRefreshing="False"  IsEnabled="{Binding ListsEnabled}"
+                      x:Name="takenList" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BindingContext="{Binding Customer}"
+                                                Margin="0,5,0,5">
+                                <Label Text="{Binding Name}" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
+                                <Label Text="{Binding Email}" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-        <!--</ScrollView>-->
+
     </ContentPage.Content>
 </ContentPage>

@@ -7,6 +7,10 @@
     xmlns:local="clr-namespace:HBProducts"
     Title="HB Support">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Send Copy" Clicked="SendCopyClicked"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:MessageDataTemplateSelector x:Key="MessageSelector" />
@@ -20,7 +24,7 @@
         </Grid.RowDefinitions>
         <ListView
             x:Name="MessageListView"
-            BackgroundColor="White"
+            BackgroundColor="{Binding BackgroundColor}"
             HasUnevenRows="True"
             ItemTemplate="{StaticResource MessageSelector}"
             ItemsSource="{Binding Messages}"
