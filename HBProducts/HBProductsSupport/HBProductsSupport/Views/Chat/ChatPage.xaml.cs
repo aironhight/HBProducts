@@ -79,14 +79,16 @@ namespace HBProductsSupport.Views.Chat
                     break;
 
                 case "error":
-                    if (!showingError)
-                    {
-                        showingError = true;
-                        await DisplayAlert("Unexpected Error", "Error while getting messages: " + list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.", "OK");
-                        showingError = false;
-                    }
+                    Device.BeginInvokeOnMainThread(() => { displayAlert("Unexpecter error", list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.");    });
                     break;
             }
+        }
+
+        private async void displayAlert(string title, string message)
+        {
+            showingError = true;           
+            await DisplayAlert(title, message, "OK");
+            showingError = false;
         }
     }
 }

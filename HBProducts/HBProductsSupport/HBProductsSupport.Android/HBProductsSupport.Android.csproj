@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -100,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HBProductsSupport\HBProductsSupport.csproj">
-      <Project>{352224F6-B270-4B3B-9B99-868EC762582C}</Project>
+      <Project>{FC317580-776C-465F-AC38-4D520DCFAA48}</Project>
       <Name>HBProductsSupport</Name>
     </ProjectReference>
   </ItemGroup>

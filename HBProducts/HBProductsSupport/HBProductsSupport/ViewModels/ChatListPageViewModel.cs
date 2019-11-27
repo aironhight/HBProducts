@@ -36,11 +36,13 @@ namespace HBProductsSupport.ViewModels
             if (sessionsString.Contains("Error:"))
             {
                 view.notify("Error", sessionsString.Substring(6));
+                IsBusy = false;
                 return;
             }
             if (empSessionsString.Contains("Error:"))
             {
                 view.notify("Error", empSessionsString.Substring(6));
+                IsBusy = false;
                 return;
             }
             UnansweredSessions = JsonConvert.DeserializeObject<ObservableCollection<Session>>(sessionsString);

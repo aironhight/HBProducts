@@ -64,6 +64,7 @@ namespace HBProductsSupport.ViewModels
 
         public void StartUpdateRequests()
         {
+            StopUpdateRequests();
             Task.Factory.StartNew(() =>
             {
                 while (manager == null || chat == null)
