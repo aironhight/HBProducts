@@ -46,7 +46,7 @@ namespace HBProducts.Droid
                  AzurePushNotificationManager.Initialize(this, Constants.ListenConnectionString, Constants.NotificationHubName, false);
 #endif
 
-            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "kurvo", "general" });
+            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "android", "general" });
             //Handle notification when app is closed here
             CrossAzurePushNotification.Current.OnNotificationReceived += (s, p) =>
             {
