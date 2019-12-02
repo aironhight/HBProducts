@@ -3,6 +3,7 @@ using HBProducts.Services;
 using HBProducts.ViewModels;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,6 +14,7 @@ namespace HBProducts.Views
     public partial class ProductsPage : ContentPage, INotifyView
     {
         private ProductsViewModel viewmodel { get; set; }
+        private bool showingError;
 
         public ProductsPage()
         {
@@ -21,6 +23,7 @@ namespace HBProducts.Views
             viewmodel = new ProductsViewModel(this);
             //Binding ViewModel to View...
             BindingContext = viewmodel;
+            showingError = false;
             productList.SelectedItem = null;
         }
 
@@ -66,7 +69,7 @@ namespace HBProducts.Views
 
         public async void notify(string type, params object[] list)
         {
-            if(type.Equals("Error"))
+            if(type.Equals("Error") )
             {
                 Device.BeginInvokeOnMainThread(() => showError(list[0].ToString()));
             }
@@ -74,8 +77,20 @@ namespace HBProducts.Views
 
         private async void showError(string message)
         {
-            await DisplayAlert("Error", message + Environment.NewLine + "The page will automatically try to refresh.", "OK");
-            viewmodel.requestProducts();
+            if (!showingError)
+            {
+                showingError = true;
+                await DisplayAlert("Error", message + Environment.NewLine + "The page will automatically try to refresh.", "OK");
+                showingError = false;
+
+                //Add a small delay on the product requests.
+                await Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(2000);
+                    viewmodel.requestProducts();
+                });
+                
+            }
         }
 
         protected override bool OnBackButtonPressed()
