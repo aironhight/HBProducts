@@ -60,7 +60,7 @@ namespace HBProductsSupport.Models
         public int GetLatestCustomerMessageID()
         {
             if (messageList == null) return 0;
-            for(int i = messageList.Count-1; i>0; i--)
+            for(int i = messageList.Count - 1; i>=0; i--)
             {
                 if (!messageList[i].IsEmployee)
                     return messageList[i].Id;

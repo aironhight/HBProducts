@@ -192,15 +192,30 @@ namespace HBProductsSupport.ViewModels
             }
         }
 
-        public async void TakeSession(int sessionID, string customerName)
+        public async Task<bool> TakeSession(int sessionID, string customerName)
         {
             if (!HasInternetConnection())
             {
                 NoInternetAlert();
-                return;
+                return false;
             }
-            await manager.TakeSession(empID, sessionID); //Take session
+            int takeResponse = await manager.TakeSession(empID, sessionID); //Take session
+
+            switch(takeResponse)
+            {
+                case -5:
+                    view.notify("session parsing error");
+                    return false;
+                case -2:
+                    view.notify("session already taken");
+                    return false;
+                case -1:
+                    view.notify("session nonexist");
+                    return false;
+            }
+           
             await manager.sendMessage(sessionID, new Message(true, $"Hello, {customerName}! {Environment.NewLine}My name is {employeeName} and I will be assisting you today!", "", 0)); //Send greetings message :)
+            return true;
         }
 
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)

@@ -30,7 +30,7 @@ namespace HBProductsSupport.Views
             pageVisible = true;
             displayingError = false;
             manager = new ChatManager();
-            this.employeeName = "Martin";
+            this.employeeName = "Mathias";
             BindingContext = viewmodel = new ChatListPageViewModel(this, employeeName);
         }
 
@@ -48,6 +48,16 @@ namespace HBProductsSupport.Views
                 case "no internet":
                     CallAlert("No internet connection", "There is no internet connection. The title of the page will remain the same until there is no internet connectivity...");
                     break;
+                case "session parsing error":
+                    CallAlert("Error while taking session.", "Received unexpected answer.");
+                    break;
+                case "session already taken":
+                    CallAlert("Error while taking session.", "Session already taken.");
+                    break;
+                case "session nonexist":
+                    CallAlert("Error while taking session.", "Session does not exist.");
+                    break;
+
             }
         }
         private void CallAlert(string title, string text)
@@ -86,12 +96,16 @@ namespace HBProductsSupport.Views
                     }
 
                     viewmodel.IsBusy = true;
-                    viewmodel.TakeSession(s.SessionID, s.Customer.Name);
-                    await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
+
+                    bool sessionTaken = await viewmodel.TakeSession(s.SessionID, s.Customer.Name);
+                    if(sessionTaken)
+                        await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
+
                     viewmodel.IsBusy = false;
                 }
                     
             }
+            unTakenList.SelectedItem = null;
         }
 
         private async void onTakenItemSelected(object sender, ItemTappedEventArgs e)

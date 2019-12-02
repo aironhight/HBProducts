@@ -21,7 +21,8 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout BindingContext="{Binding Customer}"
-                                                Margin="0,5,0,5">
+                                                Margin="0,5,0,5"
+                                         BackgroundColor="ForestGreen">
                                 <Label Text="{Binding Name}" BackgroundColor="{Binding BackgroundColor},  Source={x:Reference rootView}"/>
                                 <Label Text="{Binding Email}" BackgroundColor="{Binding BackgroundColor},  Source={x:Reference rootView}"/>
                             </StackLayout>
