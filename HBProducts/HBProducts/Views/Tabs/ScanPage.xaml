@@ -6,13 +6,55 @@
              mc:Ignorable="d"
              x:Class="HBProducts.Views.ScanPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Scan Page! Click the button below to start scanning!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button
-                Text="Scan"
-                Clicked="ScanButtonClicked"/>
-        </StackLayout>
+
+        <RelativeLayout>
+            <StackLayout VerticalOptions="FillAndExpand"
+                        x:Name="stackLayout"
+                        RelativeLayout.YConstraint=
+                            "{ConstraintExpression 
+                                Type=RelativeToParent,
+                                Property=Height,
+                                Factor=0.5,
+                                Constant=-25}">
+                
+                <Label Text="Welcome to the Scan Page! Click the button below to start scanning!"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                
+                <Button
+                    Text="Scan"
+                    x:Name="scanButton"
+                    Clicked="ScanButtonClicked"
+                    BackgroundColor="{DynamicResource HB}"
+                    TextColor="White"
+                    RelativeLayout.YConstraint=
+                            "{ConstraintExpression 
+                                Type=RelativeToParent,
+                                Property=Height,
+                                Factor=0.5,
+                                Constant=-50}"/>
+            </StackLayout>
+            
+
+            <ActivityIndicator 
+                        IsRunning="False"
+                        IsVisible="False"
+                        x:Name="indicator"
+                        Color="{x:StaticResource HB}"
+                
+                        RelativeLayout.XConstraint=
+                            "{ConstraintExpression 
+                                Type=RelativeToParent,
+                                Property=Width, 
+                                Factor=0.5,
+                                Constant=-25}"
+                
+                        RelativeLayout.YConstraint=
+                            "{ConstraintExpression 
+                                Type=RelativeToParent,
+                                Property=Height,
+                                Factor=0.5,
+                                Constant=-25}"/>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

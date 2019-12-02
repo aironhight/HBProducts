@@ -82,6 +82,7 @@ namespace HBProducts.Views
                 {
                     System.Diagnostics.Debug.WriteLine("Good QR code.");
                     //If the scanned code contains ID.
+
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         Navigation.PopAsync();
@@ -109,18 +110,23 @@ namespace HBProducts.Views
             var networkAccess = Connectivity.NetworkAccess; //Check internet connectivity
             if (networkAccess == NetworkAccess.Internet)
             {
+                setIndicatorState(true);
                 string productString = await manager.getProductWithId(id);
+                
 
             Device.BeginInvokeOnMainThread(() =>
             {
                 if (productString.Contains("Error:")) {
                     Navigation.PopAsync();
                     DisplayAlert("Error", productString.Substring(6), "OK");
+                    setIndicatorState(false);
                     return;
                 } else {
                     Product scannedProduct = JsonConvert.DeserializeObject<Product>(productString);
                     startProductPage(scannedProduct);
+                    setIndicatorState(false);
                 }
+
             });
             }
             else
@@ -146,6 +152,14 @@ namespace HBProducts.Views
                     await DisplayAlert("Error", "Unexpected error: " + ex.Message, "OK");
                 }
             }
+        }
+
+        //Sets the Activity indicator running state. While the activity indicator is running the button is disabled.
+        private void setIndicatorState(bool running)
+        {
+            scanButton.IsEnabled = !running;
+            indicator.IsRunning = running;
+            indicator.IsVisible = running;
         }
 
         protected override void OnDisappearing()

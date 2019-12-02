@@ -24,7 +24,7 @@ namespace HBProducts.ViewModels
         private Session chat;
         private ChatManager manager;
         private string textEntry;
-        private int lastMessageID, sessionID, failedMessages, failedRequests;;
+        private int lastMessageID, sessionID, failedMessages, failedRequests;
         private INotifyView view;
         private Timer timer;
         private Color backgroundColor;

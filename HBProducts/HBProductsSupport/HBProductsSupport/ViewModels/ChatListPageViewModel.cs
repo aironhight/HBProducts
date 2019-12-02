@@ -37,6 +37,8 @@ namespace HBProductsSupport.ViewModels
             unansweredSessions = new ObservableCollection<Session>();
             employeeSessions = new ObservableCollection<Session>();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged; //Add an event handler for internet connectivity changes.
+            PageTitle = "Getting Employee ID...";
+            IsBusy = false;
             empID = -1;
             IsUpdating = false;
             backgroundColor = internetColor;
@@ -56,26 +58,35 @@ namespace HBProductsSupport.ViewModels
                 NoInternetAlert();
                 return;
             }
-            
-            empID = await manager.GetEmpID(employeeName);
-            if (empID == -200 || empID == -12)
+
+            int newID = await manager.GetEmpID(employeeName);
+
+            if (empID != -1)//This will be executed if there are still pending requests after the Employee id has already been set...
             {
-                IsBusy = true;
-                view.notify("id error", "Error while trying to get the employee ID from the API. Check internet connection...");
-                //Device.BeginInvokeOnMainThread(() => DisplayAlert("ERROR!", "Error while trying to get the employee ID from the API. Check internet connection...", "OK"));
-                var startTimeSpan = TimeSpan.Zero;
-                var periodTimeSpan = TimeSpan.FromSeconds(3);
                 if (IDtimer != null)
                     IDtimer.Dispose();
-
-                IDtimer = new Timer((e) =>
-                {
-                    GetEmployeeID();
-                }, null, startTimeSpan, periodTimeSpan);
-                IsBusy = false;
                 return;
+            }
+
+            if (newID == -200 || newID == -12)
+            {
+                view.notify("id error");
+
+                Task.Factory.StartNew(() =>
+                {
+                    if (IDtimer != null)
+                        IDtimer.Dispose();
+                    //Make the system check for new messages every 3 seconds.
+                    var startTimeSpan = TimeSpan.Zero;
+                    var periodTimeSpan = TimeSpan.FromSeconds(3);
+                    IDtimer = new Timer((e) =>
+                    {
+                        GetEmployeeID();
+                    }, null, startTimeSpan, periodTimeSpan);
+                });
             } else
             {
+                empID = newID;
                 if (IDtimer != null)
                     IDtimer.Dispose();
                 PageTitle = internetAcessTitle;
@@ -210,7 +221,7 @@ namespace HBProductsSupport.ViewModels
         }
 
         public string PageTitle {
-            get { return title; }
+            get { return title;  }
             set { SetProperty(ref title, value); OnPropertyChanged("Title"); }
         }
 

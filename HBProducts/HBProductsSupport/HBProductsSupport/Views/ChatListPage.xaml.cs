@@ -43,7 +43,7 @@ namespace HBProductsSupport.Views
                     CallAlert("Unexpected Error", "Error while updating sessions." + Environment.NewLine + list[0].ToString());
                     break;
                 case "id error":
-                    CallAlert("Unexpected Error", "Error while getting employee ID" + Environment.NewLine + list[0].ToString());
+                    CallAlert("Unexpected Error", "Error while trying to get the employee ID from the API. Check internet connection...");
                     break;
                 case "no internet":
                     CallAlert("No internet connection", "There is no internet connection. The title of the page will remain the same until there is no internet connectivity...");
