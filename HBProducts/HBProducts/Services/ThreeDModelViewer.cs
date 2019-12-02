@@ -105,7 +105,7 @@ namespace HBProducts
             {
                 touch1 = input.GetTouch(0);
 
-                if (input.NumTouches == 2)
+                if (input.NumTouches == 2) //Two touch inputs (user zooming/unzooming the object)
                 {
                     touch2 = input.GetTouch(1);
 
@@ -136,13 +136,11 @@ namespace HBProducts
                         Debug.WriteLine("Sensor scale changed to: " + scale);
                     }
                 }
-                else if (input.NumTouches == 1)
+                else if (input.NumTouches == 1) //Only one touch input (user rotating the object)
                 {
-                    //TouchState state = input.GetTouch(0);
+                    
                     if (touch1.Delta.X != 0 || touch1.Delta.Y != 0)
                     {
-
-
                         var camera = sensorNode.GetComponent<StaticModel>();
                         if (camera == null)
                             return;

@@ -19,10 +19,8 @@ namespace HBProductsSupport.Views
     {
         private ChatListPageViewModel viewmodel;
         private ChatManager manager;
-        private int empID;
         private string employeeName;
         private bool pageVisible, displayingError;
-
 
         public ChatListPage()
         {
@@ -34,7 +32,7 @@ namespace HBProductsSupport.Views
             BindingContext = viewmodel = new ChatListPageViewModel(this, employeeName);
         }
 
-
+        //Notification handler.
         public void notify(string type, params object[] list)
         {
             switch (type)
@@ -60,6 +58,8 @@ namespace HBProductsSupport.Views
 
             }
         }
+
+        //Makes a Alert call on the UI thread.
         private void CallAlert(string title, string text)
         {
             Device.BeginInvokeOnMainThread(() =>
@@ -69,6 +69,7 @@ namespace HBProductsSupport.Views
             });
         }
 
+        //Creates an alert message on the screen.
         private async void Alert(string title, string text)
         {
             if (!displayingError)
@@ -79,36 +80,39 @@ namespace HBProductsSupport.Views
             }
         }
 
-        private async void onItemSelected(object sender, ItemTappedEventArgs e)
+        //On unanswered session click
+        private async void OnUnansweredSessionSelected(object sender, ItemTappedEventArgs e)
         {
             var res = await DisplayAlert("Take Session?", "Are you sure you want to take this session?", "Take", "Cancel");
             if (res)
             {
-                Session s = e.Item as Session;
-                int response = await manager.TakeSession(empID, s.SessionID);
-
-                if (response != -2)
+                //Check if there is internet connection
+                if (!viewmodel.HasInternetConnection())
                 {
-                    unTakenList.SelectedItem = null;
-                    if (!viewmodel.HasInternetConnection()) {
-                        notify("no internet");
-                        return;
-                    }
-
-                    viewmodel.IsBusy = true;
-
-                    bool sessionTaken = await viewmodel.TakeSession(s.SessionID, s.Customer.Name);
-                    if(sessionTaken)
-                        await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
-
-                    viewmodel.IsBusy = false;
+                    notify("no internet");
+                    return;
                 }
+
+                Session s = e.Item as Session;
+
+                unTakenList.SelectedItem = null; //Unmark the selected item from the UI
+                
+                viewmodel.IsBusy = true;
+                //Make a request and await for a response if the session was successfuly taken.
+                bool sessionTaken = await viewmodel.TakeSession(s.SessionID, s.Customer.Name);
+                //If the session was successfuly taken - Open a new page with the session.
+                if(sessionTaken)
+                    await Navigation.PushAsync(new ChatPage(s.SessionID, s.Customer.Name));
+
+                viewmodel.IsBusy = false;
+
                     
             }
             unTakenList.SelectedItem = null;
         }
 
-        private async void onTakenItemSelected(object sender, ItemTappedEventArgs e)
+        //Called on Taken session selected.
+        private async void OnTakenSessionSelected(object sender, ItemTappedEventArgs e)
         {
             {
                 takenList.SelectedItem = null;

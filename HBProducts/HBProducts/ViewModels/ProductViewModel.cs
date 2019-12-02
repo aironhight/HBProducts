@@ -61,6 +61,7 @@ namespace HBProducts.ViewModels
 
             Device.OpenUri(new Uri(url));
 
+            //Code for opening in the in-app web viewer.
             //switch (Device.RuntimePlatform)
             //{
             //    case Device.iOS:

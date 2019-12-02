@@ -34,12 +34,11 @@ namespace HBProducts.ViewModels
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged; //Add an event handler for internet connectivity changes.
         }
 
-
+        //Requests the products from the product manager.
         public async void requestProducts()
         {
-            var networkAccess = Connectivity.NetworkAccess;
-
-            if (networkAccess == NetworkAccess.Internet)
+            //Check if there is internet connection
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 NoInternetConnection = false;
                 IsLoading = true;
@@ -59,6 +58,7 @@ namespace HBProducts.ViewModels
             }
         }
 
+        //Sorts the product list so that it puts the favorites on top.
         private ProductList SortProductList(ProductList products)
         {
             List<int> favProducts = Settings.GetFavoriteProducts();
@@ -104,6 +104,7 @@ namespace HBProducts.ViewModels
             set { SetProperty(ref noInternetConnection, value); OnPropertyChanged("NoInternetConnection"); }
         }
 
+        //Requests information for product with ID.
         public async Task<Product> GetProductWithId(int id)
         {
             IsLoading = true;

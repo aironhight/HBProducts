@@ -67,14 +67,14 @@ namespace HBProductsSupport.ViewModels
                     IDtimer.Dispose();
                 return;
             }
-
+            //Check if the requested ID does not contain an error response.
             if (newID == -200 || newID == -12)
             {
                 view.notify("id error");
 
                 Task.Factory.StartNew(() =>
                 {
-                    if (IDtimer != null)
+                    if (IDtimer != null) //Destroy the timer if it already exists.
                         IDtimer.Dispose();
                     //Make the system check for new messages every 3 seconds.
                     var startTimeSpan = TimeSpan.Zero;
@@ -84,8 +84,10 @@ namespace HBProductsSupport.ViewModels
                         GetEmployeeID();
                     }, null, startTimeSpan, periodTimeSpan);
                 });
-            } else
+            }
+            else
             {
+                //The request for employee ID was successful.
                 empID = newID;
                 if (IDtimer != null)
                     IDtimer.Dispose();
@@ -94,14 +96,20 @@ namespace HBProductsSupport.ViewModels
             }      
         }
 
+        //Starts updating the chat list
         public void StartUpdatingChatList()
         {
+            //Check for internet connectivity
             if (!HasInternetConnection())
             {
                 NoInternetAlert();
                 return;
             }
-            if (empID == -1) return;
+            //If the employee ID is still not received
+            if (empID == -1)
+                return;
+
+            //Start a new thread to make requests for updates every 3 seconds.
             Task.Factory.StartNew(() =>
             {
                 while (manager == null)
@@ -119,12 +127,14 @@ namespace HBProductsSupport.ViewModels
             });
         }
 
+        //Stops the updating of the chat list
         public void StopUpdatingChatList()
         {
             if (timer != null)
                 timer.Dispose();
         }
 
+        //Updates the session list.
         private async void UpdateSessionLists()
         {
             if (!HasInternetConnection())
@@ -134,21 +144,25 @@ namespace HBProductsSupport.ViewModels
             }
             if (IsUpdating) return; //If the previous request is not yet processed - don't make another one...
             IsUpdating = true;
-            string sessionsString = await manager.GetUnansweredSessions();
-            string empSessionsString = await manager.GetEmpSessions(empID);
-            if (sessionsString.Contains("Error:"))
+            string unansweredSessionsString = await manager.GetUnansweredSessions(); //JSON string of the unanswered sessions
+            string employeeSessionsString = await manager.GetEmpSessions(empID); //JSON string of the answeered sessions for the current employee
+            
+            //Check if the strings contain error
+            if (unansweredSessionsString.Contains("Error:"))
             {
-                view.notify("session error", sessionsString.Substring(6));
+                view.notify("session error", unansweredSessionsString.Substring(6));
                 return;
             }
-            if (empSessionsString.Contains("Error:"))
+            if (employeeSessionsString.Contains("Error:"))
             {
-                view.notify("session error", empSessionsString.Substring(6));
+                view.notify("session error", employeeSessionsString.Substring(6));
                 return;
             }
-            ObservableCollection<Session> newUnanswered = JsonConvert.DeserializeObject<ObservableCollection<Session>>(sessionsString);
-            ObservableCollection<Session> newEmployeeSessions = JsonConvert.DeserializeObject<ObservableCollection<Session>>(empSessionsString);
+            //Deserialize the strings
+            ObservableCollection<Session> newUnanswered = JsonConvert.DeserializeObject<ObservableCollection<Session>>(unansweredSessionsString);
+            ObservableCollection<Session> newEmployeeSessions = JsonConvert.DeserializeObject<ObservableCollection<Session>>(employeeSessionsString);
 
+            //Update the sessions list.
             UpdateSessionList(UnansweredSessions, newUnanswered);
             UpdateSessionList(EmployeeSessions, newEmployeeSessions);
 
@@ -184,23 +198,23 @@ namespace HBProductsSupport.ViewModels
             set { SetProperty(ref employeeSessions, value); OnPropertyChanged("EmployeeSessions"); }
         }
 
-        public ICommand CommandUpdate
-        {
-            get
-            {
-                return new Command(() => UpdateSessionLists());
-            }
-        }
-
+        /**
+         * Take a unanswered chat session with a given id
+         * @params sessionID - The ID of the session to be taken
+         * @params customerName - The name of the customer in the chat.
+         */
         public async Task<bool> TakeSession(int sessionID, string customerName)
         {
+            //Check for internet connectivity
             if (!HasInternetConnection())
             {
                 NoInternetAlert();
                 return false;
             }
-            int takeResponse = await manager.TakeSession(empID, sessionID); //Take session
+            //Make a take session request.
+            int takeResponse = await manager.TakeSession(empID, sessionID);
 
+            //Check  the response for errors
             switch(takeResponse)
             {
                 case -5:
@@ -213,25 +227,26 @@ namespace HBProductsSupport.ViewModels
                     view.notify("session nonexist");
                     return false;
             }
-           
+            //Send a greetings message if the response is successful
             await manager.sendMessage(sessionID, new Message(true, $"Hello, {customerName}! {Environment.NewLine}My name is {employeeName} and I will be assisting you today!", "", 0)); //Send greetings message :)
             return true;
         }
 
+        //Connectivity changed event handler.
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
-            if (e.NetworkAccess == NetworkAccess.Internet)
+            if (e.NetworkAccess == NetworkAccess.Internet) //Internet access
             {
-                PageTitle = internetAcessTitle;
+                PageTitle = internetAcessTitle; 
                 BackgroundColor = internetColor;
                 if (empID != -1 && empID != -200)
-                    StartUpdatingChatList(); //Start Updating if there is network access...
+                    StartUpdatingChatList(); //Start Updating if there is network access and the employee ID is already taken from the API...
                 else
-                    GetEmployeeID();
+                    GetEmployeeID(); //Request a employee ID...
             }
             else
             {
-                NoInternetAlert();
+                NoInternetAlert(); //Alert the user for no internet access
             }
         }
 
@@ -240,7 +255,7 @@ namespace HBProductsSupport.ViewModels
             set { SetProperty(ref title, value); OnPropertyChanged("Title"); }
         }
 
-
+        //Cheks if a list of sessions contains a session with a given ID
         private bool sessionListContainsID(ObservableCollection<Session> sess, int id)
         {
             foreach(Session s in sess)
@@ -253,14 +268,16 @@ namespace HBProductsSupport.ViewModels
 
         public bool ListsEnabled { get { return !IsBusy; } }
 
+        //Stops the updating of the chat lists.
         private void NoInternetAlert()
         {
-            BackgroundColor = noInternetColor;
-            PageTitle = noInternetTitle;
-            StopUpdatingChatList(); //Stop updating if there is no network access...
-            view.notify("no internet");
+            BackgroundColor = noInternetColor; //Change the background color to indicate no internet connection
+            PageTitle = noInternetTitle; //Change the title to indicate no internet connection
+            StopUpdatingChatList(); //Stops the updating of the session lists.
+            view.notify("no internet"); //Notify the view for no internet
         }
 
+        //Checks if the device has wifi or mobile data connected.
         public Boolean HasInternetConnection()
         {
             return Connectivity.NetworkAccess == NetworkAccess.Internet;

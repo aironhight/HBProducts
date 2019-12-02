@@ -104,16 +104,8 @@ namespace HBProductsSupport.Views.Chat
                     AlertMessage("Error sending message!", "Sending the message failed too many times... The message will not be sent." + Environment.NewLine + "Error: " + list[0].ToString());
                     break;
 
-                case "response":
-                    Response response = (Response)list[0];
-
-                    //Check if the enquiry was sent successfully
-                    if (response.StatusCode == HttpStatusCode.Accepted)
-                        AlertMessage("Sucess", "Chat copy sent successfuly");
-                    else
-                        //Alert the user if not.
-                        AlertMessage("Fail", "Chat copy did not send successfuly. Error code:" + response.StatusCode.ToString());
-
+                case "closed without copy":
+                    AlertMessage("Error sending a copy", "The copy failed to send.");
                     break;
 
                 case "no internet":
@@ -147,10 +139,15 @@ namespace HBProductsSupport.Views.Chat
 
         private async void closeSessionClicked(object sender, EventArgs e)
         {
+            if(!vm.HasInternetEnabled())
+            {
+                AlertMessage("No internet", "You cannot close a session if there are no internet services.");
+                return;
+            }
             var res = await DisplayAlert("Close session?", "Are you sure that you want to close this session?", "Continue", "Cancel");
             if (res)
             {
-                var sendRes = await DisplayAlert("Send copy to email?", "Do you want to send a copy of the chat to the customer's email?", "Yes", "Cancel");
+                var sendRes = await DisplayAlert($"Send copy to email?", "Do you want to send a copy of the chat to " + Constants.supportEmail + "?", "Yes", "Cancel");
                 vm.CloseSessionAsync(sendRes);
             }
         }

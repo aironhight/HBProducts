@@ -282,6 +282,7 @@ namespace HBProductsSupport.ViewModels
             }
         }
 
+        //Sends a chat copy to the support email.
         public async void SendChatCopy()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -302,11 +303,17 @@ namespace HBProductsSupport.ViewModels
                 HtmlContent = chatCopy
             };
 
-            msg.AddTo(new EmailAddress("hstoyanov@outlook.com", chat.Employee.Name));
+            msg.AddTo(new EmailAddress(Constants.supportEmail, chat.Employee.Name));
             try
             {
                 var response = await client.SendEmailAsync(msg);
-                view.notify("response", response);
+                if(response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                {
+                    view.notify("copy sent");
+                } else
+                {
+                    view.notify("copy error", response.StatusCode.ToString());
+                }
             }
             catch (HttpRequestException e)
             {
@@ -347,5 +354,9 @@ namespace HBProductsSupport.ViewModels
             view.notify("no internet");
         }
 
+        public Boolean HasInternetEnabled()
+        {
+            return Connectivity.NetworkAccess == NetworkAccess.Internet;
+        }
     }
 }

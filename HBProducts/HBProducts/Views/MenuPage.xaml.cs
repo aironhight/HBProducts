@@ -28,7 +28,7 @@ namespace HBProducts.Views
                 new HomeMenuItem {Id = MenuItemType.Scan, Title = "Scan QR"},
                 new HomeMenuItem {Id = MenuItemType.FAQ, Title = "FAQ"},
                 new HomeMenuItem {Id = MenuItemType.ContactUs, Title = "Contact Us"},
-                new HomeMenuItem {Id = MenuItemType.About, Title="About" },
+                new HomeMenuItem {Id = MenuItemType.About, Title="About Us" },
             };
 
             ListViewMenu.ItemsSource = menuItems;

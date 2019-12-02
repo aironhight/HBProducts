@@ -11,14 +11,13 @@ namespace HBProducts.Services
     {
         public static void SaveUserData(Customer customer)
         {
-            //Preferences.Set("userData", JsonConvert.SerializeObject(customer));
             SaveToPreferences("userData", customer);
         }
 
         public static Customer GetUserData()
         {
             String userData = Preferences.Get("userData", "");
-            if (userData.Length == 0)
+            if (userData.Length == 0) //Return an empty customer if there isnt any customer data
                 return new Customer("", "", "", "", "");
 
             Customer toReturn = JsonConvert.DeserializeObject<Customer>(userData);
@@ -32,30 +31,21 @@ namespace HBProducts.Services
 
         public static void AddToFavorites(Product product)
         {
-            String favorites = Preferences.Get("favorites", ""); //Get the preferences for favorites
-            List<int> favList = GetFavoriteProducts();
-
-
-            //if (favorites.Length == 0) { //If there are no favorites 
-            //    favList = new List<int>();
-            //    favList.Add(product.Id); //Add a new list to th
-            //    SaveToPreferences("favorites", favList);
-            //    return;
-            //}
+            List<int> favList = GetFavoriteProducts(); //Get the favorite products 
              
-            //favList = JsonConvert.DeserializeObject<List<int>>(favorites);
             if (!favList.Contains(product.Id)) { 
-                favList.Add(product.Id);
-                SaveToPreferences("favorites", favList);
+                favList.Add(product.Id); //Add the current product to the list if it isn't there.
+                SaveToPreferences("favorites", favList); //Save the new product list.
             }
         }
 
         public static List<int> GetFavoriteProducts()
         {
             String favorites = Preferences.Get("favorites", "");
-            return (favorites.Length==0) ? new List<int>() : JsonConvert.DeserializeObject<List<int>>(favorites);
+            return (favorites.Length==0) ? new List<int>() : JsonConvert.DeserializeObject<List<int>>(favorites); //Return an empty list if there are no favorites.
         }
 
+        //Removes a product from facorites.
         public static void RemoveProductFromFavorites(Product product)
         {
             List<int> favList = GetFavoriteProducts();
@@ -63,6 +53,7 @@ namespace HBProducts.Services
             SaveToPreferences("favorites", favList);
         }
 
+        //Returns true if the product is in the favorites list, false otherwise
         public static bool ProductIsFavorite(Product product)
         {
             return GetFavoriteProducts().Contains(product.Id);

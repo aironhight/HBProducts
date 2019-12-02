@@ -20,7 +20,7 @@ namespace HBProducts.Services
             client = new HttpClient();
         }
 
-        //Method used for getting a session ID
+        //Method used for getting a session ID.
         public async Task<int> GetSesionId(string email, string name)
         {
             try
@@ -51,19 +51,25 @@ namespace HBProducts.Services
             }
         }
 
-        public async Task<string> GetEmpMessages(int sessionID, int lastMesage)
+        //Gets the latest messages sent from the Employee after the specified messageID
+        public async Task<string> GetEmpMessages(int sessionID, int lastMessageID)
         {
             try
             {
-                var response = await client.GetStringAsync(Constants.ChatURI + "GetEmpMessages/"+sessionID+"/"+lastMesage);
+                var response = await client.GetStringAsync(Constants.ChatURI + "GetEmpMessages/"+sessionID+"/"+lastMessageID);
                 return JsonConvert.DeserializeObject<string>(response); //Deserializes the response into a JSON String
+            }
+            catch(OperationCanceledException opc) //Timeout exception
+            {
+                return "Error:Timeout error while retreiving messages: " + opc.Message;
             }
             catch (Exception ex)
             {
-                return "Error:Session Error." + ex.Message;
+                return "Error:Getting messages error." + ex.Message;
             }
         }
 
+        //Gets the session with the given ID
         public async Task<string> GetSessionInfo(int sessionID)
         {
             try
@@ -77,7 +83,7 @@ namespace HBProducts.Services
             }
         }
 
-        // Method used for senting messages.
+        // Method used for sending messages.
         public async Task<int> sendMessage(int sessionID, Message message)
         {
             int latestMessageID = -1;
@@ -91,9 +97,7 @@ namespace HBProducts.Services
                 request.Content.Headers.Remove("Content-Type");
                 request.Content.Headers.Add("Content-Type", "application/json");
                 var res = await client.SendAsync(request);
-                string response = await res.Content.ReadAsStringAsync();
-                //Debug.WriteLine("Kurvata: " + response);
-                
+                string response = await res.Content.ReadAsStringAsync();                
 
                 if (res.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -108,7 +112,6 @@ namespace HBProducts.Services
                         //Unsucessful tryparse - Unexpected error ocurred
                         return -12;
                     }
-                    
                 }
                 else
                 {

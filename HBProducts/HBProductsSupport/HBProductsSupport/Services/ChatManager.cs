@@ -68,6 +68,7 @@ namespace HBProductsSupport.Services
             }
         }
 
+        //Requests session info for the session with the specified ID.
         public async Task<string> GetSessionInfo(int sessionID)
         {
             try

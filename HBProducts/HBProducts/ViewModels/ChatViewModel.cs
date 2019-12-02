@@ -47,7 +47,7 @@ namespace HBProducts.ViewModels
             textEntry = String.Empty;
             sessionClosed = false;
 
-            setSession(sessionID);
+            SetSession(sessionID);
             StartUpdateRequests();
         }
         
@@ -57,13 +57,14 @@ namespace HBProducts.ViewModels
             set { SetProperty(ref backgroundColor, value); OnPropertyChanged("BackgroundColor"); }
         }
 
+        //Connectivity changed event handler
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             if (e.NetworkAccess == NetworkAccess.Internet)
             {
                 BackgroundColor = internetColor;
                 if (chat == null)
-                    setSession(sessionID);
+                    SetSession(sessionID);
                 else
                     StartUpdateRequests();
             }
@@ -73,6 +74,7 @@ namespace HBProducts.ViewModels
             }
         }
 
+        //Stops the update requests and alerts the user for no internet services enabled
         private void NoInternetAlert()
         {
             StopUpdateRequests();
@@ -86,7 +88,9 @@ namespace HBProducts.ViewModels
             set { SetProperty(ref textEntry, value); OnPropertyChanged("TextEntry"); }
         }
 
-        private async void setSession(int sessionID)
+        //Requests the session object from the server(in case there are any messages already in it)
+
+        private async void SetSession(int sessionID)
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
@@ -95,85 +99,98 @@ namespace HBProducts.ViewModels
             }
             string chatString = await manager.GetSessionInfo(sessionID);
             this.chat = JsonConvert.DeserializeObject<Session>(chatString);
-            lastMessageID = chat.GetLatestEmployeeMessageID();
-            if(chat.MessageList != null) { 
+            lastMessageID = chat.GetLatestEmployeeMessageID(); //Update the latest message id so that the message does not appear multiple times.
+
+            if (chat.MessageList != null) { 
                 foreach (Message m in chat.MessageList) //Add all previous messages to the chat page.
                     Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = m.IsEmployee ? TextChatViewModel.ChatDirection.Incoming : TextChatViewModel.ChatDirection.Outgoing });
-                view.notify("new messages");
+                view.notify("new messages"); //Notify the view so that it scrolls to the latest message in the chat session.
             } 
         }
 
+        //Starts the timer for updating the chat message list.
         public void StartUpdateRequests()
         {
+            //Check for internet connection
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 NoInternetAlert();
                 return;
             }
+            //Starts a timer on a new thread which makes requests every 3 seconds.
             Task.Factory.StartNew(() =>
             {
+                //While the chat manager and chat session are null - put the thread to sleep.
                 while (manager == null || chat == null)
                 {
                     Thread.Sleep(500);
                 }
-                StopUpdateRequests();
-                //Make the system check for new messages every 3 seconds.
+                StopUpdateRequests(); //Stop the timer to prevent multiple timers running at once
+
+                //Start a timer which requests new messages every 3 seconds.
                 if (manager == null || chat == null) return;
                 var startTimeSpan = TimeSpan.Zero;
                 var periodTimeSpan = TimeSpan.FromSeconds(3);
                 timer = new Timer((e) =>
                 {
-                    getLatestMessages();
+                    GetLatestMessages();
                 }, null, startTimeSpan, periodTimeSpan);
             }); 
         }
 
+        //Stops the timer for updating the chat message list.
         public void StopUpdateRequests()
         {
             if(timer!=null)
                 timer.Dispose();
         }
 
-        private async void getLatestMessages()
+       //Gets the messages sent after the latest received message.
+        private async void GetLatestMessages()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 NoInternetAlert();
                 return;
             }
-            string jsonList = await manager.GetEmpMessages(chat.SessionID, lastMessageID);
-            if (jsonList.Contains("Error"))
+            
+            string jsonMessageList = await manager.GetEmpMessages(chat.SessionID, lastMessageID); //Get the employee messages in a json list.
+
+            //Check if the response contains error.
+            if (jsonMessageList.Contains("Error")) 
             {
-                if (failedRequests > 5)
+                if (failedRequests > 5) //If too many errors have occured
                 {
-                    if (jsonList.Substring(6).Contains("Unable to resolve host"))
-                        view.notify("error host");
+                    if (jsonMessageList.Substring(6).Contains("Unable to resolve host"))
+                        view.notify("error host"); //Can't reach host exception
                     else
-                        view.notify("error", jsonList.Substring(6) + Environment.NewLine + $" The messaging service has been disabled after {failedRequests} failed requests.");
+                        view.notify("error", jsonMessageList.Substring(6) + Environment.NewLine + $" The messaging service has encountered {failedRequests} failed requests.");
 
                     failedRequests = 0;
                 }
 
                 failedRequests++;
-                //StopUpdateRequests();
                 return;
             }
-            List<Message> newMesssages = JsonConvert.DeserializeObject<List<Message>>(jsonList);
 
-            if (newMesssages.Count > 0)
+            //If no errors have occured - convert the json message list from a string to list.
+            List<Message> newMesssages = JsonConvert.DeserializeObject<List<Message>>(jsonMessageList);
+
+            if (newMesssages.Count > 0) //Check if the list isn't empty
             {
-                lastMessageID = newMesssages[newMesssages.Count - 1].Id;
-                foreach (Message m in newMesssages)
+                lastMessageID = newMesssages[newMesssages.Count - 1].Id; 
+                foreach (Message m in newMesssages) //Add the messages in the chat list.
                 {
                     Messages.Add(new TextChatViewModel() { Text = m.Text, Direction = TextChatViewModel.ChatDirection.Incoming });
                     chat.AddMessage(m);
                 }
                    
-                view.notify("new messages");
+                view.notify("new messages"); //Notify the view for new messages in order to scroll to the last message.
                 DataAdded?.Invoke(this, null);
             }
         }
 
+        //Sends a chat copy to the customer's email address.
         public async void SendChatCopy()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -198,7 +215,7 @@ namespace HBProducts.ViewModels
             try
             {
                 var response = await client.SendEmailAsync(msg);
-                view.notify("response", response);
+                view.notify("email response", response);
             }
             catch (HttpRequestException e)
             {
@@ -214,6 +231,7 @@ namespace HBProducts.ViewModels
             }
         }
 
+        //Requests the current session from the server and makes it into a string.
         private async Task<string> getChatString()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -244,23 +262,25 @@ namespace HBProducts.ViewModels
             return acc;
         }
 
-        private async void SubmitMessage(string obj)
+        //Submits a message in the chat
+        private async void SubmitMessage(string messageText)
         {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet) {
                 NoInternetAlert();
                 return;
             }
             if (manager == null || TextEntry.Length == 0) return;
 
-            if(chat == null)
-            {
+            if(chat == null) {
                 view.notify("session error");
+                return;
             }
 
-            if(sessionClosed) { view.notify("session closed"); }
+            if(sessionClosed) {
+                view.notify("session closed"); return;
+            }
             
-            var x = new TextChatViewModel() { Direction = TextChatViewModel.ChatDirection.Outgoing, Text = obj };          
+            var messageBubble = new TextChatViewModel() { Direction = TextChatViewModel.ChatDirection.Outgoing, Text = messageText };          
             int sendResult = await manager.sendMessage(chat.SessionID, new Message(false, TextEntry, "", 0));
 
             switch (sendResult)
@@ -272,7 +292,7 @@ namespace HBProducts.ViewModels
                         return;
                     }
                     failedMessages++;
-                    SubmitMessage(obj);
+                    SubmitMessage(messageText); //make another attempt to send the message.
                     return;
 
                 case -12: //unsuccessful tryParse in the manager.
@@ -282,7 +302,7 @@ namespace HBProducts.ViewModels
                         return;
                     }
                     failedMessages++;
-                    SubmitMessage(obj);
+                    SubmitMessage(messageText); //Make another attempt to send the message.
                     return;
 
                 case -2: //Session closed
@@ -295,11 +315,10 @@ namespace HBProducts.ViewModels
                 failedMessages = 0; //Message was sent successfully.
 
             chat.AddMessage(new Message(false, TextEntry, "", 0));
-            Messages.Add(x);
-            TextEntry = string.Empty;
-            view.notify("new messages");
+            Messages.Add(messageBubble); //Add the message blob to the list
+            TextEntry = string.Empty; //Empty the entry field
+            view.notify("new messages"); //notify the view to scroll down
             DataAdded?.Invoke(this, null);
-
         }
     }
 }

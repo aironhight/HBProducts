@@ -13,9 +13,8 @@
         <StackLayout Margin="7,0,7,7" IsEnabled="{Binding ListsEnabled}" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}">
             <Label Text="Unanswered Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
             
-            <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True" ItemTapped="onItemSelected" 
-                      IsPullToRefreshEnabled="False" RefreshCommand="{Binding CommandUpdate}"
-                      IsRefreshing="False" IsEnabled="{Binding ListsEnabled}"
+            <ListView ItemsSource="{Binding UnansweredSessions}" HasUnevenRows="True" ItemTapped="OnUnansweredSessionSelected" 
+                      IsPullToRefreshEnabled="False"  IsEnabled="{Binding ListsEnabled}"
                       x:Name="unTakenList" BackgroundColor="{Binding BackgroundColor}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -32,8 +31,7 @@
             </ListView>
 
             <Label Text="Taken Sessions" FontSize="Medium" FontAttributes="Bold" TextColor="Black" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}"/>
-            <ListView ItemsSource="{Binding EmployeeSessions}" HasUnevenRows="True" ItemTapped="onTakenItemSelected" 
-                      IsPullToRefreshEnabled="False" RefreshCommand="{Binding CommandUpdate}"
+            <ListView ItemsSource="{Binding EmployeeSessions}" HasUnevenRows="True" ItemTapped="OnTakenSessionSelected" 
                       IsRefreshing="False"  IsEnabled="{Binding ListsEnabled}"
                       x:Name="takenList" BackgroundColor="{Binding BackgroundColor}, Source={x:Reference rootView}">
                 <ListView.ItemTemplate>

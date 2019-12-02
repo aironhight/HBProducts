@@ -79,6 +79,7 @@ namespace HBProducts.Views.Chat
             switch(type)
             {
                 case "new messages":
+                    //Add the messages to the list from the UI thread.
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         if(vm.Messages != null && vm.Messages.Count > 0)
@@ -86,44 +87,40 @@ namespace HBProducts.Views.Chat
                     });
                     break;
 
-                case "error":
+                case "error": //Unexpected error
                     AlertMessage("Unexpected Error", "Error while getting messages: " + list[0].ToString() + Environment.NewLine + "The chat will try to update automatically.", false);
                     break;
 
-                case "no internet":
+                case "no internet": //No internet services
                     AlertMessage("No internet", "The background of the page will become red and will stay red until there is no internet connectivity...", false);
                     break;
 
-                case "message error":
+                case "message error": //Too many failed attempts to send a message
                     AlertMessage("Error sending message!", "Sending the message failed too many times... The message will not be sent." + Environment.NewLine + "Error: " + list[0].ToString(), false);
                     break;
 
-                case "session closed":
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-
-                    });
-                    AlertMessage("Session closed", "The session was closed. You cannot send anymore messages.", true);
+                case "session closed": //Cannot send messages to closed session, ask for chat copy
+                    AlertMessage("Session closed", "You cannot send anymore messages in this session because it was closed. If you want to ask another question open a new session. Do you want to get a copy of the chat on your email?", true);
                     break;
 
-                case "EmailError":
-                    AlertMessage("Error sending chat copy to the customer", list[0].ToString(), false);
+                case "EmailError": //Error while sending email from SendGrid.
+                    AlertMessage("Error", "Error occured while sending chat copy:" + Environment.NewLine +  list[0].ToString(), false);
                     break;
 
-                case "send copy":
+                case "send copy": //User has confirmed to send a chat copy
                     vm.SendChatCopy();
                     break;
 
-                case "copy error":
-                    AlertMessage("FAIL", "Error sending chat copy to the customer", false);
+                case "copy error": //Error while getting a chat copy from the server
+                    AlertMessage("FAIL", "Error while trying to get a session copy from the server." + Environment.NewLine + list[0].ToString(), false);
                     break;
 
-                case "response":
+                case "email response":
                     Response response = (Response)list[0];
 
                     //Check if the enquiry was sent successfully
                     if (response.StatusCode == HttpStatusCode.Accepted)
-                        AlertMessage("Sucess", "Chat copy sent successfuly", false);
+                        AlertMessage("Sucess", "Chat copy sent successfuly! If you cannot see the e-mail, please check your SPAM box.", false);
                     else
                         //Alert the user if not.
                         AlertMessage("Fail", "Chat copy did not send successfuly. Error code:"+response.StatusCode.ToString(), false);
@@ -148,14 +145,13 @@ namespace HBProducts.Views.Chat
             });
         }
 
-        private async void Alert(string title, string text, bool multipleAnswer)
+        private async void Alert(string title, string text, bool isChatCopy)
         {
-            if(multipleAnswer)
+            if(isChatCopy)
             {
                 bool res = await DisplayAlert(title, text, "OK", "Cancel");
                 if (res)
                     notify("send copy");
-
             }
 
             if(!showingError)
@@ -166,9 +162,10 @@ namespace HBProducts.Views.Chat
             }
         }
 
+        //Send a m
         private async void SendCopyClicked(object sender, EventArgs e)
         {
-            var res = await DisplayAlert("Send text copy", "If you click OK a copy of the current chat session will be sent to your email address immediately.", "OK", "Cancel");
+            var res = await DisplayAlert("Send chat copy", "If you click OK a copy of the current chat session will be sent to your email address immediately.", "OK", "Cancel");
             if(res)
                 vm.SendChatCopy();
         }
