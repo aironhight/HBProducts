@@ -30,7 +30,7 @@ namespace HBProducts.iOS
             KeyboardOverlapRenderer.Init();
             AzurePushNotificationManager.Initialize(Constants.ListenConnectionString, Constants.NotificationHubName, options, true) ;
             AzurePushNotificationManager.CurrentNotificationPresentationOption = UNNotificationPresentationOptions.Alert | UNNotificationPresentationOptions.Badge;
-            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "all", "general" });
+            CrossAzurePushNotification.Current.RegisterAsync(new string[] { "ios", "general" });
 
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
