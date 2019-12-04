@@ -26,6 +26,7 @@ namespace HBProductsSupport.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
             KeyboardOverlapRenderer.Init();
+            UIApplication.SharedApplication.IdleTimerDisabled = true; //Keep screen on
 
             return base.FinishedLaunching(app, options);
         }
