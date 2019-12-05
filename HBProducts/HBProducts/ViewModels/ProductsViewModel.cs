@@ -65,7 +65,6 @@ namespace HBProducts.ViewModels
             if (favProducts.Count == 0) //Check if there are any favorite products...
                 return products;
 
-            ProductList pl = new ProductList();
             int favIndex = 0;
 
             for (int i = 0; i < products.ProductsCount(); i++)

@@ -31,8 +31,8 @@ namespace HBProducts.Views
          {
              try
              {
-                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
-                System.Diagnostics.Debug.WriteLine("Permission status: " + status.ToString());
+                  var status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+                  System.Diagnostics.Debug.WriteLine("Permission status: " + status.ToString());
                  if (status != PermissionStatus.Granted)
                  {
                      if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))

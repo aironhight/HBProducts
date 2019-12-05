@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HBProducts.Services
 {
-    class ChatManager
+    public class ChatManager
     {
         private HttpClient client;
 

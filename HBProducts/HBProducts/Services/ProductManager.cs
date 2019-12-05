@@ -7,7 +7,7 @@ using Xamarin.Essentials;
 
 namespace HBProducts.Services
 {
-    class ProductManager
+    public class ProductManager
     {
         private HttpClient client;
 
