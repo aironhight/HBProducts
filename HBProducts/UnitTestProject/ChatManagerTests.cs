@@ -14,15 +14,39 @@ namespace UnitTestProject
         ChatManager cm = new ChatManager();
 
         [TestMethod]
-        public async Task PrimitiveDataTest()
+        public async Task SameIDTest()
         {
-            //Task<string> answer = cm.getProductWithId(2);//Get the answer
-            //answer.Wait();
-            //Product product = JsonConvert.DeserializeObject<Product>(answer.Result);
-            //Assert.AreEqual("Refrigerant Switch - Low Temperature", product.Model);
-            //Assert.AreEqual("NH3", product.Type);
-            //Assert.AreEqual(2, product.Id);
+            Task<int> req1 = cm.GetSesionId("testing_mail@test.com", "Tester");
+            req1.Wait();
+            Task<int> req2 = cm.GetSesionId("testing_mail@test.com", "Tester");
+            req2.Wait();
+            Assert.AreEqual(req1.Result, req2.Result);
+            Assert.AreEqual(req1.Result, 61);
         }
+
+        [TestMethod]
+        public async Task TestSessionTasks()
+        {
+            Task<string> req1 = cm.GetSessionInfo(61);
+            req1.Wait();
+            Session sess = JsonConvert.DeserializeObject<Session>(req1.Result);
+
+            Assert.AreEqual("Tester", sess.Customer.Name);
+            Assert.AreEqual("testing_mail@test.com", sess.Customer.Email);
+
+            await cm.sendMessage(61, new Message(false, "This is a test", "", -1));
+
+            req1 = cm.GetSessionInfo(61);
+            req1.Wait();
+            sess = JsonConvert.DeserializeObject<Session>(req1.Result);
+
+            Assert.AreEqual("This is a test", sess.MessageList[0].Text);
+        }
+
+
+
+
+
 
 
     }
