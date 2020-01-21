@@ -37,10 +37,10 @@
     <EmbeddedResource Update="Views\Chat\ChatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Tabs\Enquiry\EnquiryMessagePage.xaml">
+    <EmbeddedResource Update="Views\Enquiry\EnquiryMessagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Tabs\Enquiry\EnquiryPage.xaml">
+    <EmbeddedResource Update="Views\Enquiry\EnquiryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\iOS\WebViewerPage.xaml">

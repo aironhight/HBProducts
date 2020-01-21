@@ -10,7 +10,6 @@ namespace HBProducts.Models
         private string email;
         private string telNum;
         private string country;
-        private ProductList favouriteProducts;
 
         public Customer() { }
 
@@ -20,15 +19,11 @@ namespace HBProducts.Models
             this.email = email;
             this.telNum = telnum;
             this.country = country;
-            favouriteProducts = new ProductList();
         }
 
         public string Company { get { return company; } set { this.company = value; } }
         public string Email { get { return email; } set { this.email = value; } }
         public string Telephone { get { return telNum; } set { this.telNum = value; } }
         public string Country { get { return country; } set { this.country = value; } }
-        public ProductList FavouriteProducts { get { return favouriteProducts; } set  { this.favouriteProducts = value;  } }
-
-
     }
 }

@@ -5,8 +5,8 @@ namespace HBProducts
     {
         public const string ListenConnectionString = "Endpoint=sb://bachproj.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=8ydPv6lUvOcBaozPOSnfyNUMQBrOqeCblKKoUoo7xmg=";
         public const string NotificationHubName = "NotificationTest";
-        public static readonly string ProductsURI = "https://hbproductswebapi2.azurewebsites.net/api/Product";
-        public static readonly string ChatURI = "https://hbproductschatapi.azurewebsites.net/api/Chat/";
+        public static readonly string ProductsURI = "https://hbproductswebapi3.azurewebsites.net/api/Product";
+        public static readonly string ChatURI = "https://hbproductschatapi3.azurewebsites.net/api/Chat/";
         public static readonly string sendgridApiKey = "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";
         public static readonly string telephone = "+4587476200";
 

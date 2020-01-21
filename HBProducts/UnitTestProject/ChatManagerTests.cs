@@ -43,11 +43,5 @@ namespace UnitTestProject
             Assert.AreEqual("This is a test", sess.MessageList[0].Text);
         }
 
-
-
-
-
-
-
     }
 }

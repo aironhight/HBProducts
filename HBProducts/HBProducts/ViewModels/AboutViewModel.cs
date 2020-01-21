@@ -43,9 +43,5 @@ namespace HBProducts.ViewModels
             get { return Constants.aboutParagraph2Text; }
         }
 
-
-
-
-
     }
 }

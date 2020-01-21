@@ -2,12 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Essentials;
 
 namespace HBProducts.Services
 {
-    class Settings
+    public class Settings
     {
         public static void SaveUserData(Customer customer)
         {
